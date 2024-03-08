@@ -1,0 +1,56 @@
+:root{
+    --background-color: black;
+    --color-A: #9400d3;
+    --color-B: #f44174;
+    --color-C: #f9dc5c;
+    --color-D: #01baef;
+    --color-D: #017fa2;
+    --color-E: #171738;
+    --color-F: #09bc8a;
+    --color-G: #8fd694;
+    --color-H: #333333;
+    --hover-color: linear-gradient(0deg, rgba(251, 141, 63, 1) 0%, rgba(252, 70, 107, 1) 100%);
+    /* --running-color: linear-gradient(0deg, rgba(34, 118, 195, 1) 0%, rgba(119, 202, 255, 1) 100%); */
+    /* --running-color: rgba(34, 118, 195, 1); */
+    /* --running-color: radial-gradient(circle, rgba(49, 122, 255, 1) 0%, rgba(43, 110, 232, 1) 100%); */
+    --running-color: radial-gradient(circle, rgba(38, 132, 218, 1) 0%, rgba(34, 118, 195, 1) 100%);
+    --neighbourhood-color: radial-gradient(circle, rgba(0, 159, 255, 1) 0%, rgba(0, 147, 236, 1) 100%);
+    --complete-color: linear-gradient(0deg, rgba(195, 53, 34, 1) 0%, rgba(255, 119, 161, 1) 100%);
+    --complete-color: linear-gradient( 0deg, rgba(255, 199, 135, 0.8) 0%, rgba(180, 84, 0, 0.8) 30%, rgba(113, 56, 0, 0.8) 35%, rgba(255, 255, 255, 0.8) 36%, rgba(0, 155, 255, 0.8) 100%);
+    --border-color: white;
+    --link-color: white;
+    --stats-color: var(--color-D);
+    --inv-color: var(--color-B);
+
+}
+
+* {
+    /* a lot of fonts here
+    Source Code Pro is preferred for the aesthetic
+    but others might come in handy for this and that
+    */
+    /* font-family: 'Bungee Shade', cursive; */
+    /* font-family: 'Courier Prime', monospace; */
+    /* font-family: 'DynaPuff', cursive; */
+    /* font-family: 'Press Start 2P', cursive; */
+    /* font-family: 'Redacted Script', cursive; */
+    /* font-family: 'Share Tech Mono', monospace; */
+    font-family: 'Source Code Pro', monospace;
+    text-align: left;
+    background: var(--background-color);
+    font-weight: 400;
+    color: var(--color-B);
+    line-height: 90%;
+    /* color: #fff; */
+    user-select: none;
+}
+
+
+.everythingWrapperClass{
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    flex-grow: 0;
+    max-width: 90vw;
+    max-height: 100vh;
+}
