@@ -15,7 +15,7 @@
   /* --running-color: radial-gradient(circle, rgba(49, 122, 255, 1) 0%, rgba(43, 110, 232, 1) 100%); */
   --running-color: radial-gradient(circle, rgba(38, 132, 218, 1) 0%, rgba(34, 118, 195, 1) 100%);
   --neighbourhood-color: radial-gradient(circle, rgba(0, 159, 255, 1) 0%, rgba(0, 147, 236, 1) 100%);
-  --complete-color: linear-gradient(0deg, rgba(195, 53, 34, 1) 0%, rgba(255, 119, 161, 1) 100%);
+  /* --complete-color: linear-gradient(0deg, rgba(195, 53, 34, 1) 0%, rgba(255, 119, 161, 1) 100%); */
   --complete-color: linear-gradient(
     0deg,
     rgba(255, 199, 135, 0.8) 0%,
@@ -33,38 +33,43 @@
   background: var(--background-color);
   font-weight: 400;
   color: var(--color-B);
+
   line-height: 70%;
   /* color: #fff; */
   user-select: none;
-
 }
 
-* {
+a {
+  color: var(--color-D);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-C);
+}
+
+/* * {
   /* a lot of fonts here
     Source Code Pro is preferred for the aesthetic
     but others might come in handy for this and that
     */
-  /* font-family: 'Bungee Shade', cursive; */
-  /* font-family: 'Courier Prime', monospace; */
-  /* font-family: 'DynaPuff', cursive; */
-  /* font-family: 'Press Start 2P', cursive; */
-  /* font-family: 'Redacted Script', cursive; */
-  /* font-family: 'Share Tech Mono', monospace; */
-  /* font-family: "Source Code Pro", monospace; */
-  /* text-align: left; */
-  /* background: var(--background-color);
+/* font-family: 'Bungee Shade', cursive; */
+/* font-family: 'Courier Prime', monospace; */
+/* font-family: 'DynaPuff', cursive; */
+/* font-family: 'Press Start 2P', cursive; */
+/* font-family: 'Redacted Script', cursive; */
+/* font-family: 'Share Tech Mono', monospace; */
+/* font-family: "Source Code Pro", monospace; */
+/* text-align: left; */
+/* background: var(--background-color);
   font-weight: 400;
   color: var(--color-B);
   line-height: 90%;
   /* color: #fff; */
-  /* user-select: none; */ */
-}
+/* user-select: none; */
+/* } */
 
-.titleClass {
-  font-size: x-small;
-}
-
-.everythingWrapperClass {
+#everythingWrapperID {
   display: flex;
   margin: 0 auto;
   flex-direction: column;
@@ -73,13 +78,13 @@
   max-height: 100vh;
 }
 
-.titleWrapperClass {
+#titleWrapperID {
   display: flex;
   margin: 10 auto;
   /* flex-direction: column; */
   flex-grow: 0;
   flex-shrink: 0;
-  padding: 4px;
+  padding: 8px;
   justify-content: space-between;
 
   max-width: 90vw;
@@ -93,22 +98,45 @@
   max-height: 20vh;
   /* background: rgba(0, 0, 0, 0); */
 
-  border-style: solid;
-    border-color: var(--border-color);
+  border-style: dotted;
+  border-color: var(--color-D);
+
+  overflow: hidden;
+}
+#titleWrapperID:hover {
+  /* background: var(--complete-color); */
+  /* background: var(--complete-color),radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(0,0,0,1) 100%); */
+  /* background-blend-mode:screen; */
 }
 
-.title_links {
+#titleID {
+  font-size: x-small;
+  z-index: 1;
+}
+
+#titleID:hover {
+  color: var(--color-C);
+  color:#09bc8a;
+  /* color: var(--color-C); */
+}
+
+#titleLinksID {
   text-transform: lowercase;
   font-size: 1.3em;
-  color: white;
+  /* color: white; */
   writing-mode: vertical-lr;
   align-self: center;
   text-align: center;
   font-family: "DynaPuff", cursive;
-  background: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
+  padding: 20px;
+  z-index: 2;
+  position: fixed;
+  right: 5vw;
+  color: var(--color-F);
 }
 
-.mainGameWrapperClass {
+#mainGameWrapperID {
   display: flex;
   margin: 10 auto;
   flex-direction: row;
@@ -118,24 +146,24 @@
 
   max-width: 90vw;
   max-height: 80vh;
+  /* border-style: solid; */
+  border-color: var(--border-color);
+}
+
+#buttonWrapperID {
+  margin: 10 auto;
+
+  padding: 8px;
+  width: 70vw;
   border-style: solid;
   border-color: var(--border-color);
 }
 
-.buttonWrapperClass {
+#sideBarWrapperID {
   margin: 10 auto;
 
   padding: 8px;
-  max-width: 70vw;
-  border-style: solid;
-  border-color: var(--border-color);
-}
-
-.sideBarWrapperClass {
-  margin: 10 auto;
-
-  padding: 8px;
-  max-width: 30vw;
+  width: 30vw;
 
   border-style: solid;
   border-color: var(--border-color);
