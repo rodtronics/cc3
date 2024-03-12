@@ -1,0 +1,55 @@
+:root {
+    --background-color: black;
+    --color-A: #9400d3;
+    --color-B: #f44174;
+    --color-C: #f9dc5c;
+    --color-D: #01baef;
+    --color-D: #017fa2;
+    --color-E: #171738;
+    --color-F: #09bc8a;
+    --color-G: #8fd694;
+    --color-H: #333333;
+    --hover-color: linear-gradient(0deg, rgba(251, 141, 63, 1) 0%, rgba(252, 70, 107, 1) 100%);
+    /* --running-color: linear-gradient(0deg, rgba(34, 118, 195, 1) 0%, rgba(119, 202, 255, 1) 100%); */
+    /* --running-color: rgba(34, 118, 195, 1); */
+    /* --running-color: radial-gradient(circle, rgba(49, 122, 255, 1) 0%, rgba(43, 110, 232, 1) 100%); */
+    --running-color: radial-gradient(circle, rgba(38, 132, 218, 1) 0%, rgba(34, 118, 195, 1) 100%);
+    --neighbourhood-color: radial-gradient(circle, rgba(0, 159, 255, 1) 0%, rgba(0, 147, 236, 1) 100%);
+    --complete-color: linear-gradient(0deg, rgba(195, 53, 34, 1) 0%, rgba(255, 119, 161, 1) 100%);
+    --complete-color: linear-gradient( 0deg, rgba(255, 199, 135, 0.8) 0%, rgba(180, 84, 0, 0.8) 30%, rgba(113, 56, 0, 0.8) 35%, rgba(255, 255, 255, 0.8) 36%, rgba(0, 155, 255, 0.8) 100%);
+    --border-color: white;
+    --link-color: white;
+    --stats-color: var(--color-D);
+    --inv-color: var(--color-B);
+}
+
+* {
+    font-family: "Source Code Pro", monospace;
+    /* font-family: "Courier Prime", monospace; */
+    /* font-family: "IBM Plex Mono", monospace; */
+    text-align: left;
+    background: var(--background-color);
+    font-weight: 400;
+    /* color: var(--color-A); */
+    line-height: 90%;
+    font-size: 16px;
+    /* color: #fff; */
+}
+
+.about_title {
+    /* color: black; */
+    color: var(--color-B);
+    /* color: white;  */
+    font-weight: 1000;
+    font-size: 22px;
+    /* background: linear-gradient(0deg, rgba(255, 0, 0, 1) 0%, rgba(249, 255, 0, 1) 100%); */
+}
+
+.about {
+    /* color: black; */
+    color: var(--color-D);
+    font-weight: 400;
+    font-size: 30px;
+    /* color: white; */
+    /* background: linear-gradient(0deg, rgba(255, 0, 0, 1) 0%, rgba(249, 255, 0, 1) 100%); */
+}
