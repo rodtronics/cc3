@@ -108,12 +108,11 @@ pre {
     flex-shrink: 0;
     justify-content: space-between;
     max-width: 90vw;
-    max-height: 20vh;
+    max-height: 25vh;
     border-style: solid;
     border-color: var(--border-color);
     align-content: flex-start;
     flex-flow: row;
-    max-height: 20vh;
     /* background: rgba(0, 0, 0, 0); */
     border-style: dotted;
     border-color: var(--color-D);
@@ -123,27 +122,17 @@ pre {
 
 #titleWrapperID:hover {
     /* background: var(--complete-color); */
-    /* background: var(--complete-color),radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(0,0,0,1) 100%); */
-    /* background-blend-mode:screen; */
+    /* background: var(--complete-color), radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(0, 0, 0, 1) 100%); */
+    /* background-blend-mode: screen; */
 }
 
 #titleID {
-    /* text-transform: lowercase; */
     padding-left: 2vw;
     display: flex;
     flex-flow: row;
     flex-wrap: wrap;
-    /* font-family: 'Courier Prime', monospace; */
-    /* font-size: 0.3vmax; */
-    font-size: 0.8vmin;
-    ;
-    line-height: normal;
-}
-
-#titleID:hover {
-    color: var(--color-C);
-    color: #09bc8a;
-    /* color: var(--color-C); */
+    font-size: 0.9vmin;
+    line-height: 0.9em;
 }
 
 #titleLinksID {
@@ -202,22 +191,24 @@ pre {
     display: flex;
     flex: 1;
     padding: 1vh;
-    margin: 0.2vh;
+    margin: 0.2vh 0.2vh 0 0.2vh;
     justify-content: right;
     font-style: italic;
     text-transform: uppercase;
     letter-spacing: -0.05em;
     background-color: var(--color-G);
     /* background-size: 5; */
-    border-radius: 1vw 1vh 0 0;
+    /* border-radius: 1vw 1vh 0 0;
     border-width: 0.4vh 0.4vh 0 0.4vh;
     border-style: solid;
     border-color: var(--color-D2);
-    border-color: var(--color-D2) var(--color-D4) black var(--color-D);
+    border-color: var(--color-D2) var(--color-D4) black var(--color-D); */
 }
 
 .tabs[data-tabState="active"] {
     background-color: var(--color-D);
+    /* background-color: var(--running-color); */
+    background-blend-mode: screen;
     color: white;
     /* border-color: var(--color-D2);
     border-color: var(--color-D2) var(--color-D4) black var(--color-D); */
@@ -234,9 +225,21 @@ pre {
     color: var(--color-C);
 }
 
-.crimeWidgets {
+.crimeGizmoWrapper {
     background-color: var(--color-G);
     height: 100%;
+    margin: 0 0.2vh 0.2vh 0.2vh;
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+}
+
+.gizmo {
+    background-color: #333333;
+    width: 15vh;
+    height: 15vh;
+    margin: 1vh;
 }
 
 #sideBarWrapperID {
