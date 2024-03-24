@@ -34,29 +34,16 @@ for (let index = 0; index < tabTotalNumber; index++) {
 // done
 
 
-
-// this part of the script cycles the logo colors when its clicked on
-// variables related to cycling the logo colors
-var logoColorIndex = 0;
-var logoColorLength = 6;
-var logoElement = document.getElementById("titleID");
-// a series of colors to cycle through
-var logoColorArray = ["#CA2C92", "#008080", "#FF7F11", "#50C878", "#EE4B2B", "#01baef", ];
-// set up event listener for clicking on logo
-logoElement.addEventListener("click", () => cycleLogoColor());
-// function that cycles logo colors;
-function cycleLogoColor() {
-    logoColorIndex++;
-    logoColorIndex = logoColorIndex % logoColorLength
-    logoElement.style.color = logoColorArray[logoColorIndex];
-}
-// done
-
-
-
 // this part of the script is to try and create a gizmo
 // this just appends one of these into the crimeGizmoWrapper
 var crimeGizmoWrapperElement = document.getElementById("crimeGizmoWrapper_ID");
+// once that's made I add an event listner across the entire gizmo div
+// that'll callback a function that returns an identifier of what was clicked
+crimeGizmoWrapperElement.addEventListener("click", (element) => whatGotClicked(element));
+
+function gizmoClicked(elementClicked) {
+    let elementClass = elementClicked.target.getAttribute("class");
+}
 
 function createGizmoTest(testWords) {
     let newGizmo = document.createElement("div");
@@ -67,3 +54,24 @@ function createGizmoTest(testWords) {
 for (let index = 0; index < 16; index++) {
     createGizmoTest("newrods " + index);
 }
+
+// this function clears the gizmos utterly
+// removes references and removes them from the DOM ready for GC
+// idk if this is best for stopping leaks
+// or is horribly inefficient. perhaps it'd be better to remove
+// the divs from the DOM but keep them around
+function clearAndDereferenceGizmos() {
+    //first step is creating an array of every element inside
+    // crimeGizmoWrapperElement
+    let gizmoChildElements = crimeGizmoWrapperElement.children;
+    for (let index = 0; index < gizmoChildElements.length; index++) {
+        gizmoChildElements[index];
+
+    }
+
+}
+
+
+
+
+clearAndDereferenceGizmos();

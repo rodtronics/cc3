@@ -127,7 +127,7 @@ pre {
 }
 
 #titleID {
-    padding-left: 2vw;
+    padding: 0 0 0 1vw;
     display: flex;
     flex-flow: row;
     flex-wrap: wrap;
