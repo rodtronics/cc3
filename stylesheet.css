@@ -12,6 +12,7 @@
     --color-F: #09bc8a;
     --color-G: #8fd694;
     --color-H: #333333;
+    --color-I:#df1b1b;
     --hover-color: linear-gradient(0deg, rgba(251, 141, 63, 1) 0%, rgba(252, 70, 107, 1) 100%);
     /* --running-color: linear-gradient(0deg, rgba(34, 118, 195, 1) 0%, rgba(119, 202, 255, 1) 100%); */
     /* --running-color: rgba(34, 118, 195, 1); */
@@ -106,7 +107,7 @@ pre {
     /* flex-direction: column; */
     flex-grow: 0;
     flex-shrink: 0;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     max-width: 90vw;
     max-height: 25vh;
     border-style: solid;
@@ -133,6 +134,12 @@ pre {
     flex-wrap: wrap;
     font-size: 0.9vmin;
     line-height: 0.9em;
+}
+
+#titleAndVersionID{
+    padding: 0.5vh;
+    line-height: 100%;
+    color: var(--color-F);;
 }
 
 #titleLinksID {
@@ -182,9 +189,8 @@ pre {
     flex: 1;
     flex-flow: row;
     justify-content: space-evenly;
-    height: 6vh;
-    max-height: 6vh;
-    min-height: 6vh;
+    max-height: 4vh;
+    min-height: 4vh;
 }
 
 .tabs {
@@ -192,6 +198,8 @@ pre {
     flex: 1;
     padding: 1vh;
     margin: 0.2vh 0.2vh 0 0.2vh;
+    font-size: 1.5vh;
+    font-weight: 800;
     justify-content: right;
     font-style: italic;
     text-transform: uppercase;
@@ -227,20 +235,73 @@ pre {
 
 .crimeGizmoWrapper {
     background-color: var(--color-G);
+    background-color: black;
     height: 100%;
     margin: 0 0.2vh 0.2vh 0.2vh;
     display: flex;
     flex-flow: row;
     flex-wrap: wrap;
     overflow-y: scroll;
+    font-size: 1.2vh;
 }
 
 .gizmoBase {
+    display: flex;
+    flex-flow: column;
     background-color: #333333;
     width: 15vh;
     height: 15vh;
-    margin: 1vh;
+    margin: 0.5vh;
+    letter-spacing: -0.05em;
+
 }
+
+.gizmoTitle{
+    background-color: var(--color-D4);
+    color: var(--color-D2);
+    padding: 0.5vh;
+    border-width: 0.1vh;
+    border-style: solid;
+    border-color: var(--color-I);
+    margin: 0.5vh;
+    line-height: 90%;
+    justify-items: right;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.gizmoSeverityWrapper{
+    padding: 0.2vh;
+    display: flex;
+justify-content: space-between;   
+ flex-flow: row;
+    border-width: 0.1vh 0 0.1vh 0;
+    border-width: 0.1vh;
+    border-style: solid;
+    border-color: var(--color-I);
+    background-color: black;
+}
+
+.gizmoSeverityWord{
+    font-size: 70%;
+    text-transform: uppercase;
+    padding: 0.05vh;
+    color: #9400d3;
+
+}
+
+.gizmoSeverity{
+    justify-items: right;
+    padding: 0.1vh;
+    color: var(--color-B);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0em;
+    word-spacing: -0.3em;
+
+}
+
+
 
 #sideBarWrapperID {
     margin: 10 auto;
