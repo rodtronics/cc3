@@ -1,6 +1,7 @@
 :root {
     --background-color: black;
     --color-A: #9400d3;
+    --color-A2: #520075;
     --color-B: #f44174;
     --color-B2: ##EF3601;
     --color-C: #f9dc5c;
@@ -25,12 +26,15 @@
     --link-color: white;
     --stats-color: var(--color-D);
     --inv-color: var(--color-B);
+    font-family: 'Workbench', sans-serif;
+    font-family: "VT323",monospace;
     font-family: "Source Code Pro", monospace;
+    
+
     background: var(--background-color);
     font-weight: 400;
     color: var(--color-B);
     line-height: 70%;
-    /* color: #fff; */
     user-select: none;
 }
 
@@ -47,50 +51,6 @@ pre {
     font-family: 'Share Tech Mono', monospace;
     font-family: 'Courier Prime', monospace;
 }
-
-
-/* * {
-  /* a lot of fonts here
-    Source Code Pro is preferred for the aesthetic
-    but others might come in handy for this and that
-    */
-
-
-/* font-family: 'Bungee Shade', cursive; */
-
-
-/* font-family: 'Courier Prime', monospace; */
-
-
-/* font-family: 'DynaPuff', cursive; */
-
-
-/* font-family: 'Press Start 2P', cursive; */
-
-
-/* font-family: 'Redacted Script', cursive; */
-
-
-/* font-family: 'Share Tech Mono', monospace; */
-
-
-/* font-family: "Source Code Pro", monospace; */
-
-
-/* text-align: left; */
-
-
-/* background: var(--background-color);
-  font-weight: 400;
-  color: var(--color-B);
-  line-height: 90%;
-  /* color: #fff; */
-
-
-/* user-select: none; */
-
-
-/* } */
 
 #everythingWrapperID {
     display: flex;
@@ -271,23 +231,34 @@ pre {
 }
 
 .gizmoSeverityWrapper{
-    padding: 0.2vh;
-    display: flex;
-justify-content: space-between;   
- flex-flow: row;
+    padding: 0;
+    justify-content: space-between;   
+    flex-flow: row;
     border-width: 0.1vh 0 0.1vh 0;
     border-width: 0.1vh;
     border-style: solid;
     border-color: var(--color-I);
     background-color: black;
+    position: relative;
+    height: 1.5em;
+}
+
+.gizmoSeverityWord,.gizmoSeverity{
+    position: absolute;
+    text-transform: uppercase;
 }
 
 .gizmoSeverityWord{
-    font-size: 70%;
-    text-transform: uppercase;
-    padding: 0.05vh;
-    color: #9400d3;
-
+    /* font-size: 70%; */
+    /* padding: 0.05vh; */
+    font-weight: 700;
+    font-size: 1em;
+    color: var(--color-A2);
+    z-index: 0;
+    font-family: 'Archivo Black', sans-serif;
+    left:0;
+    top:0.3vh;
+    /* overflow: hidden; */
 }
 
 .gizmoSeverity{
@@ -295,10 +266,10 @@ justify-content: space-between;
     padding: 0.1vh;
     color: var(--color-B);
     font-weight: 800;
-    text-transform: uppercase;
     letter-spacing: 0em;
     word-spacing: -0.3em;
-
+    right: 0.2vh;
+    top: 0.3vh;
 }
 
 
