@@ -235,7 +235,7 @@ pre {
     overflow-y: scroll;
 }
 
-.gizmo {
+.gizmoBase {
     background-color: #333333;
     width: 15vh;
     height: 15vh;

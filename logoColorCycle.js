@@ -1,4 +1,4 @@
-// this part of the script cycles the logo colors when its clicked on
+// this script cycles the logo colors when its clicked on
 // variables related to cycling the logo colors
 var logoColorIndex = 0;
 var logoColorLength = 6;
@@ -13,3 +13,4 @@ function cycleLogoColor() {
     logoColorIndex = logoColorIndex % logoColorLength
     logoElement.style.color = logoColorArray[logoColorIndex];
 }
+//

@@ -34,20 +34,33 @@ for (let index = 0; index < tabTotalNumber; index++) {
 // done
 
 
-// this part of the script is to try and create a gizmo
-// this just appends one of these into the crimeGizmoWrapper
+// define var
 var crimeGizmoWrapperElement = document.getElementById("crimeGizmoWrapper_ID");
 // once that's made I add an event listner across the entire gizmo div
 // that'll callback a function that returns an identifier of what was clicked
-crimeGizmoWrapperElement.addEventListener("click", (element) => whatGotClicked(element));
+crimeGizmoWrapperElement.addEventListener("click", (elementClicked) => gizmoClicked(elementClicked));
 
 function gizmoClicked(elementClicked) {
-    let elementClass = elementClicked.target.getAttribute("class");
+    // get info about clicked gizmo
+    let elementCSSClass = elementClicked.target.getAttribute("class");
+    let elementGizmoID = elementClicked.target.getAttribute("data-gizmoID");
+
+    // switch to determine where to go from there
+    switch (elementCSSClass) {
+        case "gizmoBase":
+            console.log("gizmo class")
+            break;
+
+        default:
+            console.log("other")
+            break;
+    };
 }
 
 function createGizmoTest(testWords) {
     let newGizmo = document.createElement("div");
-    newGizmo.classList.add("gizmo");
+    newGizmo.classList.add("gizmoBase");
+    newGizmo.setAttribute("data-gizmoID", testWords);
     newGizmo.innerHTML = testWords;
     crimeGizmoWrapperElement.appendChild(newGizmo);
 }
@@ -64,10 +77,7 @@ function clearAndDereferenceGizmos() {
     //first step is creating an array of every element inside
     // crimeGizmoWrapperElement
     let gizmoChildElements = crimeGizmoWrapperElement.children;
-    for (let index = 0; index < gizmoChildElements.length; index++) {
-        gizmoChildElements[index];
-
-    }
+    console.log(gizmoChildElements.length);
 
 }
 
