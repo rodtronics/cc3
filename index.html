@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>crime committer</title>
@@ -14,27 +13,31 @@
     <!-- import a lot of fonts lol -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Courier+Prime:ital@0;1&family=DynaPuff:wght@500&family=Press+Start+2P&family=Redacted+Script&family=Share+Tech+Mono&family=Source+Code+Pro&family=Archivo+Black&family=VT323&family=Workbench&display=swap"
-        rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Courier+Prime:ital@0;1&family=DynaPuff:wght@500&family=Press+Start+2P&family=Redacted+Script&family=Share+Tech+Mono&family=Source+Code+Pro&family=Archivo+Black&family=VT323&family=Workbench&display=swap"
+      rel="stylesheet"
+    />
 
-        <script src="scripts/js.cookie.js"></script>
+    <script src="scripts/js.cookie.js"></script>
     <script src="scripts/dayjs.js"></script>
     <script src="scripts/relativeTime.js"></script>
     <script src="scripts/Duration.js"></script>
+    <script src="scripts/color-math.js"></script>
+    <script src="scripts/colorstyle.js"></script>
     <script>
-        dayjs.extend(dayjs_plugin_relativeTime);
+      dayjs.extend(dayjs_plugin_relativeTime);
     </script>
     <script>
-        dayjs.extend(dayjs_plugin_duration);
+      dayjs.extend(dayjs_plugin_duration);
     </script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="everythingContainerID">
-        <div id="titleContainerID">
-            <div id="titleID">
-                <div>
-                    <pre>
+      <div id="titleContainerID">
+        <div id="titleID">
+          <div>
+            <pre>
                /$$                      
               |__/
   /$$$$$$$ /$$$$$$ /$$/$$$$$$/$$$$  /$$$$$$ 
@@ -48,34 +51,30 @@
 | $$     | $$  \ $| $$ \ $$ \ $| $$ \ $$ \ $| $$ | $$   | $$   | $$$$$$$| $$  \__/
 | $$     | $$  | $| $$ | $$ | $| $$ | $$ | $| $$ | $$ /$| $$ /$| $$_____| $$
 |  $$$$$$|  $$$$$$| $$ | $$ | $| $$ | $$ | $| $$ |  $$$$|  $$$$|  $$$$$$| $$
- \_______/\______/|__/ |__/ |__|__/ |__/ |__|__/  \___/  \___/  \_______|__/</pre>
-                </div>
-            </div>
-            <div id="titleAndVersionID">
-                if you can read this..<br /> something fucked up
-            </div>
-            <div id="titleLinksID">
-                <a href="https://crimecommitter.com/about.html" target="_blank" rel="noopener noreferrer">about</a>
-            </div>
+ \_______/\______/|__/ |__/ |__|__/ |__/ |__|__/  \___/  \___/  \_______|__/</pre
+            >
+          </div>
         </div>
-        <div id="gameContainerID">
-
-            <div id="tabContainerID">
-                <div class="tabs" data-tabState="active" id="tabA_ID">crimes</div>
-                <div class="tabs" data-tabState="inactive" id="tabB_ID">facilities</div>
-                <div class="tabs" data-tabState="inactive" id="tabC_ID">research</div>
-                <div class="tabs" data-tabState="inactive" id="tabD_ID">info</div>
-
-            </div>
-            <div class="gizmoContainer" id="gizmoContainer_ID"></div>
-
-
-
+        <div id="titleAndVersionID">
+          if you can read this..<br />
+          something fucked up
         </div>
+        <div id="titleLinksID">
+          <a href="https://crimecommitter.com/about.html" target="_blank" rel="noopener noreferrer">about</a>
+        </div>
+      </div>
+      <div id="gameContainerID">
+        <div id="tabContainerID">
+          <div class="tabs" data-tabState="active" id="tabA_ID">crimes</div>
+          <div class="tabs" data-tabState="inactive" id="tabB_ID">facilities</div>
+          <div class="tabs" data-tabState="inactive" id="tabC_ID">research</div>
+          <div class="tabs" data-tabState="inactive" id="tabD_ID">info</div>
+        </div>
+        <div class="gizmoContainer" id="gizmoContainer_ID"></div>
+      </div>
     </div>
-</body>
+  </body>
 
-<script src="scripts/logoColorCycle.js"></script>
-<script src="main.js"></script>
-
+  <script src="scripts/logoColorCycle.js"></script>
+  <script src="main.js"></script>
 </html>
