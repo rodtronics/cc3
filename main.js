@@ -54,15 +54,15 @@ class crimeObjectClass {
     this.category = null;
     this.timeCrimeStarted = 0;
     this.timeCrimeWillEnd = 0;
-    this.state = 0; // 0 means not running (or not yet started) & 1 is running
+    this.state = 2; // 0 means paused & 1 is running. 3 means not ever started
     this.auto = 1;
     this.progress = 0.0;
     this.baseTimeToCompleteMS = 10000;
-    this.futureCompletionTime = 0;
     this.progressElement = null;
     this.recruitmentAddElement = null;
     this.recruitmentSubElement = null;
     this.numCrimElement = null;
+    this.timesDone = 0;
   }
 }
 
@@ -240,14 +240,20 @@ function recruitClicked(index, polarity) {
       if (parseInt(criminals) > 0) {
         crimeArray[index].numOfCriminals--;
       }
+      if (crimeArray[index].numOfCriminals == 0) {
+        crimeArray[index].state = 0;
+      }
       break;
 
     case "add":
+      if (crimeArray[index].state == 2) {
+      }
       crimeArray[index].numOfCriminals++;
+      crimeArray[index].state = 1;
   }
   recruitmentSetButtonsActivity(index, polarity);
-
   updateCriminalNumbers(index);
+  setCrimeCompletionTime(index);
 }
 
 function recruitmentSetButtonsActivity(index, polarity) {
@@ -268,58 +274,81 @@ function updateCrimeProgress() {
     let currentElement = crimeArray[index].progressElement;
     let currentCrimeID = getNumberFromCrimeID(currentElement.getAttribute("data-ProgressID"));
     let currentCrime = crimeArray[currentCrimeID];
-    // get state and progress
-    let currentState = currentCrime.state;
     let currentProgress = currentCrime.progress;
     let newProgressText = "";
+    let currentState = currentCrime.state;
     // update html text
-    switch (currentCrime.state) {
-      case 0:
-        newProgressText = "∞";
+    // console.log(currentState);
+    switch (currentState) {
+      case 0: // paused
+        newProgressText = "remaining: ∞";
         break;
-      case 1:
-        newProgressText = "??";
+      case 1: // running
+        newProgressText = "remaining " + getCrimeTimeLeft(index);
+        break;
+      case 2: // never done
+        newProgressText = "never done";
         break;
       default:
         newProgressText = "??";
         break;
     }
-    let newHTML = "remaining: " + newProgressText;
+    let newHTML = newProgressText;
     currentElement.innerHTML = newHTML;
   }
 }
-updateCrimeProgress();
+// updateCrimeProgress();
 
 function getCurrentTime() {
   let currentTime = dayjs();
 }
+
+function updateProgressNumber(index) {}
 
 // this calculates time from now until crime complete
 // based on how many people working on it
 // and progress
 function calcTimeToComplete(index) {
   let currentCrime = crimeArray[index];
-
   let currentProgress = currentCrime.progress;
-  if (currentProgress == 0) {
+  if (currentCrime.numOfCriminals == 0) {
     return null;
   }
-  let msLeft = (currentProgress * currentCrime.baseTimeToCompleteMS) / currentCrime.numOfCriminals;
-  console.log(currentProgress);
+  let msLeft = ((1 - currentProgress) * currentCrime.baseTimeToCompleteMS) / currentCrime.numOfCriminals;
   return msLeft;
 }
 
-function setCrimeCompletionTime(index, msLeft) {
+function setCrimeCompletionTime(index) {
+  let msLeft = calcTimeToComplete(index);
   let currentCrime = crimeArray[index];
   let newCompletionTime = dayjs().add(dayjs(msLeft, "millisecond"));
-  currentCrime.futureCompletionTime = newCompletionTime;
-  console.log(msLeft);
+
+  currentCrime.timeCrimeWillEnd = newCompletionTime;
+  // console.log(dayjs());
+  // console.log(crimeArray[index].timeCrimeWillEnd);
+  return newCompletionTime;
 }
 
-let timeToComplete = calcTimeToComplete(0);
-if (timeToComplete != null) {
-  setCrimeCompletionTime(0, timeToComplete);
+function getCrimeTimeLeft(index) {
+  let currentCrime = crimeArray[index];
+
+  let timeLeft = dayjs(currentCrime.timeCrimeWillEnd).diff(dayjs());
+  if (timeLeft < 0) {
+    crimeCompleted(index);
+  }
+  console.log(timeLeft);
+  return dayjs(timeLeft).format("mm:ss");
 }
+
+function crimeCompleted(index) {
+  crimeArray[index].timesDone++;
+}
+
+// let timeToComplete = calcTimeToComplete(0);
+
+// if (timeToComplete != null) {
+//   setCrimeCompletionTime(0, timeToComplete);
+// }
 // setCrimeCompletionTime(0, calcTimeToComplete(0));
 
 function updateMainCrimeNumbers() {
@@ -334,10 +363,19 @@ function updateCriminalNumbers(index) {
   }
 }
 
-updateMainCrimeNumbers();
-updateCriminalNumbers();
-
 let colorStyle = 3;
 setColorStyle(colorStyle);
 
+updateMainCrimeNumbers();
+updateCriminalNumbers();
 updateCrimeProgress();
+
+//mainloop
+function gameLoop() {
+  updateMainCrimeNumbers();
+  updateCriminalNumbers();
+  updateCrimeProgress();
+  // window.requestAnimationFrame(gameLoop);
+}
+
+setInterval(gameLoop, 250);
