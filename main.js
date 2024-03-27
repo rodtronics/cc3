@@ -54,7 +54,15 @@ class crimeObjectClass {
     this.category = null;
     this.timeCrimeStarted = 0;
     this.timeCrimeWillEnd = 0;
-    this.state = 0;
+    this.state = 0; // 0 means not running (or not yet started) & 1 is running
+    this.auto = 1;
+    this.progress = 0.0;
+    this.baseTimeToCompleteMS = 10000;
+    this.futureCompletionTime = 0;
+    this.progressElement = null;
+    this.recruitmentAddElement = null;
+    this.recruitmentSubElement = null;
+    this.numCrimElement = null;
   }
 }
 
@@ -70,9 +78,6 @@ for (let index = 0; index < crimesConst.length; index++) {
 
 // make it so low severty crimes auto visible
 for (let index = 0; index < crimesConst.length; index++) {
-  if (crimesConst[index].severity == "Very Low") {
-    crimeArray[index].visible = true;
-  }
   crimeArray[index].visible = true;
 }
 
@@ -113,26 +118,6 @@ let gizmoContainerElement = document.getElementById("gizmoContainer_ID");
 gizmoContainerElement.addEventListener("click", (elementClicked) => gizmoClicked(elementClicked));
 
 // the function called when there is a click anywhere in gizmozone
-function gizmoClicked(elementClickedPointerEvent) {
-  // find out the crimeID of the gizmo
-  let crimeIDofClickedGizmo = getCrimeIDofGizmo(elementClickedPointerEvent);
-  // do nothing if cant find an id
-  if (crimeIDofClickedGizmo == null) {
-    return;
-  }
-
-  // switch on class of clicked element
-  let gizmoClass = elementClickedPointerEvent.target.getAttribute("class");
-  switch (gizmoClass) {
-    case "gizmoProgress":
-      progressClicked(crimeIDofClickedGizmo);
-      break;
-    default:
-      break;
-  }
-}
-
-function progressClicked(crimeID) {}
 
 // this function walks up element chain until it
 // works out what the ID of the gizmo is
@@ -141,6 +126,7 @@ function getCrimeIDofGizmo(elementClickedPointerEvent) {
   // this function takes a pointer event
   // first thing is get the target of the event and
   // then just work on targets and their parents
+  // console.log(elementClickedPointerEvent);
   let tempElementTarget = elementClickedPointerEvent.target;
 
   do {
@@ -175,27 +161,41 @@ function addNewGizmoToContainer(index) {
   newGizmoTitle.innerHTML = crimesConst[crimeIndex].crime;
   newGizmo.appendChild(newGizmoTitle);
 
-  // create container for severity
-  let newGizmoSeverityContainer = document.createElement("div");
-  newGizmoSeverityContainer.classList.add("gizmoSeverityContainer");
-  newGizmo.appendChild(newGizmoSeverityContainer);
-  // word severity in the container
-  let newGizmoSeverityWord = document.createElement("div");
-  newGizmoSeverityWord.classList.add("gizmoSeverityWord");
-  newGizmoSeverityWord.innerHTML = "severity";
-  newGizmoSeverityContainer.appendChild(newGizmoSeverityWord);
-  // value of severity in container
-  let newGizmoSeverity = document.createElement("div");
-  newGizmoSeverity.classList.add("gizmoSeverity");
-  newGizmoSeverity.innerHTML = crimesConst[crimeIndex].severity;
-  newGizmoSeverityContainer.appendChild(newGizmoSeverity);
-
   // progress bar - also info about click to committ etc
   let newGizmoCrimeProgress = document.createElement("div");
   newGizmoCrimeProgress.setAttribute("data-progressID", crimeIndexID);
   newGizmoCrimeProgress.classList.add("gizmoProgress");
-  newGizmoCrimeProgress.innerHTML = "commit crime";
+  newGizmoCrimeProgress.innerHTML = "not committing";
   newGizmo.appendChild(newGizmoCrimeProgress);
+  crimeArray[index].progressElement = newGizmoCrimeProgress;
+
+  //container for recruitment buttons
+  let newGizmoRecruitContainer = document.createElement("div");
+  newGizmoRecruitContainer.classList.add("gizmoRecruitContainer");
+  newGizmo.appendChild(newGizmoRecruitContainer);
+
+  // the subtract button
+  let newGizmoRecruitSub = document.createElement("div");
+  newGizmoRecruitSub.classList.add("gizmoRecruitButton");
+  newGizmoRecruitSub.innerHTML = "-";
+  newGizmoRecruitSub.setAttribute("data-buttonState", "inactive");
+  newGizmoRecruitSub.setAttribute("data-polarity", "sub");
+  newGizmoRecruitContainer.appendChild(newGizmoRecruitSub);
+  crimeArray[index].recruitmentSubElement = newGizmoRecruitSub;
+
+  // the add button
+  let newGizmoRecruitAdd = document.createElement("div");
+  newGizmoRecruitAdd.classList.add("gizmoRecruitButton");
+  newGizmoRecruitAdd.innerHTML = "+";
+  newGizmoRecruitAdd.setAttribute("data-buttonState", "active");
+  newGizmoRecruitAdd.setAttribute("data-polarity", "add");
+  newGizmoRecruitContainer.appendChild(newGizmoRecruitAdd);
+  crimeArray[index].recruitmentAddElement = newGizmoRecruitAdd;
+
+  // crimepeople
+  let newGizmoActiveCriminals = document.createElement("div");
+  newGizmo.appendChild(newGizmoActiveCriminals);
+  crimeArray[index].numCrimElement = newGizmoActiveCriminals;
 }
 // create some gizmos
 for (let index = 0; index < crimesConst.length; index++) {
@@ -203,10 +203,124 @@ for (let index = 0; index < crimesConst.length; index++) {
     addNewGizmoToContainer(index);
   }
 }
+// an array holding the elements
+
+//
+//
+//
+
+function gizmoClicked(elementClickedPointerEvent) {
+  // find out the crimeID of the gizmo
+  let crimeIDofClickedGizmo = getNumberFromCrimeID(getCrimeIDofGizmo(elementClickedPointerEvent));
+  let polarity = elementClickedPointerEvent.target.getAttribute("data-polarity");
+  let target = elementClickedPointerEvent.target;
+  // console.log(elementClickedPointerEvent.target);
+  // do nothing if cant find an id
+  if (crimeIDofClickedGizmo == null) {
+    return;
+  }
+
+  // switch on class of clicked element
+  let gizmoClass = elementClickedPointerEvent.target.getAttribute("class");
+  switch (gizmoClass) {
+    case "gizmoRecruitButton":
+      recruitClicked(crimeIDofClickedGizmo, polarity);
+      break;
+    default:
+      break;
+  }
+}
+
+function recruitClicked(index, polarity) {
+  // console.log(index, polarity);
+  let criminals = crimeArray[index].numOfCriminals;
+
+  switch (polarity) {
+    case "sub":
+      if (parseInt(criminals) > 0) {
+        crimeArray[index].numOfCriminals--;
+      }
+      break;
+
+    case "add":
+      crimeArray[index].numOfCriminals++;
+  }
+  recruitmentSetButtonsActivity(index, polarity);
+
+  updateCriminalNumbers(index);
+}
+
+function recruitmentSetButtonsActivity(index, polarity) {
+  let criminals = crimeArray[index].numOfCriminals;
+  // get the elements to change
+
+  // if can remove a criminal then its active but if not then nto
+  if (criminals < 1) {
+    crimeArray[index].recruitmentSubElement.setAttribute("data-buttonState", "inactive");
+  } else {
+    crimeArray[index].recruitmentSubElement.setAttribute("data-buttonState", "active");
+  }
+}
+
+function updateCrimeProgress() {
+  for (let index = 0; index < crimeArray.length; index++) {
+    // get the crimeID so can apply data
+    let currentElement = crimeArray[index].progressElement;
+    let currentCrimeID = getNumberFromCrimeID(currentElement.getAttribute("data-ProgressID"));
+    let currentCrime = crimeArray[currentCrimeID];
+    // get state and progress
+    let currentState = currentCrime.state;
+    let currentProgress = currentCrime.progress;
+    let newProgressText = "";
+    // update html text
+    switch (currentCrime.state) {
+      case 0:
+        newProgressText = "∞";
+        break;
+      case 1:
+        newProgressText = "??";
+        break;
+      default:
+        newProgressText = "??";
+        break;
+    }
+    let newHTML = "remaining: " + newProgressText;
+    currentElement.innerHTML = newHTML;
+  }
+}
+updateCrimeProgress();
 
 function getCurrentTime() {
   let currentTime = dayjs();
 }
+
+// this calculates time from now until crime complete
+// based on how many people working on it
+// and progress
+function calcTimeToComplete(index) {
+  let currentCrime = crimeArray[index];
+
+  let currentProgress = currentCrime.progress;
+  if (currentProgress == 0) {
+    return null;
+  }
+  let msLeft = (currentProgress * currentCrime.baseTimeToCompleteMS) / currentCrime.numOfCriminals;
+  console.log(currentProgress);
+  return msLeft;
+}
+
+function setCrimeCompletionTime(index, msLeft) {
+  let currentCrime = crimeArray[index];
+  let newCompletionTime = dayjs().add(dayjs(msLeft, "millisecond"));
+  currentCrime.futureCompletionTime = newCompletionTime;
+  console.log(msLeft);
+}
+
+let timeToComplete = calcTimeToComplete(0);
+if (timeToComplete != null) {
+  setCrimeCompletionTime(0, timeToComplete);
+}
+// setCrimeCompletionTime(0, calcTimeToComplete(0));
 
 function updateMainCrimeNumbers() {
   let newHTML =
@@ -214,7 +328,16 @@ function updateMainCrimeNumbers() {
   document.getElementById("titleAndVersionID").innerHTML = newHTML;
 }
 
+function updateCriminalNumbers(index) {
+  for (let index = 0; index < crimeArray.length; index++) {
+    crimeArray[index].numCrimElement.innerHTML = crimeArray[index].numOfCriminals + " crims working";
+  }
+}
+
 updateMainCrimeNumbers();
+updateCriminalNumbers();
 
 let colorStyle = 3;
 setColorStyle(colorStyle);
+
+updateCrimeProgress();

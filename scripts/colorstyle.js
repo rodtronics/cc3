@@ -20,8 +20,8 @@ function setColorStyle(version) {
     let activeTabName = "--tab" + (index + 1) + "-Active";
     let inactiveTabName = "--tab" + (index + 1) + "-Inactive";
 
-    console.log(activeColor);
-    console.log(inactiveColor);
+    // console.log(activeColor);
+    // console.log(inactiveColor);
     root.style.setProperty(activeTabName, activeColor);
     root.style.setProperty(inactiveTabName, inactiveColor);
   }

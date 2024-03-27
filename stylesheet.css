@@ -10,6 +10,8 @@
   --color-D3: #045a72;
   --color-D4: #043947;
   --color-E: #171738;
+  --color-E2: #472e6d;
+
   --color-F: #09bc8a;
   --color-G: #8fd694;
   --color-H: #333333;
@@ -228,63 +230,22 @@ pre {
   height: 15vh;
   margin: 0.5vh;
   letter-spacing: -0.05em;
+  border-style: solid;
+  border-width: 0.5vh;
 }
 
 .gizmoTitle {
   background-color: var(--color-D4);
-  color: var(--color-D2);
+  color: var(--color-D);
   padding: 0.5vh;
-  border-width: 0.1vh;
+  /* border-width: 0.1vh;
   border-style: solid;
-  border-color: var(--color-I);
-  margin: 0.5vh;
+  border-color: var(--color-I); */
+  /* margin: 0.5vh; */
   line-height: 90%;
   justify-items: right;
   text-align: center;
   text-transform: uppercase;
-}
-
-.gizmoSeverityContainer {
-  padding: 0;
-  justify-content: space-between;
-  flex-flow: row;
-  border-width: 0.1vh 0 0.1vh 0;
-  border-width: 0.1vh;
-  border-style: solid;
-  border-color: var(--color-I);
-  background-color: black;
-  position: relative;
-  height: 1.5em;
-}
-
-.gizmoSeverityWord,
-.gizmoSeverity {
-  position: absolute;
-  text-transform: uppercase;
-}
-
-.gizmoSeverityWord {
-  /* font-size: 70%; */
-  /* padding: 0.05vh; */
-  font-weight: 700;
-  font-size: 1em;
-  color: var(--color-A2);
-  z-index: 0;
-  font-family: "Archivo Black", sans-serif;
-  left: 0;
-  top: 0.3vh;
-  /* overflow: hidden; */
-}
-
-.gizmoSeverity {
-  justify-items: right;
-  padding: 0.1vh;
-  color: var(--color-B);
-  font-weight: 800;
-  letter-spacing: 0em;
-  word-spacing: -0.3em;
-  right: 0.2vh;
-  top: 0.3vh;
 }
 
 .gizmoProgress {
@@ -292,6 +253,30 @@ pre {
   margin: 0.5vh 0 0 0;
   padding: 0.5vh;
   color: white;
+}
+
+.gizmoRecruitContainer {
+  display: flex;
+  flex-direction: row;
+}
+.gizmoRecruitButton {
+  padding: 0.3em;
+  font-size: 2em;
+  background-color: var(--color-E);
+  flex: 1;
+  text-align: center;
+}
+
+.gizmoRecruitButton[data-buttonState="active"] {
+  color: var(--color-D);
+}
+.gizmoRecruitButton[data-buttonState="inactive"] {
+  color: var(--color-D3);
+}
+
+.gizmoRecruitButton[data-buttonState="active"]:hover {
+  background-color: var(--color-E2);
+  color: var(--color-B);
 }
 
 /* width */
