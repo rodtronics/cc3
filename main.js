@@ -2,9 +2,13 @@
 
 // this is the code for the all new crime committer
 
+// init some variables needed before functions
 const ccVersion = 3.1;
 const ccCodeName = "deep alpha";
+let totalCrimesCommitted = 0;
+let money = 0;
 
+// crime data
 const crimesConst = [
   { crime: "Trespassing", severity: "Very Low", earnings: "Low", notoriousness: "Low", timeToCommit: "Minutes" },
   { crime: "Vandalism", severity: "Very Low", earnings: "Low", notoriousness: "Low", timeToCommit: "Minutes" },
@@ -37,17 +41,13 @@ const crimesConst = [
   { crime: "Bribery", severity: "Moderate", earnings: "High", notoriousness: "High", timeToCommit: "Days" },
   { crime: "Blackmail", severity: "Moderate", earnings: "High", notoriousness: "High", timeToCommit: "Hours" },
 ];
-
-let totalCrimesCommitted = 0;
-let money = 0;
-
 // define the class
 // none of this should duplicate what is in the crimes const
 class crimeObjectClass {
   constructor(index) {
     this.crimeIndex = index;
     this.crimeIndexID = "crimeIndexID_" + this.crimeIndex;
-    this.visible = false;
+    this.visible = true;
     this.running = false;
     this.numOfCriminals = 0;
     this.multiplier = 0; // this is ADDED onto 1
@@ -55,6 +55,7 @@ class crimeObjectClass {
     this.timeCrimeStarted = 0;
     this.timeCrimeWillEnd = 0;
     this.state = 2; // 0 means paused & 1 is running. 3 means not ever started
+    // 4 means now in crimes per second mode
     this.auto = 1;
     this.progress = 0.0;
     this.baseTimeToCompleteMS = 10000;
@@ -62,10 +63,11 @@ class crimeObjectClass {
     this.recruitmentAddElement = null;
     this.recruitmentSubElement = null;
     this.numCrimElement = null;
+    this.timesDoneElement = null;
     this.timesDone = 0;
+    this.cpsRate = 0.0;
   }
 }
-
 // generate array of crimes
 // this holds some static info
 // and dynamic info about the crime
@@ -76,25 +78,12 @@ for (let index = 0; index < crimesConst.length; index++) {
   crimeArray[index] = new crimeObjectClass(index);
 }
 
-// make it so low severty crimes auto visible
-for (let index = 0; index < crimesConst.length; index++) {
-  crimeArray[index].visible = true;
-}
-
+// extracts the integer number from the ID word
 function getNumberFromCrimeID(crimeID) {
   return parseInt(crimeID.slice(13));
 }
 
-// this part of the script manages the changing of tabs when clicked upon
-// load the references to the tabs into this array
-var tabElement = [];
-tabElement[0] = document.getElementById("tabA_ID");
-tabElement[1] = document.getElementById("tabB_ID");
-tabElement[2] = document.getElementById("tabC_ID");
-tabElement[3] = document.getElementById("tabD_ID");
-
-var tabTotalNumber = tabElement.length;
-
+//called upon to switch tabs (display of tabs only)
 function setActiveTab(tabNumber) {
   // clear all tabs to inactive
   for (let index = 0; index < tabTotalNumber; index++) {
@@ -105,13 +94,6 @@ function setActiveTab(tabNumber) {
   // now switch background colour to reflect active tab
   document.getElementById("gizmoContainer_ID").setAttribute("data-backgroundColor", tabNumber);
 }
-
-setActiveTab(0);
-// set up event listeners for tabs
-for (let index = 0; index < tabTotalNumber; index++) {
-  tabElement[index].addEventListener("click", () => setActiveTab(index));
-}
-// done
 
 // make one event listener across whole gizmo Container
 let gizmoContainerElement = document.getElementById("gizmoContainer_ID");
@@ -143,6 +125,7 @@ function getCrimeIDofGizmo(elementClickedPointerEvent) {
   return null;
 }
 
+// make a crime gizmo
 function addNewGizmoToContainer(index) {
   let crimeIndex = index;
   let crimeIndexID = "crimeIndexID_" + crimeIndex;
@@ -196,6 +179,10 @@ function addNewGizmoToContainer(index) {
   let newGizmoActiveCriminals = document.createElement("div");
   newGizmo.appendChild(newGizmoActiveCriminals);
   crimeArray[index].numCrimElement = newGizmoActiveCriminals;
+
+  let newGizmoTimesDone = document.createElement("div");
+  newGizmo.appendChild(newGizmoTimesDone);
+  crimeArray[index].timesDoneElement = newGizmoTimesDone;
 }
 // create some gizmos
 for (let index = 0; index < crimesConst.length; index++) {
@@ -203,12 +190,9 @@ for (let index = 0; index < crimesConst.length; index++) {
     addNewGizmoToContainer(index);
   }
 }
-// an array holding the elements
 
-//
-//
-//
-
+// what to do if a gizmo clicked
+// incl switching thru what element class clicked
 function gizmoClicked(elementClickedPointerEvent) {
   // find out the crimeID of the gizmo
   let crimeIDofClickedGizmo = getNumberFromCrimeID(getCrimeIDofGizmo(elementClickedPointerEvent));
@@ -231,6 +215,7 @@ function gizmoClicked(elementClickedPointerEvent) {
   }
 }
 
+// when + or - buttons pressed
 function recruitClicked(index, polarity) {
   // console.log(index, polarity);
   let criminals = crimeArray[index].numOfCriminals;
@@ -247,6 +232,7 @@ function recruitClicked(index, polarity) {
 
     case "add":
       if (crimeArray[index].state == 2) {
+        initCrime(index);
       }
       crimeArray[index].numOfCriminals++;
       crimeArray[index].state = 1;
@@ -256,6 +242,7 @@ function recruitClicked(index, polarity) {
   setCrimeCompletionTime(index);
 }
 
+// changes the display of + and - buttons
 function recruitmentSetButtonsActivity(index, polarity) {
   let criminals = crimeArray[index].numOfCriminals;
   // get the elements to change
@@ -268,7 +255,7 @@ function recruitmentSetButtonsActivity(index, polarity) {
   }
 }
 
-function updateCrimeProgress() {
+function updateCrimeProgressDiv() {
   for (let index = 0; index < crimeArray.length; index++) {
     // get the crimeID so can apply data
     let currentElement = crimeArray[index].progressElement;
@@ -289,6 +276,9 @@ function updateCrimeProgress() {
       case 2: // never done
         newProgressText = "never done";
         break;
+      case 3:
+        newProgressText = "CPS " + currentCrime.cpsRate.toFixed(3);
+        break;
       default:
         newProgressText = "??";
         break;
@@ -297,13 +287,30 @@ function updateCrimeProgress() {
     currentElement.innerHTML = newHTML;
   }
 }
-// updateCrimeProgress();
 
-function getCurrentTime() {
-  let currentTime = dayjs();
+function updateCrimeProgressValue(index) {
+  for (let index = 0; index < crimeArray.length; index++) {
+    let currentCrime = crimeArray[index];
+    if (currentCrime.state == 1) {
+      let initTime = currentCrime.timeCrimeStarted;
+      let finishTime = currentCrime.timeCrimeWillEnd;
+      let durationStartToFinish = dayjs(finishTime).diff(dayjs(initTime));
+      let durationNowToFinish = dayjs(finishTime).diff(dayjs());
+      let newProgress = 1 - durationNowToFinish / durationStartToFinish;
+      currentCrime.progress = newProgress;
+      if (index == 2) {
+        // console.log(newProgress);
+        // console.log(dayjs(durationStartToFinish).format("DD/MM/YY HH:mm:ss"));
+      }
+    }
+  }
 }
 
-function updateProgressNumber(index) {}
+function initCrime(index) {
+  let currentCrime = crimeArray[index];
+  currentCrime.timeCrimeStarted = dayjs();
+  setCrimeCompletionTime(index);
+}
 
 // this calculates time from now until crime complete
 // based on how many people working on it
@@ -315,6 +322,15 @@ function calcTimeToComplete(index) {
     return null;
   }
   let msLeft = ((1 - currentProgress) * currentCrime.baseTimeToCompleteMS) / currentCrime.numOfCriminals;
+  if (msLeft < 250) {
+    msLeft = 250;
+  }
+  if (currentCrime.baseTimeToCompleteMS / currentCrime.numOfCriminals < 1000) {
+    currentCrime.state = 3;
+  } else {
+    currentCrime.state = 1;
+  }
+
   return msLeft;
 }
 
@@ -335,32 +351,67 @@ function getCrimeTimeLeft(index) {
   let timeLeft = dayjs(currentCrime.timeCrimeWillEnd).diff(dayjs());
   if (timeLeft < 0) {
     crimeCompleted(index);
+    return "restarting";
   }
-  console.log(timeLeft);
+  // console.log(timeLeft);
   return dayjs(timeLeft).format("mm:ss");
 }
 
 function crimeCompleted(index) {
   crimeArray[index].timesDone++;
+  updateTimesDone(index);
+  totalCrimesCommitted++;
+  updateMainCrimeNumbers();
+  // console.log("crime committed " + crimeArray[index].timesDone);
+  initCrime(index);
 }
 
-// let timeToComplete = calcTimeToComplete(0);
-
-// if (timeToComplete != null) {
-//   setCrimeCompletionTime(0, timeToComplete);
-// }
-// setCrimeCompletionTime(0, calcTimeToComplete(0));
+function updateTimesDone(index) {
+  crimeArray[index].timesDoneElement.innerHTML = "<bs>times done: " + crimeArray[index].timesDone.toFixed(0);
+}
 
 function updateMainCrimeNumbers() {
   let newHTML =
-    "crime committer " + ccVersion + "<br>" + ccCodeName + "<br><br><br>you got $" + money + "<br><br>" + "total crimes committed:<br>" + totalCrimesCommitted;
+    "crime committer " +
+    ccVersion +
+    "<br>" +
+    ccCodeName +
+    "<br><br><br>you got $" +
+    money +
+    "<br><br>" +
+    "total crimes committed:<br>" +
+    totalCrimesCommitted.toFixed(0);
   document.getElementById("titleAndVersionID").innerHTML = newHTML;
 }
 
 function updateCriminalNumbers(index) {
   for (let index = 0; index < crimeArray.length; index++) {
-    crimeArray[index].numCrimElement.innerHTML = crimeArray[index].numOfCriminals + " crims working";
+    crimeArray[index].numCrimElement.innerHTML = "<br>" + crimeArray[index].numOfCriminals + " crims working";
   }
+}
+
+function cpsMode(index) {
+  let currentCrime = crimeArray[index];
+  let cpsRate = 1000 / (currentCrime.baseTimeToCompleteMS / currentCrime.numOfCriminals);
+  currentCrime.cpsRate = cpsRate;
+  currentCrime.timesDone = currentCrime.timesDone + cpsRate / 4;
+  totalCrimesCommitted = totalCrimesCommitted + cpsRate / 4;
+  updateTimesDone(index);
+}
+
+// initialisations before main loop
+let tabElement = [];
+tabElement[0] = document.getElementById("tabA_ID");
+tabElement[1] = document.getElementById("tabB_ID");
+tabElement[2] = document.getElementById("tabC_ID");
+tabElement[3] = document.getElementById("tabD_ID");
+let tabTotalNumber = tabElement.length;
+
+setActiveTab(0);
+
+// set up event listeners for tabs
+for (let index = 0; index < tabTotalNumber; index++) {
+  tabElement[index].addEventListener("click", () => setActiveTab(index));
 }
 
 let colorStyle = 3;
@@ -368,14 +419,26 @@ setColorStyle(colorStyle);
 
 updateMainCrimeNumbers();
 updateCriminalNumbers();
-updateCrimeProgress();
+updateCrimeProgressDiv();
 
 //mainloop
 function gameLoop() {
   updateMainCrimeNumbers();
   updateCriminalNumbers();
-  updateCrimeProgress();
+  updateCrimeProgressDiv();
+  updateCrimeProgressValue();
+  for (let index = 0; index < crimeArray.length; index++) {
+    if (crimeArray[index].state == 3) {
+      cpsMode(index);
+    }
+  }
   // window.requestAnimationFrame(gameLoop);
+
+  // let currentCrime = crimeArray[2];
+  // let initTime = currentCrime.timeCrimeStarted;
+  // let finishTime = currentCrime.timeCrimeWillEnd;
+  // let durationStartToFinish = dayjs(finishTime).diff(dayjs(initTime));
+  // console.log(dayjs(durationStartToFinish).format("mm:ss:sss"));
 }
 
 setInterval(gameLoop, 250);
