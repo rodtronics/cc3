@@ -60,6 +60,7 @@ class crimeObjectClass {
     this.progress = 0.0;
     this.baseTimeToCompleteMS = 10000;
     this.progressElement = null;
+    this.gizmoElement = null;
     this.recruitmentAddElement = null;
     this.recruitmentSubElement = null;
     this.numCrimElement = null;
@@ -81,18 +82,6 @@ for (let index = 0; index < crimesConst.length; index++) {
 // extracts the integer number from the ID word
 function getNumberFromCrimeID(crimeID) {
   return parseInt(crimeID.slice(13));
-}
-
-//called upon to switch tabs (display of tabs only)
-function setActiveTab(tabNumber) {
-  // clear all tabs to inactive
-  for (let index = 0; index < tabTotalNumber; index++) {
-    tabElement[index].setAttribute("data-tabState", "inactive");
-  }
-  // now set which one active
-  tabElement[tabNumber].setAttribute("data-tabState", "active");
-  // now switch background colour to reflect active tab
-  document.getElementById("gizmoContainer_ID").setAttribute("data-backgroundColor", tabNumber);
 }
 
 // make one event listener across whole gizmo Container
@@ -136,6 +125,7 @@ function addNewGizmoToContainer(index) {
   let newGizmo = document.createElement("div");
   newGizmo.classList.add("gizmoBase");
   newGizmo.setAttribute("data-gizmoID", crimeIndexID);
+  crimeArray[index].gizmoElement = newGizmo;
   gizmoContainerElement.appendChild(newGizmo);
 
   // put the title element in the gizmo
@@ -188,6 +178,34 @@ function addNewGizmoToContainer(index) {
 for (let index = 0; index < crimesConst.length; index++) {
   if (crimeArray[index].visible == true) {
     addNewGizmoToContainer(index);
+  }
+}
+
+//called upon to switch tabs (display of tabs only)
+function setActiveTab(tabNumber) {
+  // clear all tabs to inactive
+  for (let index = 0; index < tabTotalNumber; index++) {
+    tabElement[index].setAttribute("data-tabState", "inactive");
+  }
+  // now set which one active
+  tabElement[tabNumber].setAttribute("data-tabState", "active");
+  // now switch background colour to reflect active tab
+  document.getElementById("gizmoContainer_ID").setAttribute("data-backgroundColor", tabNumber);
+  clearTabs();
+  switch (tabNumber) {
+    case 0:
+      for (let index = 0; index < crimeArray.length; index++) {
+        if (crimeArray[index].visible == true) {
+          gizmoContainerElement.appendChild(crimeArray[index].gizmoElement);
+        }
+      }
+      break;
+    case 1:
+      break;
+    case 2:
+      break;
+    case 3:
+      break;
   }
 }
 
@@ -412,6 +430,12 @@ setActiveTab(0);
 // set up event listeners for tabs
 for (let index = 0; index < tabTotalNumber; index++) {
   tabElement[index].addEventListener("click", () => setActiveTab(index));
+}
+
+function clearTabs() {
+  while (gizmoContainerElement.firstChild) {
+    gizmoContainerElement.removeChild(gizmoContainerElement.lastChild);
+  }
 }
 
 let colorStyle = 3;
