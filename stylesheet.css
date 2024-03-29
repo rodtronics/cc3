@@ -232,6 +232,7 @@ pre {
   letter-spacing: -0.05em;
   border-style: solid;
   border-width: 0.5vh;
+  border-color: var(--color-A2);
 }
 
 .gizmoTitle {
@@ -277,6 +278,11 @@ pre {
 .gizmoRecruitButton[data-buttonState="active"]:hover {
   background-color: var(--color-E2);
   color: var(--color-B);
+}
+
+.criminalText {
+  text-align: center;
+  line-height: 1em;
 }
 
 /* width */

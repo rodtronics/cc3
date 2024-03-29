@@ -7,39 +7,40 @@ const ccVersion = 3.1;
 const ccCodeName = "deep alpha";
 let totalCrimesCommitted = 0;
 let money = 0;
+let refreshRate = 50;
 
 // crime data
 const crimesConst = [
-  { crime: "Trespassing", severity: "Very Low", earnings: "Low", notoriousness: "Low", timeToCommit: "Minutes" },
-  { crime: "Vandalism", severity: "Very Low", earnings: "Low", notoriousness: "Low", timeToCommit: "Minutes" },
-  { crime: "Public intoxication", severity: "Very Low", earnings: "N/A", notoriousness: "Low", timeToCommit: "N/A" },
-  { crime: "Shoplifting", severity: "Very Low", earnings: "Low", notoriousness: "Low", timeToCommit: "Seconds" },
-  { crime: "Theft", severity: "Very Low", earnings: "Low", notoriousness: "Low", timeToCommit: "Minutes" },
-  { crime: "Breaking and entering", severity: "Low", earnings: "Moderate", notoriousness: "Moderate", timeToCommit: "Minutes" },
-  { crime: "Forgery", severity: "Low", earnings: "Moderate", notoriousness: "Moderate", timeToCommit: "Hours" },
-  { crime: "Money counterfeiting", severity: "Low", earnings: "High", notoriousness: "High", timeToCommit: "Days" },
-  { crime: "Car theft", severity: "Low", earnings: "High", notoriousness: "Moderate", timeToCommit: "Minutes" },
-  { crime: "Breaking and entering", severity: "Low", earnings: "Moderate", notoriousness: "Moderate", timeToCommit: "Minutes" },
-  { crime: "White-collar crime", severity: "Low", earnings: "High", notoriousness: "High", timeToCommit: "Months" },
-  { crime: "Intellectual property theft", severity: "Low", earnings: "High", notoriousness: "High", timeToCommit: "Hours" },
-  { crime: "Credit card theft", severity: "Low", earnings: "High", notoriousness: "High", timeToCommit: "Minutes" },
-  { crime: "Check fraud", severity: "Low", earnings: "Moderate", notoriousness: "High", timeToCommit: "Hours" },
-  { crime: "Identity fraud", severity: "Low", earnings: "High", notoriousness: "High", timeToCommit: "Hours" },
-  { crime: "Welfare fraud", severity: "Low", earnings: "Moderate", notoriousness: "High", timeToCommit: "Days" },
-  { crime: "Tax fraud", severity: "Low", earnings: "High", notoriousness: "High", timeToCommit: "Weeks" },
-  { crime: "Cyber fraud", severity: "Low", earnings: "High", notoriousness: "High", timeToCommit: "Hours" },
-  { crime: "Piracy", severity: "Low", earnings: "Low", notoriousness: "Low", timeToCommit: "Seconds" },
-  { crime: "Hacking", severity: "Low", earnings: "High", notoriousness: "High", timeToCommit: "Hours" },
-  { crime: "Scams", severity: "Low", earnings: "High", notoriousness: "High", timeToCommit: "Days" },
-  { crime: "Pyramid schemes", severity: "Low", earnings: "High", notoriousness: "High", timeToCommit: "Months" },
-  { crime: "Insurance scams", severity: "Low", earnings: "High", notoriousness: "High", timeToCommit: "Weeks" },
-  { crime: "Counterfeiting", severity: "Low", earnings: "High", notoriousness: "Moderate", timeToCommit: "Days" },
-  { crime: "Money laundering", severity: "Moderate", earnings: "High", notoriousness: "High", timeToCommit: "Months" },
-  { crime: "Embezzlement", severity: "Moderate", earnings: "High", notoriousness: "High", timeToCommit: "Years" },
-  { crime: "Cyber extortion", severity: "Moderate", earnings: "High", notoriousness: "High", timeToCommit: "Hours" },
-  { crime: "Fraudulent schemes", severity: "Moderate", earnings: "High", notoriousness: "High", timeToCommit: "Months" },
-  { crime: "Bribery", severity: "Moderate", earnings: "High", notoriousness: "High", timeToCommit: "Days" },
-  { crime: "Blackmail", severity: "Moderate", earnings: "High", notoriousness: "High", timeToCommit: "Hours" },
+  { crime: "Petty Theft", description: "The act of stealing small items or goods of low value." },
+  { crime: "Vandalism", description: "Willful destruction or damage to property that belongs to someone else." },
+  { crime: "Trespassing", description: "Entering someone's property without permission." },
+  { crime: "Disorderly Conduct", description: "Engaging in behavior that disturbs the peace in public places." },
+  { crime: "Noise Violation", description: "Creating excessive noise that disturbs others." },
+  { crime: "Loitering", description: "Remaining in a public place without a specific purpose or reason." },
+  { crime: "Jaywalking", description: "Crossing a street unlawfully or outside of designated crosswalks." },
+  { crime: "Graffiti", description: "Writing or drawing on public or private property without permission." },
+  { crime: "Minor in Possession of Alcohol", description: "Underage individuals possessing or consuming alcoholic beverages." },
+  { crime: "Public Intoxication", description: "Being visibly intoxicated in a public place." },
+  { crime: "Reckless Driving", description: "Operating a vehicle in a manner that poses a risk to others' safety." },
+  { crime: "Fraudulent Use of a Credit Card", description: "Illegally using someone else's credit card or credit card information." },
+  { crime: "Forgery", description: "Falsifying or altering documents, signatures, or other items for fraudulent purposes." },
+  { crime: "Identity Theft", description: "Using someone else's personal information without their consent for fraudulent purposes." },
+  { crime: "Embezzlement", description: "Theft or misappropriation of funds or assets entrusted to one's care, typically by an employer." },
+  { crime: "Money Laundering", description: "Concealing the origins of illegally obtained money by processing it through legitimate channels." },
+  { crime: "Tax Evasion", description: "Illegally avoiding paying taxes owed to the government." },
+  { crime: "Insider Trading", description: "Trading stocks or securities based on non-public, material information about a company." },
+  { crime: "Intellectual Property Theft", description: "Unauthorized use or theft of copyrighted material, patents, or trade secrets." },
+  { crime: "Cybercrime", description: "Criminal activities carried out using computers or the internet, such as hacking or phishing." },
+  { crime: "Perjury", description: "Knowingly making false statements under oath during a legal proceeding." },
+  { crime: "Contempt of Court", description: "Disobeying or disrespecting the authority of a court or its officers." },
+  { crime: "Conspiracy", description: "Planning or agreeing with others to commit a crime or unlawful act." },
+  { crime: "Extortion", description: "Coercing or blackmailing someone into providing money, services, or other valuables through threats or intimidation." },
+  { crime: "Bribery", description: "Offering, giving, receiving, or soliciting something of value in exchange for influence or action in one's favor." },
+  { crime: "Arson", description: "Intentionally setting fire to property or structures." },
+  { crime: "Burglary", description: "Illegally entering a building or structure with the intent to commit theft, vandalism, or other crimes." },
+  { crime: "Robbery", description: "Taking or attempting to take something of value from another person by force, threat, or intimidation." },
+  { crime: "Kidnapping", description: "Unlawfully seizing, confining, abducting, or carrying away another person by force or threat." },
+  { crime: "Homicide", description: "The unlawful killing of another person, whether intentional, accidental, or due to negligence." },
 ];
 // define the class
 // none of this should duplicate what is in the crimes const
@@ -60,7 +61,7 @@ class crimeObjectClass {
     this.progress = 0.0;
     this.baseTimeToCompleteMS = 10000;
     this.progressElement = null;
-    this.gizmoElement = null;
+    this.containerElement = null;
     this.recruitmentAddElement = null;
     this.recruitmentSubElement = null;
     this.numCrimElement = null;
@@ -77,6 +78,84 @@ class crimeObjectClass {
 let crimeArray = [];
 for (let index = 0; index < crimesConst.length; index++) {
   crimeArray[index] = new crimeObjectClass(index);
+}
+
+const facilityConst = [
+  { name: "Nightclubs", description: "Often used for illegal activities such as drug dealing, money laundering, or hosting illegal gambling." },
+  { name: "Warehouses", description: "Criminals might use warehouses for storing illegal goods such as stolen merchandise, counterfeit products, or drugs." },
+  { name: "Strip Clubs", description: "These establishments may be fronts for illegal activities such as human trafficking or prostitution." },
+  { name: "Abandoned Buildings", description: "Criminals might take over abandoned buildings to conduct various illegal activities away from public view." },
+  {
+    name: "Hotels/Motels",
+    description:
+      "These establishments can be used for illegal activities such as drug dealing, prostitution, or human trafficking due to the transient nature of their clientele.",
+  },
+  { name: "Vacation Rentals", description: "Similar to hotels, vacation rentals can be used for illegal activities due to the lack of strict oversight." },
+  { name: "Bars", description: "Some bars may serve as fronts for illegal activities such as drug dealing or illegal gambling." },
+  {
+    name: "Construction Sites",
+    description: "Criminals might use construction sites to store illegal goods or equipment or to conduct illegal activities such as theft.",
+  },
+  { name: "Car Washes", description: "Car wash businesses can be used for money laundering or as fronts for drug distribution." },
+  { name: "Storage Units", description: "Criminals might rent storage units to store illegal goods or equipment." },
+  {
+    name: "Gas Stations",
+    description: "Gas stations can be used for illegal activities such as selling stolen goods, drug dealing, or as a meeting point for criminal activities.",
+  },
+  { name: "Factories", description: "Some factories might be used for illegal manufacturing operations such as producing counterfeit goods or illegal drugs." },
+  {
+    name: "Apartment Buildings",
+    description: "Criminals might own or rent apartments within buildings to conduct illegal activities such as drug dealing or as hideouts for fugitives.",
+  },
+  {
+    name: "Pawn Shops",
+    description: "While legitimate pawn shops exist, some might engage in illegal activities such as fencing stolen goods or money laundering.",
+  },
+  {
+    name: "Warehouses",
+    description:
+      "Often located in industrial areas, warehouses can be used for various illegal activities including storing stolen goods, counterfeit products, or illegal drugs.",
+  },
+  {
+    name: "Cannabis Grow Houses",
+    description:
+      "In regions where cannabis cultivation is illegal, criminals might set up grow houses in residential or industrial areas to cultivate and distribute marijuana illegally.",
+  },
+  {
+    name: "Internet Cafes/Gaming Arcades",
+    description: "These establishments might be used for illegal online activities such as cybercrime or online gambling.",
+  },
+  {
+    name: "Churches or Religious Buildings",
+    description:
+      "While uncommon, some criminals might use religious buildings as fronts for illegal activities or as meeting places due to their perceived sanctity.",
+  },
+  {
+    name: "Vacant Lots",
+    description: "Criminals might use vacant lots for illegal activities such as dumping toxic waste or conducting illegal transactions away from public view.",
+  },
+  {
+    name: "Mobile Homes/Trailers",
+    description:
+      "Criminals might use mobile homes or trailers as temporary bases of operations for illegal activities such as drug manufacturing or human trafficking.",
+  },
+];
+class facilityObjectClass {
+  constructor(index) {
+    this.name = facilityConst[index].name;
+    this.facilityIndex = index;
+    this.facilityIndexID = "facilityIndexID_" + index;
+    this.visible = true;
+    this.built = false;
+    this.level = 1;
+    this.element;
+  }
+}
+
+// generate array of facilities
+let facilityArray = [];
+for (let index = 0; index < facilityConst.length; index++) {
+  facilityArray[index] = new facilityObjectClass(index);
 }
 
 // extracts the integer number from the ID word
@@ -125,7 +204,7 @@ function addNewGizmoToContainer(index) {
   let newGizmo = document.createElement("div");
   newGizmo.classList.add("gizmoBase");
   newGizmo.setAttribute("data-gizmoID", crimeIndexID);
-  crimeArray[index].gizmoElement = newGizmo;
+  crimeArray[index].containerElement = newGizmo;
   gizmoContainerElement.appendChild(newGizmo);
 
   // put the title element in the gizmo
@@ -168,10 +247,13 @@ function addNewGizmoToContainer(index) {
   // crimepeople
   let newGizmoActiveCriminals = document.createElement("div");
   newGizmo.appendChild(newGizmoActiveCriminals);
+  newGizmoActiveCriminals.classList.add("criminalText");
   crimeArray[index].numCrimElement = newGizmoActiveCriminals;
 
   let newGizmoTimesDone = document.createElement("div");
   newGizmo.appendChild(newGizmoTimesDone);
+  newGizmoTimesDone.classList.add("criminalText");
+
   crimeArray[index].timesDoneElement = newGizmoTimesDone;
 }
 // create some gizmos
@@ -180,6 +262,19 @@ for (let index = 0; index < crimesConst.length; index++) {
     addNewGizmoToContainer(index);
   }
 }
+
+function facilityCreateElement(index) {
+  let newFacilityElement = document.createElement("div");
+  newFacilityElement.innerHTML = facilityArray[index].name;
+  newFacilityElement.classList.add("gizmoBase");
+  return newFacilityElement;
+}
+
+for (let index = 0; index < facilityArray.length; index++) {
+  facilityArray[index].element = facilityCreateElement(index);
+}
+
+// create facility arrays
 
 //called upon to switch tabs (display of tabs only)
 function setActiveTab(tabNumber) {
@@ -196,11 +291,16 @@ function setActiveTab(tabNumber) {
     case 0:
       for (let index = 0; index < crimeArray.length; index++) {
         if (crimeArray[index].visible == true) {
-          gizmoContainerElement.appendChild(crimeArray[index].gizmoElement);
+          gizmoContainerElement.appendChild(crimeArray[index].containerElement);
         }
       }
       break;
     case 1:
+      for (let index = 0; index < facilityArray.length; index++) {
+        if (facilityArray[index].visible == true) {
+          gizmoContainerElement.appendChild(facilityArray[index].element);
+        }
+      }
       break;
     case 2:
       break;
@@ -253,6 +353,7 @@ function recruitClicked(index, polarity) {
         initCrime(index);
       }
       crimeArray[index].numOfCriminals++;
+      crimeArray[index].numOfCriminals = crimeArray[index].numOfCriminals * 2;
       crimeArray[index].state = 1;
   }
   recruitmentSetButtonsActivity(index, polarity);
@@ -295,7 +396,7 @@ function updateCrimeProgressDiv() {
         newProgressText = "never done";
         break;
       case 3:
-        newProgressText = "CPS " + currentCrime.cpsRate.toFixed(3);
+        newProgressText = "cps " + currentCrime.cpsRate.toFixed(3).replace(/\.?0*$/, "");
         break;
       default:
         newProgressText = "??";
@@ -404,16 +505,17 @@ function updateMainCrimeNumbers() {
 
 function updateCriminalNumbers(index) {
   for (let index = 0; index < crimeArray.length; index++) {
-    crimeArray[index].numCrimElement.innerHTML = "<br>" + crimeArray[index].numOfCriminals + " crims working";
+    crimeArray[index].numCrimElement.innerHTML = "<br>" + " active criminals: <br> " + crimeArray[index].numOfCriminals;
   }
 }
 
 function cpsMode(index) {
+  let refreshRateInverse = 1000 / refreshRate;
   let currentCrime = crimeArray[index];
   let cpsRate = 1000 / (currentCrime.baseTimeToCompleteMS / currentCrime.numOfCriminals);
   currentCrime.cpsRate = cpsRate;
-  currentCrime.timesDone = currentCrime.timesDone + cpsRate / 4;
-  totalCrimesCommitted = totalCrimesCommitted + cpsRate / 4;
+  currentCrime.timesDone = currentCrime.timesDone + cpsRate / refreshRateInverse;
+  totalCrimesCommitted = totalCrimesCommitted + cpsRate / refreshRateInverse;
   updateTimesDone(index);
 }
 
@@ -465,4 +567,4 @@ function gameLoop() {
   // console.log(dayjs(durationStartToFinish).format("mm:ss:sss"));
 }
 
-setInterval(gameLoop, 250);
+setInterval(gameLoop, refreshRate);
