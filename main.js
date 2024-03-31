@@ -9,6 +9,22 @@ let totalCrimesCommitted = 0;
 let money = 0;
 let refreshRate = 50;
 
+class criminalsClass {
+  constructor() {
+    this.thugsTotal = 1;
+    this.thugsFree = 1;
+    this.associatesTotal = 0;
+    this.associatesFree = 0;
+    this.figuresTotal = 0;
+    this.figuresFree;
+    this.bossesTotal = 0;
+    this.bossesFree = 0;
+    this.transnationalsTotal = 0;
+    this.transnationalsFree = 0;
+  }
+}
+
+let criminals = new criminalsClass();
 // crime data
 const crimesConst = [
   { crime: "Petty Theft", description: "The act of stealing small items or goods of low value." },
@@ -148,7 +164,7 @@ class facilityObjectClass {
     this.visible = true;
     this.built = false;
     this.level = 1;
-    this.element;
+    this.element = null;
   }
 }
 
@@ -156,6 +172,74 @@ class facilityObjectClass {
 let facilityArray = [];
 for (let index = 0; index < facilityConst.length; index++) {
   facilityArray[index] = new facilityObjectClass(index);
+}
+
+const researchConst = [
+  {
+    name: "Dark Web Forums and Marketplaces",
+    description:
+      "The dark web is notorious for hosting various illegal activities, including forums where criminals exchange information, share tactics, and even offer services.",
+  },
+  {
+    name: "Prison Networks",
+    description:
+      "Inmates in prisons may have access to networks where they share knowledge about criminal activities, such as smuggling, burglary, or cybercrime.",
+  },
+  {
+    name: "Street Gangs and Criminal Organizations",
+    description:
+      "Gangs and criminal syndicates often have their own networks where they share information about crimes, recruit new members, and plan illegal activities.",
+  },
+  {
+    name: "Social Media",
+    description:
+      "While mainstream social media platforms typically monitor and remove illegal content, certain channels or groups within them may still serve as places where criminals exchange information, especially in encrypted or private groups.",
+  },
+  {
+    name: "Online Forums and Chat Rooms",
+    description:
+      "There are various online forums and chat rooms where individuals discuss illegal activities, such as hacking forums, drug trafficking forums, or forums dedicated to specific types of crime.",
+  },
+  {
+    name: "Underground Markets",
+    description:
+      "Some criminals may gather information by physically visiting underground markets where illegal goods or services are bought and sold. These markets may exist in physical locations or operate online.",
+  },
+  {
+    name: "Criminal Training Camps",
+    description: "In some cases, criminals may attend training camps or workshops where they learn new techniques or strategies for committing crimes.",
+  },
+  {
+    name: "Library and Bookstores",
+    description:
+      "While less common in the digital age, some individuals may still turn to books and publications for information on criminal activities, such as guides on lock-picking, hacking, or fraud.",
+  },
+  {
+    name: "Informal Networks and Word of Mouth",
+    description:
+      "Criminals may also gather information through informal networks, such as friends, family members, or acquaintances who have experience in illegal activities.",
+  },
+  {
+    name: "Black Market Contacts",
+    description:
+      "Individuals involved in criminal activities may have contacts within the black market who can provide information or resources related to their illicit endeavors.",
+  },
+];
+
+class researchObjectClass {
+  constructor(index) {
+    this.name = researchConst[index].name;
+    this.researchIndex = index;
+    this.researchIndexID = "researchIndexID_" + index;
+    this.prerequisites = [];
+    this.visible = true;
+    this.level = 1;
+  }
+}
+
+let researchArray = [];
+for (let index = 0; index < researchConst.length; index++) {
+  researchArray[index] = new researchObjectClass(index);
 }
 
 // extracts the integer number from the ID word
@@ -274,6 +358,17 @@ for (let index = 0; index < facilityArray.length; index++) {
   facilityArray[index].element = facilityCreateElement(index);
 }
 
+function researchCreateElement(index) {
+  let newResearchElement = document.createElement("div");
+  newResearchElement.innerHTML = researchArray[index].name;
+  newResearchElement.classList.add("gizmoBase");
+  return newResearchElement;
+}
+
+for (let index = 0; index < researchArray.length; index++) {
+  researchArray[index].element = researchCreateElement(index);
+}
+
 // create facility arrays
 
 //called upon to switch tabs (display of tabs only)
@@ -303,6 +398,11 @@ function setActiveTab(tabNumber) {
       }
       break;
     case 2:
+      for (let index = 0; index < researchArray.length; index++) {
+        if (researchArray[index].visible == true) {
+          gizmoContainerElement.appendChild(researchArray[index].element);
+        }
+      }
       break;
     case 3:
       break;
@@ -353,7 +453,6 @@ function recruitClicked(index, polarity) {
         initCrime(index);
       }
       crimeArray[index].numOfCriminals++;
-      crimeArray[index].numOfCriminals = crimeArray[index].numOfCriminals * 2;
       crimeArray[index].state = 1;
   }
   recruitmentSetButtonsActivity(index, polarity);
@@ -478,14 +577,14 @@ function getCrimeTimeLeft(index) {
 
 function crimeCompleted(index) {
   crimeArray[index].timesDone++;
-  updateTimesDone(index);
+  updateTimesDoneText(index);
   totalCrimesCommitted++;
   updateMainCrimeNumbers();
   // console.log("crime committed " + crimeArray[index].timesDone);
   initCrime(index);
 }
 
-function updateTimesDone(index) {
+function updateTimesDoneText(index) {
   crimeArray[index].timesDoneElement.innerHTML = "<bs>times done: " + crimeArray[index].timesDone.toFixed(0);
 }
 

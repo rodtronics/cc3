@@ -95,7 +95,7 @@ pre {
   border-style: dotted;
   border-color: var(--color-D);
   overflow: hidden;
-  margin-bottom: 0.5vh;
+  /* margin-bottom: 0.5vh; */
 }
 
 #titleID {
@@ -127,6 +127,14 @@ pre {
   position: fixed;
   right: 5vw;
   color: var(--color-F);
+}
+
+#personnelID {
+  border-style: dotted;
+  border-top: 0;
+  /* border-width: 0.2vh; */
+  border-color: var(--color-D);
+  padding: 0.5em;
 }
 
 #gameContainerID {
