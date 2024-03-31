@@ -7,7 +7,7 @@ const ccVersion = 3.1;
 const ccCodeName = "deep alpha";
 let totalCrimesCommitted = 0;
 let money = 0;
-let refreshRate = 50;
+let refreshRate = 50; //ms between frames
 
 class criminalsClass {
   constructor() {
@@ -516,6 +516,8 @@ function updateCrimeProgressValue(index) {
       let durationNowToFinish = dayjs(finishTime).diff(dayjs());
       let newProgress = 1 - durationNowToFinish / durationStartToFinish;
       currentCrime.progress = newProgress;
+      if (newProgress>1){crimeCompleted(index);}
+      // console.log(newProgress);
       if (index == 2) {
         // console.log(newProgress);
         // console.log(dayjs(durationStartToFinish).format("DD/MM/YY HH:mm:ss"));
@@ -526,8 +528,10 @@ function updateCrimeProgressValue(index) {
 
 function initCrime(index) {
   let currentCrime = crimeArray[index];
+  currentCrime.progress=0
   currentCrime.timeCrimeStarted = dayjs();
   setCrimeCompletionTime(index);
+  // console.log("start time "+dayjs(currentCrime.timeCrimeStarted).format("mm:ss:sss")+" finish "+dayjs(currentCrime.timeCrimeWillEnd).format("mm:ss:sss"))
 }
 
 // this calculates time from now until crime complete
@@ -536,15 +540,16 @@ function initCrime(index) {
 function calcTimeToComplete(index) {
   let currentCrime = crimeArray[index];
   let currentProgress = currentCrime.progress;
+  // console.log(currentProgress)
   if (currentCrime.numOfCriminals == 0) {
     return null;
   }
   let msLeft = ((1 - currentProgress) * currentCrime.baseTimeToCompleteMS) / currentCrime.numOfCriminals;
-  if (msLeft < 250) {
-    msLeft = 250;
-  }
+  // if (msLeft < 250) {
+  //   msLeft = 250;
+  // }
   if (currentCrime.baseTimeToCompleteMS / currentCrime.numOfCriminals < 1000) {
-    currentCrime.state = 3;
+    currentCrime.state = 3; // go into cps mode
   } else {
     currentCrime.state = 1;
   }
@@ -554,6 +559,7 @@ function calcTimeToComplete(index) {
 
 function setCrimeCompletionTime(index) {
   let msLeft = calcTimeToComplete(index);
+  // console.log(msLeft)
   let currentCrime = crimeArray[index];
   let newCompletionTime = dayjs().add(dayjs(msLeft, "millisecond"));
 
@@ -570,6 +576,7 @@ function getCrimeTimeLeft(index) {
   if (timeLeft < 0) {
     crimeCompleted(index);
     return "restarting";
+    currentCrime.timeCrimeWillEnd = dayjs().add(dayjs(50000,"millisecond"));
   }
   // console.log(timeLeft);
   return dayjs(timeLeft).format("mm:ss");
@@ -615,7 +622,7 @@ function cpsMode(index) {
   currentCrime.cpsRate = cpsRate;
   currentCrime.timesDone = currentCrime.timesDone + cpsRate / refreshRateInverse;
   totalCrimesCommitted = totalCrimesCommitted + cpsRate / refreshRateInverse;
-  updateTimesDone(index);
+  updateTimesDoneText(index);
 }
 
 // initialisations before main loop
