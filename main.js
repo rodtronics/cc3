@@ -244,7 +244,14 @@ for (let index = 0; index < researchConst.length; index++) {
 
 // extracts the integer number from the ID word
 function getNumberFromCrimeID(crimeID) {
-  return parseInt(crimeID.slice(13));
+  // console.log(crimeCompleted);
+  try {
+    return parseInt(crimeID.slice(13));
+  }
+  catch (error) {
+    console.log(crimeID + " " + error);
+  }
+
 }
 
 // make one event listener across whole gizmo Container
@@ -265,9 +272,24 @@ function getCrimeIDofGizmo(elementClickedPointerEvent) {
 
   do {
     // if this is the base (based on it's class), return ID
-    if (tempElementTarget.getAttribute("class") == "gizmoBase") {
+    if (tempElementTarget.classList.contains("gizmoBase")) {
       let gizmoID = tempElementTarget.getAttribute("data-gizmoID");
       return gizmoID;
+    }
+    // else get the parent of the target and try again
+    tempElementTarget = tempElementTarget.parentElement;
+    // if we eventually go up the chain and get to <body>
+    // before getting ID, return null
+  } while (tempElementTarget.tagName != "BODY");
+  return null;
+}
+
+function getBaseElementofGizmoClicked(elementClickedPointerEvent) {
+  let tempElementTarget = elementClickedPointerEvent.target;
+  do {
+    // if this is the base (based on it's class), return ID
+    if (tempElementTarget.classList.contains("gizmoBase")) {
+      return tempElementTarget;
     }
     // else get the parent of the target and try again
     tempElementTarget = tempElementTarget.parentElement;
@@ -286,7 +308,7 @@ function addNewGizmoToContainer(index) {
   // and give it the class gizmobase
   // meaning it holds the ID of the whole gizmo
   let newGizmo = document.createElement("div");
-  newGizmo.classList.add("gizmoBase");
+  newGizmo.classList.add("gizmoBase", "crimeGizmo");
   newGizmo.setAttribute("data-gizmoID", crimeIndexID);
   crimeArray[index].containerElement = newGizmo;
   gizmoContainerElement.appendChild(newGizmo);
@@ -333,12 +355,13 @@ function addNewGizmoToContainer(index) {
   newGizmo.appendChild(newGizmoActiveCriminals);
   newGizmoActiveCriminals.classList.add("criminalText");
   crimeArray[index].numCrimElement = newGizmoActiveCriminals;
-
+  // times done
   let newGizmoTimesDone = document.createElement("div");
   newGizmo.appendChild(newGizmoTimesDone);
   newGizmoTimesDone.classList.add("criminalText");
-
   crimeArray[index].timesDoneElement = newGizmoTimesDone;
+
+
 }
 // create some gizmos
 for (let index = 0; index < crimesConst.length; index++) {
@@ -412,8 +435,14 @@ function setActiveTab(tabNumber) {
 // what to do if a gizmo clicked
 // incl switching thru what element class clicked
 function gizmoClicked(elementClickedPointerEvent) {
+  // gizmoClicked_Start(elementClickedPointerEvent);
   // find out the crimeID of the gizmo
-  let crimeIDofClickedGizmo = getNumberFromCrimeID(getCrimeIDofGizmo(elementClickedPointerEvent));
+  let crimeIDofClickedGizmo = getCrimeIDofGizmo(elementClickedPointerEvent);
+
+  let crimeIDNumberofClickedGizmo = getNumberFromCrimeID(crimeIDofClickedGizmo);
+
+  // console.log(crimeIDofClickedGizmo + " " + crimeIDNumberofClickedGizmo);
+  // console.log(elementClickedPointerEvent);
   let polarity = elementClickedPointerEvent.target.getAttribute("data-polarity");
   let target = elementClickedPointerEvent.target;
   // console.log(elementClickedPointerEvent.target);
@@ -426,12 +455,55 @@ function gizmoClicked(elementClickedPointerEvent) {
   let gizmoClass = elementClickedPointerEvent.target.getAttribute("class");
   switch (gizmoClass) {
     case "gizmoRecruitButton":
-      recruitClicked(crimeIDofClickedGizmo, polarity);
+      recruitClicked(crimeIDNumberofClickedGizmo, polarity);
       break;
     default:
       break;
   }
 }
+
+// a more generic form of this. if anything clicked in the gizmozone
+// the click event gets passed here
+// see if can get the base element (otherwise do nothing)
+// and then once got base event, switch depending on what class of base element
+function gizmoClicked_Start(elementClickedPointerEvent) {
+  let baseElementClicked = getBaseElementofGizmoClicked(elementClickedPointerEvent);
+  if (baseElementClicked == null) { return; }
+  if (baseElementClicked.classList.contains("crimeGizmo")) {
+    gizmoClicked_Crime(elementClickedPointerEvent);
+  }
+}
+
+
+function gizmoClicked_Crime(elementClickedPointerEvent) {
+  let elementClickedTarget = elementClickedPointerEvent.target;
+  if (elementClickedTarget.classList.contains("gizmoRecruitButton")) {
+
+    let crimeIDofClickedGizmo = getCrimeIDofGizmo(elementClickedPointerEvent);
+
+    let crimeIDNumberofClickedGizmo = getNumberFromCrimeID(crimeIDofClickedGizmo);
+    if (crimeIDofClickedGizmo == null) {
+      return;
+    }
+
+    let polarity = elementClickedPointerEvent.target.getAttribute("data-polarity");
+    let target = elementClickedPointerEvent.target;
+
+    let gizmoClass = elementClickedPointerEvent.target.getAttribute("class");
+    switch (gizmoClass) {
+      case "gizmoRecruitButton":
+        recruitClicked(crimeIDNumberofClickedGizmo, polarity);
+        break;
+      default:
+        break;
+        console.log("recruit button");
+    }
+  }
+}
+
+
+
+
 
 // when + or - buttons pressed
 function recruitClicked(index, polarity) {
@@ -516,7 +588,7 @@ function updateCrimeProgressValue(index) {
       let durationNowToFinish = dayjs(finishTime).diff(dayjs());
       let newProgress = 1 - durationNowToFinish / durationStartToFinish;
       currentCrime.progress = newProgress;
-      if (newProgress>1){crimeCompleted(index);}
+      if (newProgress > 1) { crimeCompleted(index); }
       // console.log(newProgress);
       if (index == 2) {
         // console.log(newProgress);
@@ -528,7 +600,7 @@ function updateCrimeProgressValue(index) {
 
 function initCrime(index) {
   let currentCrime = crimeArray[index];
-  currentCrime.progress=0
+  currentCrime.progress = 0
   currentCrime.timeCrimeStarted = dayjs();
   setCrimeCompletionTime(index);
   // console.log("start time "+dayjs(currentCrime.timeCrimeStarted).format("mm:ss:sss")+" finish "+dayjs(currentCrime.timeCrimeWillEnd).format("mm:ss:sss"))
@@ -576,7 +648,7 @@ function getCrimeTimeLeft(index) {
   if (timeLeft < 0) {
     crimeCompleted(index);
     return "restarting";
-    currentCrime.timeCrimeWillEnd = dayjs().add(dayjs(50000,"millisecond"));
+    currentCrime.timeCrimeWillEnd = dayjs().add(dayjs(50000, "millisecond"));
   }
   // console.log(timeLeft);
   return dayjs(timeLeft).format("mm:ss");
@@ -594,6 +666,8 @@ function crimeCompleted(index) {
 function updateTimesDoneText(index) {
   crimeArray[index].timesDoneElement.innerHTML = "<bs>times done: " + crimeArray[index].timesDone.toFixed(0);
 }
+
+
 
 function updateMainCrimeNumbers() {
   let newHTML =
