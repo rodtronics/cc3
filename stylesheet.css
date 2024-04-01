@@ -78,6 +78,21 @@ pre {
   min-height: 95vh;
 }
 
+.modalContainerClass {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100;
+  height: 100;
+  background-color: var(--color-C);
+  color: black;
+}
+
+.modalContainerContentClass {
+}
+
 #titleContainerID {
   display: flex;
   margin: 10 auto;

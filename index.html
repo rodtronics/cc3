@@ -27,7 +27,7 @@
     <script src="scripts/dayjs.js"></script>
     <script src="scripts/relativeTime.js"></script>
     <script src="scripts/Duration.js"></script>
-    <script src="scripts/color-math.js"></script>
+    <script src="scripts/color-math-min.js"></script>
     <script src="scripts/colorstyle.js"></script>
     <script>
       dayjs.extend(dayjs_plugin_relativeTime);
@@ -38,6 +38,9 @@
   </head>
 
   <body>
+    <div id="infoModalContainerID" class="modalContainerClass">
+      <div id="infoModalContentID" class="modalContentClass"></div>
+    </div>
     <div id="everythingContainerID">
       <div id="titleContainerID">
         <div id="titleID">
@@ -74,7 +77,8 @@
           <div class="tabs" data-tabState="active" id="tabA_ID">crimes</div>
           <div class="tabs" data-tabState="inactive" id="tabB_ID">facilities</div>
           <div class="tabs" data-tabState="inactive" id="tabC_ID">research</div>
-          <div class="tabs" data-tabState="inactive" id="tabD_ID">info</div>
+          <div class="tabs" data-tabState="inactive" id="tabD_ID">personell</div>
+          <div class="tabs" data-tabState="inactive" id="tabE_ID">info</div>
         </div>
         <div class="gizmoContainer" id="gizmoContainer_ID"></div>
       </div>

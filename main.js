@@ -165,6 +165,8 @@ class facilityObjectClass {
     this.built = false;
     this.level = 1;
     this.element = null;
+    this.buildingPrereqs = [];
+    this.researchPrereqs = [];
   }
 }
 
@@ -176,53 +178,11 @@ for (let index = 0; index < facilityConst.length; index++) {
 
 const researchConst = [
   {
-    name: "Dark Web Forums and Marketplaces",
-    description:
-      "The dark web is notorious for hosting various illegal activities, including forums where criminals exchange information, share tactics, and even offer services.",
-  },
-  {
-    name: "Prison Networks",
-    description:
-      "Inmates in prisons may have access to networks where they share knowledge about criminal activities, such as smuggling, burglary, or cybercrime.",
-  },
-  {
-    name: "Street Gangs and Criminal Organizations",
-    description:
-      "Gangs and criminal syndicates often have their own networks where they share information about crimes, recruit new members, and plan illegal activities.",
-  },
-  {
-    name: "Social Media",
-    description:
-      "While mainstream social media platforms typically monitor and remove illegal content, certain channels or groups within them may still serve as places where criminals exchange information, especially in encrypted or private groups.",
-  },
-  {
-    name: "Online Forums and Chat Rooms",
-    description:
-      "There are various online forums and chat rooms where individuals discuss illegal activities, such as hacking forums, drug trafficking forums, or forums dedicated to specific types of crime.",
-  },
-  {
-    name: "Underground Markets",
-    description:
-      "Some criminals may gather information by physically visiting underground markets where illegal goods or services are bought and sold. These markets may exist in physical locations or operate online.",
-  },
-  {
-    name: "Criminal Training Camps",
-    description: "In some cases, criminals may attend training camps or workshops where they learn new techniques or strategies for committing crimes.",
-  },
-  {
-    name: "Library and Bookstores",
-    description:
-      "While less common in the digital age, some individuals may still turn to books and publications for information on criminal activities, such as guides on lock-picking, hacking, or fraud.",
-  },
-  {
-    name: "Informal Networks and Word of Mouth",
-    description:
-      "Criminals may also gather information through informal networks, such as friends, family members, or acquaintances who have experience in illegal activities.",
-  },
-  {
-    name: "Black Market Contacts",
-    description:
-      "Individuals involved in criminal activities may have contacts within the black market who can provide information or resources related to their illicit endeavors.",
+    name: "r/crimes",
+    description: "you can learn about crimes here on reddit, the front page of the internet",
+    buildingPrereqs: [],
+    researchPrereqs: [],
+    baseTimeToCompleteMS: 600000,
   },
 ];
 
@@ -231,9 +191,10 @@ class researchObjectClass {
     this.name = researchConst[index].name;
     this.researchIndex = index;
     this.researchIndexID = "researchIndexID_" + index;
-    this.prerequisites = [];
     this.visible = true;
     this.level = 1;
+    this.buildingPrereqs = [];
+    this.researchPrereqs = [];
   }
 }
 
@@ -247,11 +208,9 @@ function getNumberFromCrimeID(crimeID) {
   // console.log(crimeCompleted);
   try {
     return parseInt(crimeID.slice(13));
-  }
-  catch (error) {
+  } catch (error) {
     console.log(crimeID + " " + error);
   }
-
 }
 
 // make one event listener across whole gizmo Container
@@ -360,8 +319,6 @@ function addNewGizmoToContainer(index) {
   newGizmo.appendChild(newGizmoTimesDone);
   newGizmoTimesDone.classList.add("criminalText");
   crimeArray[index].timesDoneElement = newGizmoTimesDone;
-
-
 }
 // create some gizmos
 for (let index = 0; index < crimesConst.length; index++) {
@@ -392,9 +349,47 @@ for (let index = 0; index < researchArray.length; index++) {
   researchArray[index].element = researchCreateElement(index);
 }
 
-// create facility arrays
+/*
 
-//called upon to switch tabs (display of tabs only)
+this is all the tab code
+
+*/
+// set up event listener
+let tabContainerElement = document.getElementById("tabContainerID");
+tabContainerElement.addEventListener("click", (elementClicked) => tabClicked(elementClicked));
+
+//creates an array with the tab elements
+function setTabElements() {
+  for (let index = 0; index < 5; index++) {
+    let constructedID = "tab" + letterArray[index] + "_ID";
+    tabElement[index] = document.getElementById(constructedID);
+  }
+}
+
+// callback function to deal with what to do when a tab is clicked
+function tabClicked(elementClicked) {
+  let tabClickedID = elementClicked.target.id;
+  switch (tabClickedID) {
+    case "tabA_ID":
+      setActiveTab(0);
+      break;
+    case "tabB_ID":
+      setActiveTab(1);
+      break;
+    case "tabC_ID":
+      setActiveTab(2);
+      break;
+    case "tabD_ID":
+      setActiveTab(3);
+      break;
+    case "tabE_ID":
+      setActiveTab(4);
+      break;
+  }
+}
+
+// sets one tab as active and the rest as inactive
+// also then switches and appends elements depending on tab
 function setActiveTab(tabNumber) {
   // clear all tabs to inactive
   for (let index = 0; index < tabTotalNumber; index++) {
@@ -404,7 +399,7 @@ function setActiveTab(tabNumber) {
   tabElement[tabNumber].setAttribute("data-tabState", "active");
   // now switch background colour to reflect active tab
   document.getElementById("gizmoContainer_ID").setAttribute("data-backgroundColor", tabNumber);
-  clearTabs();
+  clearGizmoElements();
   switch (tabNumber) {
     case 0:
       for (let index = 0; index < crimeArray.length; index++) {
@@ -431,36 +426,30 @@ function setActiveTab(tabNumber) {
       break;
   }
 }
+// removes all the elements from the main game box
+function clearGizmoElements() {
+  while (gizmoContainerElement.firstChild) {
+    gizmoContainerElement.removeChild(gizmoContainerElement.lastChild);
+  }
+}
+let letterArray = ["A", "B", "C", "D", "E"];
+let tabElement = [];
 
-// // what to do if a gizmo clicked
-// // incl switching thru what element class clicked
-// function gizmoClicked(elementClickedPointerEvent) {
-//   // gizmoClicked_Start(elementClickedPointerEvent);
-//   // find out the crimeID of the gizmo
-//   let crimeIDofClickedGizmo = getCrimeIDofGizmo(elementClickedPointerEvent);
+setTabElements();
 
-//   let crimeIDNumberofClickedGizmo = getNumberFromCrimeID(crimeIDofClickedGizmo);
+let tabTotalNumber = tabElement.length;
 
-//   // console.log(crimeIDofClickedGizmo + " " + crimeIDNumberofClickedGizmo);
-//   // console.log(elementClickedPointerEvent);
-//   let polarity = elementClickedPointerEvent.target.getAttribute("data-polarity");
-//   let target = elementClickedPointerEvent.target;
-//   // console.log(elementClickedPointerEvent.target);
-//   // do nothing if cant find an id
-//   if (crimeIDofClickedGizmo == null) {
-//     return;
-//   }
+setActiveTab(0);
 
-//   // switch on class of clicked element
-//   let gizmoClass = elementClickedPointerEvent.target.getAttribute("class");
-//   switch (gizmoClass) {
-//     case "gizmoRecruitButton":
-//       recruitClicked(crimeIDNumberofClickedGizmo, polarity);
-//       break;
-//     default:
-//       break;
-//   }
-// }
+//called upon to switch tabs (display of tabs only)
+
+function showModal(infoType, index) {
+  switch (infoType) {
+    case "crime":
+      document.getElementById("infoModalContentID").innerText = crimeArray[index].description;
+      break;
+  }
+}
 
 // a more generic form of this. if anything clicked in the gizmozone
 // the click event gets passed here
@@ -468,17 +457,21 @@ function setActiveTab(tabNumber) {
 // and then once got base event, switch depending on what class of base element
 function gizmoClicked_Start(elementClickedPointerEvent) {
   let baseElementClicked = getBaseElementofGizmoClicked(elementClickedPointerEvent);
-  if (baseElementClicked == null) { return; }
+  if (baseElementClicked == null) {
+    return;
+  }
   if (baseElementClicked.classList.contains("crimeGizmo")) {
     gizmoClicked_Crime(elementClickedPointerEvent);
+  } else if (baseElementClicked.classList.contains("facilityGizmo")) {
+    gizmoClicked_Facility(elementClickedPointerEvent);
+  } else if (baseElementClicked.classList.contains("researchGizmo")) {
+    gizmoClicked_Research(elementClickedPointerEvent);
   }
 }
-
 
 function gizmoClicked_Crime(elementClickedPointerEvent) {
   let elementClickedTarget = elementClickedPointerEvent.target;
   if (elementClickedTarget.classList.contains("gizmoRecruitButton")) {
-
     let crimeIDofClickedGizmo = getCrimeIDofGizmo(elementClickedPointerEvent);
 
     let crimeIDNumberofClickedGizmo = getNumberFromCrimeID(crimeIDofClickedGizmo);
@@ -494,6 +487,9 @@ function gizmoClicked_Crime(elementClickedPointerEvent) {
       case "gizmoRecruitButton":
         recruitClicked(crimeIDNumberofClickedGizmo, polarity);
         break;
+      case "gizmoTitle":
+        showModal("crime", crimeIDNumberofClickedGizmo);
+
       default:
         break;
         console.log("recruit button");
@@ -501,9 +497,8 @@ function gizmoClicked_Crime(elementClickedPointerEvent) {
   }
 }
 
-
-
-
+function gizmoClicked_Facility(elementClickedPointerEvent) {}
+function gizmoClicked_Research(elementClickedPointerEvent) {}
 
 // when + or - buttons pressed
 function recruitClicked(index, polarity) {
@@ -588,7 +583,9 @@ function updateCrimeProgressValue(index) {
       let durationNowToFinish = dayjs(finishTime).diff(dayjs());
       let newProgress = 1 - durationNowToFinish / durationStartToFinish;
       currentCrime.progress = newProgress;
-      if (newProgress > 1) { crimeCompleted(index); }
+      if (newProgress > 1) {
+        crimeCompleted(index);
+      }
       // console.log(newProgress);
       if (index == 2) {
         // console.log(newProgress);
@@ -600,7 +597,7 @@ function updateCrimeProgressValue(index) {
 
 function initCrime(index) {
   let currentCrime = crimeArray[index];
-  currentCrime.progress = 0
+  currentCrime.progress = 0;
   currentCrime.timeCrimeStarted = dayjs();
   setCrimeCompletionTime(index);
   // console.log("start time "+dayjs(currentCrime.timeCrimeStarted).format("mm:ss:sss")+" finish "+dayjs(currentCrime.timeCrimeWillEnd).format("mm:ss:sss"))
@@ -667,8 +664,6 @@ function updateTimesDoneText(index) {
   crimeArray[index].timesDoneElement.innerHTML = "<bs>times done: " + crimeArray[index].timesDone.toFixed(0);
 }
 
-
-
 function updateMainCrimeNumbers() {
   let newHTML =
     "crime committer " +
@@ -700,27 +695,10 @@ function cpsMode(index) {
 }
 
 // initialisations before main loop
-let tabElement = [];
-tabElement[0] = document.getElementById("tabA_ID");
-tabElement[1] = document.getElementById("tabB_ID");
-tabElement[2] = document.getElementById("tabC_ID");
-tabElement[3] = document.getElementById("tabD_ID");
-let tabTotalNumber = tabElement.length;
 
-setActiveTab(0);
+// this seems ridic and it is
 
-// set up event listeners for tabs
-for (let index = 0; index < tabTotalNumber; index++) {
-  tabElement[index].addEventListener("click", () => setActiveTab(index));
-}
-
-function clearTabs() {
-  while (gizmoContainerElement.firstChild) {
-    gizmoContainerElement.removeChild(gizmoContainerElement.lastChild);
-  }
-}
-
-let colorStyle = 3;
+let colorStyle = 4;
 setColorStyle(colorStyle);
 
 updateMainCrimeNumbers();
