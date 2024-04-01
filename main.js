@@ -256,7 +256,7 @@ function getNumberFromCrimeID(crimeID) {
 
 // make one event listener across whole gizmo Container
 let gizmoContainerElement = document.getElementById("gizmoContainer_ID");
-gizmoContainerElement.addEventListener("click", (elementClicked) => gizmoClicked(elementClicked));
+gizmoContainerElement.addEventListener("click", (elementClicked) => gizmoClicked_Start(elementClicked));
 
 // the function called when there is a click anywhere in gizmozone
 
@@ -432,35 +432,35 @@ function setActiveTab(tabNumber) {
   }
 }
 
-// what to do if a gizmo clicked
-// incl switching thru what element class clicked
-function gizmoClicked(elementClickedPointerEvent) {
-  // gizmoClicked_Start(elementClickedPointerEvent);
-  // find out the crimeID of the gizmo
-  let crimeIDofClickedGizmo = getCrimeIDofGizmo(elementClickedPointerEvent);
+// // what to do if a gizmo clicked
+// // incl switching thru what element class clicked
+// function gizmoClicked(elementClickedPointerEvent) {
+//   // gizmoClicked_Start(elementClickedPointerEvent);
+//   // find out the crimeID of the gizmo
+//   let crimeIDofClickedGizmo = getCrimeIDofGizmo(elementClickedPointerEvent);
 
-  let crimeIDNumberofClickedGizmo = getNumberFromCrimeID(crimeIDofClickedGizmo);
+//   let crimeIDNumberofClickedGizmo = getNumberFromCrimeID(crimeIDofClickedGizmo);
 
-  // console.log(crimeIDofClickedGizmo + " " + crimeIDNumberofClickedGizmo);
-  // console.log(elementClickedPointerEvent);
-  let polarity = elementClickedPointerEvent.target.getAttribute("data-polarity");
-  let target = elementClickedPointerEvent.target;
-  // console.log(elementClickedPointerEvent.target);
-  // do nothing if cant find an id
-  if (crimeIDofClickedGizmo == null) {
-    return;
-  }
+//   // console.log(crimeIDofClickedGizmo + " " + crimeIDNumberofClickedGizmo);
+//   // console.log(elementClickedPointerEvent);
+//   let polarity = elementClickedPointerEvent.target.getAttribute("data-polarity");
+//   let target = elementClickedPointerEvent.target;
+//   // console.log(elementClickedPointerEvent.target);
+//   // do nothing if cant find an id
+//   if (crimeIDofClickedGizmo == null) {
+//     return;
+//   }
 
-  // switch on class of clicked element
-  let gizmoClass = elementClickedPointerEvent.target.getAttribute("class");
-  switch (gizmoClass) {
-    case "gizmoRecruitButton":
-      recruitClicked(crimeIDNumberofClickedGizmo, polarity);
-      break;
-    default:
-      break;
-  }
-}
+//   // switch on class of clicked element
+//   let gizmoClass = elementClickedPointerEvent.target.getAttribute("class");
+//   switch (gizmoClass) {
+//     case "gizmoRecruitButton":
+//       recruitClicked(crimeIDNumberofClickedGizmo, polarity);
+//       break;
+//     default:
+//       break;
+//   }
+// }
 
 // a more generic form of this. if anything clicked in the gizmozone
 // the click event gets passed here
