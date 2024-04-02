@@ -49,30 +49,23 @@
   font-family: "Source Code Pro", monospace;
   background: var(--background-color);
   font-weight: 400;
-  color: var(--palette-6);
+  color: var(--color-B);
   line-height: 70%;
   user-select: none;
 }
 
 a {
-  color: var(--palette-4dim);
+  color: var(--color-D);
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--palette-4bright);
+  color: var(--color-C);
 }
 
 pre {
   font-family: "Share Tech Mono", monospace;
   font-family: "Courier Prime", monospace;
-}
-
-h1 {
-  color: white;
-  text-transform: uppercase;
-  font-style: italic;
-  font-weight: 1000;
 }
 
 #everythingContainerID {
@@ -86,42 +79,38 @@ h1 {
 }
 
 .modalContainerClass {
-  justify-content: center;
   display: none;
   position: fixed;
   z-index: 1;
-  margin: auto;
   left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(251, 141, 63, 0.9);
-  background: linear-gradient(0, rgba(251, 141, 63, 0.95) 0%, rgba(252, 70, 107, 0.95) 100%);
+  width: 100;
+  height: 100;
+  background-color: var(--color-C);
   color: black;
 }
 
-.modalContentClass {
-  border-style: solid;
-  margin: 5vh;
-  padding: 5vh;
-  font-size: 2em;
-  font-weight: 800;
-  line-height: normal;
+.modalContainerContentClass {
 }
 
 #titleContainerID {
   display: flex;
   margin: 10 auto;
+  /* flex-direction: column; */
   flex-grow: 0;
   flex-shrink: 0;
+  /* justify-content: space-between; */
   max-width: 90vw;
   max-height: 25vh;
   border-style: solid;
+  border-color: var(--border-color);
   align-content: flex-start;
   flex-flow: row;
+  /* background: rgba(0, 0, 0, 0); */
   border-style: dotted;
-  border-color: var(--palette-5);
+  border-color: var(--color-D);
   overflow: hidden;
+  /* margin-bottom: 0.5vh; */
 }
 
 #titleID {
@@ -136,26 +125,30 @@ h1 {
 #titleAndVersionID {
   padding: 0.5vh;
   line-height: 100%;
-  color: var(--palette-3dim);
+  color: var(--color-F);
 }
 
 #titleLinksID {
   text-transform: uppercase;
   font-size: 1.5vh;
+  /* color: white; */
+  /* writing-mode: vertical-lr; */
   align-self: top;
   text-align: center;
+  /* font-family: "DynaPuff", cursive; */
   background-color: rgba(0, 0, 0, 0);
   padding: 1vh;
-
+  z-index: 2;
   position: fixed;
   right: 5vw;
-  color: var(--palette-3dim);
+  color: var(--color-F);
 }
 
 #personnelID {
   border-style: dotted;
   border-top: 0;
-  border-color: var(--palette-6);
+  /* border-width: 0.2vh; */
+  border-color: var(--color-D);
   padding: 0.5em;
 }
 
@@ -165,6 +158,7 @@ h1 {
   justify-content: space-around;
   flex-direction: column;
   height: 85vh;
+  /* overflow: scroll; */
 }
 
 #tabContainerID {
@@ -187,6 +181,7 @@ h1 {
   font-style: italic;
   text-transform: uppercase;
   letter-spacing: -0.05em;
+  background-color: var(--color-G);
 }
 
 .tabs[data-tabState="active"] {
@@ -243,6 +238,7 @@ h1 {
   border-color: var(--tab5-Active);
 }
 .gizmoContainer {
+  background-color: var(--color-G);
   background-color: black;
   margin: 0 0.2vh 0.2vh 0.2vh;
   display: flex;
@@ -263,17 +259,16 @@ h1 {
   background-color: #333333;
   width: 15vh;
   height: 15vh;
-  margin: 1vh;
+  margin: 0.5vh;
   letter-spacing: -0.05em;
-  /* border-style: solid; */
+  border-style: solid;
   border-width: 0.5vh;
-  border-color: var(--palette-2vdim);
+  border-color: var(--color-A2);
 }
 
 .gizmoTitle {
-  background-color: var(--palette-5);
-  color: var(--palette-5);
-  color: white;
+  background-color: var(--color-D4);
+  color: var(--color-D);
   padding: 0.5vh;
   /* border-width: 0.1vh;
   border-style: solid;
@@ -283,18 +278,11 @@ h1 {
   justify-items: right;
   text-align: center;
   text-transform: uppercase;
-  font-size: 1.2em;
-}
-
-.gizmoTitle:hover {
-  background-color: var(--palette-5bright);
-  background: linear-gradient(0deg, var(--palette-5) 0%, var(--palette-5bright) 100%);
-  background: radial-gradient(circle, var(--palette-5bright) 0%, var(--palette-5) 100%);
 }
 
 .gizmoProgress {
-  background-color: var(--palette-4);
-  /* margin: 0.5vh 0 0 0; */
+  background-color: var(--color-D2);
+  margin: 0.5vh 0 0 0;
   padding: 0.5vh;
   color: white;
 }
@@ -306,28 +294,26 @@ h1 {
 .gizmoRecruitButton {
   padding: 0.3em;
   font-size: 2em;
-  background-color: var(--palette-2dim);
+  background-color: var(--color-E);
   flex: 1;
   text-align: center;
 }
 
 .gizmoRecruitButton[data-buttonState="active"] {
-  color: var(--palette-5bright);
+  color: var(--color-D);
 }
 .gizmoRecruitButton[data-buttonState="inactive"] {
-  color: var(--palette-5vdim);
+  color: var(--color-D3);
 }
 
 .gizmoRecruitButton[data-buttonState="active"]:hover {
-  background-color: var(--palette-2);
-  background: radial-gradient(circle, var(--palette-2bright) 0%, var(--palette-2dim) 75%);
-  color: white;
+  background-color: var(--color-E2);
+  color: var(--color-B);
 }
 
 .criminalText {
   text-align: center;
   line-height: 1em;
-  color: white;
 }
 
 /* width */
@@ -345,11 +331,11 @@ h1 {
 /* Handle */
 
 ::-webkit-scrollbar-thumb {
-  background: var(--palette-6);
+  background: var(--color-A);
 }
 
 /* Handle on hover */
 
 ::-webkit-scrollbar-thumb:hover {
-  background: white;
+  background: var(--color-B);
 }

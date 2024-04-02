@@ -84,6 +84,8 @@ class crimeObjectClass {
     this.timesDoneElement = null;
     this.timesDone = 0;
     this.cpsRate = 0.0;
+    this.buildingPrereqs = [];
+    this.researchPrereqs = [];
   }
 }
 // generate array of crimes
@@ -162,7 +164,7 @@ class facilityObjectClass {
     this.facilityIndex = index;
     this.facilityIndexID = "facilityIndexID_" + index;
     this.visible = true;
-    this.built = false;
+    this.done = false;
     this.level = 1;
     this.element = null;
     this.buildingPrereqs = [];
@@ -192,6 +194,7 @@ class researchObjectClass {
     this.researchIndex = index;
     this.researchIndexID = "researchIndexID_" + index;
     this.visible = true;
+    this.done = false;
     this.level = 1;
     this.buildingPrereqs = [];
     this.researchPrereqs = [];
@@ -350,105 +353,36 @@ for (let index = 0; index < researchArray.length; index++) {
 }
 
 /*
-
 this is all the tab code
-
 */
 // set up event listener
 let tabContainerElement = document.getElementById("tabContainerID");
 tabContainerElement.addEventListener("click", (elementClicked) => tabClicked(elementClicked));
-
-//creates an array with the tab elements
-function setTabElements() {
-  for (let index = 0; index < 5; index++) {
-    let constructedID = "tab" + letterArray[index] + "_ID";
-    tabElement[index] = document.getElementById(constructedID);
-  }
-}
-
-// callback function to deal with what to do when a tab is clicked
-function tabClicked(elementClicked) {
-  let tabClickedID = elementClicked.target.id;
-  switch (tabClickedID) {
-    case "tabA_ID":
-      setActiveTab(0);
-      break;
-    case "tabB_ID":
-      setActiveTab(1);
-      break;
-    case "tabC_ID":
-      setActiveTab(2);
-      break;
-    case "tabD_ID":
-      setActiveTab(3);
-      break;
-    case "tabE_ID":
-      setActiveTab(4);
-      break;
-  }
-}
-
-// sets one tab as active and the rest as inactive
-// also then switches and appends elements depending on tab
-function setActiveTab(tabNumber) {
-  // clear all tabs to inactive
-  for (let index = 0; index < tabTotalNumber; index++) {
-    tabElement[index].setAttribute("data-tabState", "inactive");
-  }
-  // now set which one active
-  tabElement[tabNumber].setAttribute("data-tabState", "active");
-  // now switch background colour to reflect active tab
-  document.getElementById("gizmoContainer_ID").setAttribute("data-backgroundColor", tabNumber);
-  clearGizmoElements();
-  switch (tabNumber) {
-    case 0:
-      for (let index = 0; index < crimeArray.length; index++) {
-        if (crimeArray[index].visible == true) {
-          gizmoContainerElement.appendChild(crimeArray[index].containerElement);
-        }
-      }
-      break;
-    case 1:
-      for (let index = 0; index < facilityArray.length; index++) {
-        if (facilityArray[index].visible == true) {
-          gizmoContainerElement.appendChild(facilityArray[index].element);
-        }
-      }
-      break;
-    case 2:
-      for (let index = 0; index < researchArray.length; index++) {
-        if (researchArray[index].visible == true) {
-          gizmoContainerElement.appendChild(researchArray[index].element);
-        }
-      }
-      break;
-    case 3:
-      break;
-  }
-}
-// removes all the elements from the main game box
-function clearGizmoElements() {
-  while (gizmoContainerElement.firstChild) {
-    gizmoContainerElement.removeChild(gizmoContainerElement.lastChild);
-  }
-}
+// create arrays
 let letterArray = ["A", "B", "C", "D", "E"];
 let tabElement = [];
+setTabElements(); // assign elements
+setActiveTab(0); // init tabs
+/*
+all other tab code in tabCode.js
+*/
 
-setTabElements();
-
-let tabTotalNumber = tabElement.length;
-
-setActiveTab(0);
-
-//called upon to switch tabs (display of tabs only)
-
+let modalContainerElement = document.getElementById("infoModalContainerID");
+let modalContentElement = document.getElementById("infoModalContentID");
 function showModal(infoType, index) {
   switch (infoType) {
     case "crime":
-      document.getElementById("infoModalContentID").innerText = crimeArray[index].description;
+      let newHTML = "<h1>" + crimesConst[index].crime + "</h1><br><br>" + crimesConst[index].description;
+      modalContentElement.innerHTML = newHTML;
+      modalContainerElement.style.display = "block";
       break;
   }
+}
+
+modalContainerElement.addEventListener("click", () => closeModal());
+
+function closeModal() {
+  modalContainerElement.style.display = "none";
 }
 
 // a more generic form of this. if anything clicked in the gizmozone
@@ -471,29 +405,24 @@ function gizmoClicked_Start(elementClickedPointerEvent) {
 
 function gizmoClicked_Crime(elementClickedPointerEvent) {
   let elementClickedTarget = elementClickedPointerEvent.target;
-  if (elementClickedTarget.classList.contains("gizmoRecruitButton")) {
-    let crimeIDofClickedGizmo = getCrimeIDofGizmo(elementClickedPointerEvent);
+  let crimeIDofClickedGizmo = getCrimeIDofGizmo(elementClickedPointerEvent);
+  let crimeIDNumberofClickedGizmo = getNumberFromCrimeID(crimeIDofClickedGizmo);
+  // manage plus and minus buttons
+  if (crimeIDofClickedGizmo == null) {
+    return;
+  }
 
-    let crimeIDNumberofClickedGizmo = getNumberFromCrimeID(crimeIDofClickedGizmo);
-    if (crimeIDofClickedGizmo == null) {
-      return;
-    }
+  let gizmoClass = elementClickedTarget.getAttribute("class");
+  switch (gizmoClass) {
+    case "gizmoRecruitButton":
+      let polarity = elementClickedTarget.getAttribute("data-polarity");
+      recruitClicked(crimeIDNumberofClickedGizmo, polarity);
+      break;
+    case "gizmoTitle":
+      showModal("crime", crimeIDNumberofClickedGizmo);
 
-    let polarity = elementClickedPointerEvent.target.getAttribute("data-polarity");
-    let target = elementClickedPointerEvent.target;
-
-    let gizmoClass = elementClickedPointerEvent.target.getAttribute("class");
-    switch (gizmoClass) {
-      case "gizmoRecruitButton":
-        recruitClicked(crimeIDNumberofClickedGizmo, polarity);
-        break;
-      case "gizmoTitle":
-        showModal("crime", crimeIDNumberofClickedGizmo);
-
-      default:
-        break;
-        console.log("recruit button");
-    }
+    default:
+      break;
   }
 }
 
@@ -694,12 +623,58 @@ function cpsMode(index) {
   updateTimesDoneText(index);
 }
 
+function calculateVisibility() {
+  crimeArray.forEach((element) => {
+    if (element.visible == true) {
+      return;
+    }
+    let buildingPrereqs = element.buildingPrereqs;
+    let researchPrereqs = element.researchPrereqs;
+    let buildingOK = false;
+    let researchOK = false;
+
+    if (buildingPrereqs.length == 0) {
+      buildingOK = true;
+    } else {
+      buildingPrereqs.forEach((bPreReqs) => {
+        if (bPreReqs.done == false) {
+          buildingOK = false;
+          return;
+        }
+        elseif(bPreReqs == true);
+        {
+          buildingOK = true;
+        }
+      });
+    }
+
+    if ((researchPrereqs.length = 0)) {
+      researchOK = true;
+      return;
+    } else {
+      researchPrereqs.forEach((rPreReqs) => {
+        if (rPreReqs.done == flase) {
+          researchOK = false;
+          return;
+        }
+        elseif(rPreReqs == true);
+        {
+          buildingOK = true;
+        }
+      });
+    }
+    if (buildingOK == true && researchOK == true) {
+      element.visible = true;
+    }
+  });
+}
+
 // initialisations before main loop
 
 // this seems ridic and it is
 
-let colorStyle = 4;
-setColorStyle(colorStyle);
+setColorStyle(0);
+setGamePalette(0);
 
 updateMainCrimeNumbers();
 updateCriminalNumbers();
