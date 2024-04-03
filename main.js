@@ -231,6 +231,36 @@ function createCrimeModalText(index) {
   if (crimesConst[index].mpc > 0) {
     newHTML += "<br>money per crime: " + crimesConst[index].mpc;
   }
+  let finishTime = "";
+  if (crimeArray[index].timeCrimeWillEnd > 0) {
+    let durationNowToFinish = dayjs(crimeArray[index].timeCrimeWillEnd).diff(dayjs());
+    durationNowToFinish = 500000000;
+    if (durationNowToFinish < 432000000) { // if less than 5 days
+      finishTime = dayjs(crimeArray[index].timeCrimeWillEnd, "millisecond").format("h:mma on dddd");
+    } else {
+      let day = dayjs(crimeArray[index].timeCrimeWillEnd, "millsecond").format("D");
+      let ordinal = "";
+      switch (day) {
+        case "1":
+          ordinal = "st";
+          break;
+        case "2":
+          ordinal = "nd";
+          break;
+        case "3":
+          ordinal = "rd"
+          break;
+        default:
+          ordinal = "th";
+          break;
+      }
+
+
+      finishTime = dayjs(crimeArray[index].timeCrimeWillEnd, "millisecond").format("h:mma D") + ordinal + dayjs(crimeArray[index].timeCrimeWillEnd, "millisecond").format(" MMM YYYY");
+
+    }
+    newHTML += "<br><br>crime will complete at:<br>" + finishTime;
+  }
   return newHTML;
 }
 
@@ -275,8 +305,8 @@ function gizmoClicked_Crime(elementClickedPointerEvent) {
   }
 }
 
-function gizmoClicked_Facility(elementClickedPointerEvent) {}
-function gizmoClicked_Research(elementClickedPointerEvent) {}
+function gizmoClicked_Facility(elementClickedPointerEvent) { }
+function gizmoClicked_Research(elementClickedPointerEvent) { }
 
 // when + or - buttons pressed
 function recruitClicked(index, polarity) {
@@ -426,6 +456,8 @@ function getCrimeTimeLeft(index) {
     currentCrime.timeCrimeWillEnd = dayjs().add(dayjs(50000, "millisecond"));
   }
   // console.log(timeLeft);
+
+
   return dayjs(timeLeft).format("mm:ss");
 }
 
