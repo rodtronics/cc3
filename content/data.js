@@ -16,17 +16,21 @@ class criminalsClass {
 let criminals = new criminalsClass();
 // crime data
 
+// ttc: time to complete (in ms)
+// mpc: money earned per crime
 const crimesConst = [
   {
     crime: "Stealing Candy from a Baby",
-    description: "It's just another reminder that even the smallest opponents can leave you feeling like a total loser.",
+    description: "It's just another reminder that even the smallest opponents can leave you feeling like a total loser",
     ttc: 20000,
+    mpc: 1,
   },
   {
     crime: "Staying up past bedtime",
     description:
       "everyone else is snoozing away, dreaming of success and babes, while you're just scrolling through memes and regretting every life choice that brought you to this moment",
     ttc: 200000,
+    mpc: 0,
   },
 ];
 // define the class
@@ -69,64 +73,7 @@ for (let index = 0; index < crimesConst.length; index++) {
 }
 
 const facilityConst = [
-  { name: "Nightclubs", description: "Often used for illegal activities such as drug dealing, money laundering, or hosting illegal gambling." },
-  { name: "Warehouses", description: "Criminals might use warehouses for storing illegal goods such as stolen merchandise, counterfeit products, or drugs." },
-  { name: "Strip Clubs", description: "These establishments may be fronts for illegal activities such as human trafficking or prostitution." },
-  { name: "Abandoned Buildings", description: "Criminals might take over abandoned buildings to conduct various illegal activities away from public view." },
-  {
-    name: "Hotels/Motels",
-    description:
-      "These establishments can be used for illegal activities such as drug dealing, prostitution, or human trafficking due to the transient nature of their clientele.",
-  },
-  { name: "Vacation Rentals", description: "Similar to hotels, vacation rentals can be used for illegal activities due to the lack of strict oversight." },
-  { name: "Bars", description: "Some bars may serve as fronts for illegal activities such as drug dealing or illegal gambling." },
-  {
-    name: "Construction Sites",
-    description: "Criminals might use construction sites to store illegal goods or equipment or to conduct illegal activities such as theft.",
-  },
-  { name: "Car Washes", description: "Car wash businesses can be used for money laundering or as fronts for drug distribution." },
-  { name: "Storage Units", description: "Criminals might rent storage units to store illegal goods or equipment." },
-  {
-    name: "Gas Stations",
-    description: "Gas stations can be used for illegal activities such as selling stolen goods, drug dealing, or as a meeting point for criminal activities.",
-  },
-  { name: "Factories", description: "Some factories might be used for illegal manufacturing operations such as producing counterfeit goods or illegal drugs." },
-  {
-    name: "Apartment Buildings",
-    description: "Criminals might own or rent apartments within buildings to conduct illegal activities such as drug dealing or as hideouts for fugitives.",
-  },
-  {
-    name: "Pawn Shops",
-    description: "While legitimate pawn shops exist, some might engage in illegal activities such as fencing stolen goods or money laundering.",
-  },
-  {
-    name: "Warehouses",
-    description:
-      "Often located in industrial areas, warehouses can be used for various illegal activities including storing stolen goods, counterfeit products, or illegal drugs.",
-  },
-  {
-    name: "Cannabis Grow Houses",
-    description:
-      "In regions where cannabis cultivation is illegal, criminals might set up grow houses in residential or industrial areas to cultivate and distribute marijuana illegally.",
-  },
-  {
-    name: "Internet Cafes/Gaming Arcades",
-    description: "These establishments might be used for illegal online activities such as cybercrime or online gambling.",
-  },
-  {
-    name: "Churches or Religious Buildings",
-    description:
-      "While uncommon, some criminals might use religious buildings as fronts for illegal activities or as meeting places due to their perceived sanctity.",
-  },
-  {
-    name: "Vacant Lots",
-    description: "Criminals might use vacant lots for illegal activities such as dumping toxic waste or conducting illegal transactions away from public view.",
-  },
-  {
-    name: "Mobile Homes/Trailers",
-    description:
-      "Criminals might use mobile homes or trailers as temporary bases of operations for illegal activities such as drug manufacturing or human trafficking.",
-  },
+  { name: "Parent's basement", description: "Often used for illegal activities such as drug dealing, money laundering, or hosting illegal gambling." },
 ];
 
 class facilityObjectClass {

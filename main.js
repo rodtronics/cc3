@@ -135,17 +135,6 @@ for (let index = 0; index < crimesConst.length; index++) {
   }
 }
 
-function facilityCreateElement(index) {
-  let newFacilityElement = document.createElement("div");
-  newFacilityElement.innerHTML = facilityArray[index].name;
-  newFacilityElement.classList.add("gizmoBase");
-  return newFacilityElement;
-}
-
-for (let index = 0; index < facilityArray.length; index++) {
-  facilityArray[index].element = facilityCreateElement(index);
-}
-
 function researchCreateElement(index) {
   let newResearchElement = document.createElement("div");
   newResearchElement.innerHTML = researchArray[index].name;
@@ -190,14 +179,15 @@ function closeModal() {
   modalContainerElement.style.display = "none";
 }
 
-function createCrimeModalText(index) {
+function formatTime(timeInMS) {
   let formattedTime = "";
   let timeUntilComplete = 0;
-  timeUntilComplete = dayjs.duration(dayjs(crimesConst[index].ttc), "millisecond");
+  timeUntilComplete = dayjs.duration(dayjs(timeInMS), "millisecond");
   timeUntilComplete.days = timeUntilComplete.format("D");
   timeUntilComplete.hours = timeUntilComplete.format("HH");
   timeUntilComplete.minutes = timeUntilComplete.format("mm");
   timeUntilComplete.seconds = timeUntilComplete.format("ss");
+  timeUntilComplete.milliseconds = timeUntilComplete.format("sss");
   if (timeUntilComplete.days > 0) {
     formattedTime += timeUntilComplete.days + "d " + timeUntilComplete.hours + ":";
   } else if (timeUntilComplete.hours > 0) {
@@ -206,11 +196,41 @@ function createCrimeModalText(index) {
     formattedTime += timeUntilComplete.minutes + "m";
   }
   formattedTime += timeUntilComplete.seconds + "s";
+  if (timeInMS < 10000) {
+    formattedTime += timeUntilComplete.milliseconds + "ms";
+  }
+  return formattedTime;
+}
 
-  let timeToCompleteText = crimesConst[index].ttc;
+function createCrimeModalText(index) {
+  let formattedTime = formatTime(crimesConst[index].ttc);
+
+  // let timeToCompleteText = crimesConst[index].ttc;
+  let numCrims = crimeArray[index].numOfCriminals;
+
   let newHTML = "<h1>" + crimesConst[index].crime + "</h1><br><br>" + crimesConst[index].description;
-  newHTML = newHTML + "<br><br>base time to complete: " + formattedTime + "<br><br>criminals on the job: " + crimeArray[index].criminals;
+  newHTML += "<br><br>base time to complete: " + formattedTime + "<br><br>criminals on the job: " + numCrims + "<br>";
+  let newCompletionTime = "";
+  switch (crimeArray[index].state) {
+    case 0: // no crims
+      break;
+    case 1: // running
+      if (numCrims > 1) {
+        newCompletionTime = "new completion time: " + formatTime(crimesConst[index].ttc / crimeArray[index].numOfCriminals);
+      }
+      break;
+    case 2: // never ran
+      break;
+    case 3: //cps mode
+      newCompletionTime = "committed per second: " + crimeArray[index].cpsRate.toFixed(3).replace(/\.?0*$/, "");
 
+      break;
+  }
+  newHTML += newCompletionTime;
+
+  if (crimesConst[index].mpc > 0) {
+    newHTML += "<br>money per crime: " + crimesConst[index].mpc;
+  }
   return newHTML;
 }
 
