@@ -108,7 +108,7 @@ h1 {
   font-weight: 800;
   line-height: 1em;
   background: #017fa2;
-  background: linear-gradient(0,rgba(1, 127, 162, 1) 0%,rgba(100,178,240,1)100%)
+  background: linear-gradient(0, rgba(1, 127, 162, 1) 0%, rgba(100, 178, 240, 1) 100%);
 }
 
 #titleContainerID {
@@ -297,7 +297,8 @@ h1 {
 .gizmoProgress {
   background-color: var(--palette-4);
   /* margin: 0.5vh 0 0 0; */
-  padding: 0.5vh;
+  padding: 0.2em;
+  line-height: 1em;
   color: white;
 }
 

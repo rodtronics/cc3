@@ -1,3 +1,89 @@
+!(function (r, e) {
+  "object" == typeof exports && "undefined" != typeof module
+    ? (module.exports = e())
+    : "function" == typeof define && define.amd
+    ? define(e)
+    : ((r = "undefined" != typeof globalThis ? globalThis : r || self).dayjs_plugin_relativeTime = e());
+})(this, function () {
+  "use strict";
+  return function (r, e, t) {
+    r = r || {};
+    var n = e.prototype,
+      o = {
+        future: "in %s",
+        past: "%s ago",
+        s: "a few seconds",
+        m: "a minute",
+        mm: "%d minutes",
+        h: "an hour",
+        hh: "%d hours",
+        d: "a day",
+        dd: "%d days",
+        M: "a month",
+        MM: "%d months",
+        y: "a year",
+        yy: "%d years",
+      };
+    function i(r, e, t, o) {
+      return n.fromToBase(r, e, t, o);
+    }
+    (t.en.relativeTime = o),
+      (n.fromToBase = function (e, n, i, d, u) {
+        for (
+          var f,
+            a,
+            s,
+            l = i.$locale().relativeTime || o,
+            h = r.thresholds || [
+              { l: "s", r: 44, d: "second" },
+              { l: "m", r: 89 },
+              { l: "mm", r: 44, d: "minute" },
+              { l: "h", r: 89 },
+              { l: "hh", r: 21, d: "hour" },
+              { l: "d", r: 35 },
+              { l: "dd", r: 25, d: "day" },
+              { l: "M", r: 45 },
+              { l: "MM", r: 10, d: "month" },
+              { l: "y", r: 17 },
+              { l: "yy", d: "year" },
+            ],
+            m = h.length,
+            c = 0;
+          c < m;
+          c += 1
+        ) {
+          var y = h[c];
+          y.d && (f = d ? t(e).diff(i, y.d, !0) : i.diff(e, y.d, !0));
+          var p = (r.rounding || Math.round)(Math.abs(f));
+          if (((s = f > 0), p <= y.r || !y.r)) {
+            p <= 1 && c > 0 && (y = h[c - 1]);
+            var v = l[y.l];
+            u && (p = u("" + p)), (a = "string" == typeof v ? v.replace("%d", p) : v(p, n, y.l, s));
+            break;
+          }
+        }
+        if (n) return a;
+        var M = s ? l.future : l.past;
+        return "function" == typeof M ? M(a) : M.replace("%s", a);
+      }),
+      (n.to = function (r, e) {
+        return i(r, e, this, !0);
+      }),
+      (n.from = function (r, e) {
+        return i(r, e, this);
+      });
+    var d = function (r) {
+      return r.$u ? t.utc() : t();
+    };
+    (n.toNow = function (r) {
+      return this.to(d(this), r);
+    }),
+      (n.fromNow = function (r) {
+        return this.from(d(this), r);
+      });
+  };
+});
+
 !(function (t, s) {
   "object" == typeof exports && "undefined" != typeof module
     ? (module.exports = s())
@@ -8,8 +94,7 @@
   "use strict";
   var t,
     s,
-    n =
-      /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g,
+    n = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g,
     i =
       /^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$/,
     e = {
@@ -56,8 +141,7 @@
       function h(t, s, n) {
         var r = this;
         if (((this.$d = {}), (this.$l = n), s)) return o(t * e[u(s)], this);
-        if ("number" == typeof t)
-          return (this.$ms = t), this.parseFromMilliseconds(), this;
+        if ("number" == typeof t) return (this.$ms = t), this.parseFromMilliseconds(), this;
         if ("object" == typeof t)
           return (
             Object.keys(t).forEach(function (s) {
@@ -118,24 +202,9 @@
             o = this.$d.seconds || 0;
           this.$d.milliseconds && (o += this.$d.milliseconds / 1e3);
           var u = d(o, "S"),
-            h =
-              t.negative ||
-              s.negative ||
-              i.negative ||
-              e.negative ||
-              r.negative ||
-              u.negative,
+            h = t.negative || s.negative || i.negative || e.negative || r.negative || u.negative,
             a = e.format || r.format || u.format ? "T" : "",
-            c =
-              (h ? "-" : "") +
-              "P" +
-              t.format +
-              s.format +
-              i.format +
-              a +
-              e.format +
-              r.format +
-              u.format;
+            c = (h ? "-" : "") + "P" + t.format + s.format + i.format + a + e.format + r.format + u.format;
           return "P" === c || "-P" === c ? "P0D" : c;
         }),
         (c.toJSON = function () {
@@ -169,19 +238,11 @@
         (c.get = function (t) {
           var s = this.$ms,
             n = u(t);
-          return (
-            "milliseconds" === n
-              ? (s %= 1e3)
-              : (s = "weeks" === n ? a(s / e[n]) : this.$d[n]),
-            0 === s ? 0 : s
-          );
+          return "milliseconds" === n ? (s %= 1e3) : (s = "weeks" === n ? a(s / e[n]) : this.$d[n]), 0 === s ? 0 : s;
         }),
         (c.add = function (t, s, n) {
           var i;
-          return (
-            (i = s ? t * e[u(s)] : r(t) ? t.$ms : o(t, this).$ms),
-            o(this.$ms + i * (n ? -1 : 1), this)
-          );
+          return (i = s ? t * e[u(s)] : r(t) ? t.$ms : o(t, this).$ms), o(this.$ms + i * (n ? -1 : 1), this);
         }),
         (c.subtract = function (t, s) {
           return this.add(t, s, !0);
@@ -263,5 +324,38 @@
       (i.prototype.subtract = function (t, s) {
         return r(t) && (t = t.asMilliseconds()), h.bind(this)(t, s);
       });
+  };
+});
+
+!(function (o, e) {
+  "object" == typeof exports && "undefined" != typeof module
+    ? (module.exports = e())
+    : "function" == typeof define && define.amd
+    ? define(e)
+    : ((o = "undefined" != typeof globalThis ? globalThis : o || self).dayjs_plugin_isTomorrow = e());
+})(this, function () {
+  "use strict";
+  return function (o, e, t) {
+    e.prototype.isTomorrow = function () {
+      var o = "YYYY-MM-DD",
+        e = t().add(1, "day");
+      return this.format(o) === e.format(o);
+    };
+  };
+});
+!(function (e, o) {
+  "object" == typeof exports && "undefined" != typeof module
+    ? (module.exports = o())
+    : "function" == typeof define && define.amd
+    ? define(o)
+    : ((e = "undefined" != typeof globalThis ? globalThis : e || self).dayjs_plugin_isToday = o());
+})(this, function () {
+  "use strict";
+  return function (e, o, t) {
+    o.prototype.isToday = function () {
+      var e = "YYYY-MM-DD",
+        o = t();
+      return this.format(e) === o.format(e);
+    };
   };
 });

@@ -12,10 +12,13 @@ let money = 0;
 let refreshRate = 50; //ms between frames
 
 // extracts the integer number from the ID word
-function getNumberFromCrimeID(crimeID) {
+function getNumberFromID(crimeID) {
   // console.log(crimeCompleted);
+
+  let position = crimeID.search("_");
+
   try {
-    return parseInt(crimeID.slice(13));
+    return parseInt(crimeID.slice(position + 1));
   } catch (error) {
     console.log(crimeID + " " + error);
   }
@@ -30,7 +33,7 @@ gizmoContainerElement.addEventListener("click", (elementClicked) => gizmoClicked
 // this function walks up element chain until it
 // works out what the ID of the gizmo is
 // or returns null
-function getCrimeIDofGizmo(elementClickedPointerEvent) {
+function getGizmoID(elementClickedPointerEvent) {
   // this function takes a pointer event
   // first thing is get the target of the event and
   // then just work on targets and their parents
@@ -135,13 +138,6 @@ for (let index = 0; index < crimesConst.length; index++) {
   }
 }
 
-function researchCreateElement(index) {
-  let newResearchElement = document.createElement("div");
-  newResearchElement.innerHTML = researchArray[index].name;
-  newResearchElement.classList.add("gizmoBase");
-  return newResearchElement;
-}
-
 for (let index = 0; index < researchArray.length; index++) {
   researchArray[index].element = researchCreateElement(index);
 }
@@ -161,107 +157,47 @@ setActiveTab(0); // init tabs
 all other tab code in tabCode.js
 */
 
-let modalContainerElement = document.getElementById("infoModalContainerID");
-let modalContentElement = document.getElementById("infoModalContentID");
-function showModal(infoType, index) {
-  switch (infoType) {
-    case "crime":
-      let newHTML = createCrimeModalText(index);
-      modalContentElement.innerHTML = newHTML;
-      modalContainerElement.style.display = "block";
-      break;
-  }
-}
-
-modalContainerElement.addEventListener("click", () => closeModal());
-
-function closeModal() {
-  modalContainerElement.style.display = "none";
-}
-
 function formatTime(timeInMS) {
   let formattedTime = "";
   let timeUntilComplete = 0;
   timeUntilComplete = dayjs.duration(dayjs(timeInMS), "millisecond");
   timeUntilComplete.days = timeUntilComplete.format("D");
-  timeUntilComplete.hours = timeUntilComplete.format("HH");
+  timeUntilComplete.hours = timeUntilComplete.format("H");
   timeUntilComplete.minutes = timeUntilComplete.format("mm");
   timeUntilComplete.seconds = timeUntilComplete.format("ss");
   timeUntilComplete.milliseconds = timeUntilComplete.format("sss");
+
   if (timeUntilComplete.days > 0) {
-    formattedTime += timeUntilComplete.days + "d " + timeUntilComplete.hours + ":";
+    formattedTime += timeUntilComplete.days + "d " + timeUntilComplete.hours + "h " + timeUntilComplete.minutes + "m ";
   } else if (timeUntilComplete.hours > 0) {
-    formattedTime += timeUntilComplete.hours + "h";
+    formattedTime += timeUntilComplete.hours + "h " + timeUntilComplete.minutes + "m ";
   } else if (timeUntilComplete.minutes > 0) {
-    formattedTime += timeUntilComplete.minutes + "m";
+    formattedTime += timeUntilComplete.minutes + "m ";
   }
   formattedTime += timeUntilComplete.seconds + "s";
-  if (timeInMS < 10000) {
-    formattedTime += timeUntilComplete.milliseconds + "ms";
-  }
+  // if (timeInMS < 10000) {
+  //   formattedTime += timeUntilComplete.milliseconds + "ms";
+  // }
   return formattedTime;
 }
 
-function createCrimeModalText(index) {
-  let formattedTime = formatTime(crimesConst[index].ttc);
-
-  // let timeToCompleteText = crimesConst[index].ttc;
-  let numCrims = crimeArray[index].numOfCriminals;
-
-  let newHTML = "<h1>" + crimesConst[index].crime + "</h1><br><br>" + crimesConst[index].description;
-  newHTML += "<br><br>base time to complete: " + formattedTime + "<br><br>criminals on the job: " + numCrims + "<br>";
-  let newCompletionTime = "";
-  switch (crimeArray[index].state) {
-    case 0: // no crims
+function getOrdinal(value) {
+  let ordinal = "";
+  switch (value) {
+    case "1":
+      ordinal = "st";
       break;
-    case 1: // running
-      if (numCrims > 1) {
-        newCompletionTime = "new completion time: " + formatTime(crimesConst[index].ttc / crimeArray[index].numOfCriminals);
-      }
+    case "2":
+      ordinal = "nd";
       break;
-    case 2: // never ran
+    case "3":
+      ordinal = "rd";
       break;
-    case 3: //cps mode
-      newCompletionTime = "committed per second: " + crimeArray[index].cpsRate.toFixed(3).replace(/\.?0*$/, "");
-
+    default:
+      ordinal = "th";
       break;
   }
-  newHTML += newCompletionTime;
-
-  if (crimesConst[index].mpc > 0) {
-    newHTML += "<br>money per crime: " + crimesConst[index].mpc;
-  }
-  let finishTime = "";
-  if (crimeArray[index].timeCrimeWillEnd > 0) {
-    let durationNowToFinish = dayjs(crimeArray[index].timeCrimeWillEnd).diff(dayjs());
-    durationNowToFinish = 500000000;
-    if (durationNowToFinish < 432000000) { // if less than 5 days
-      finishTime = dayjs(crimeArray[index].timeCrimeWillEnd, "millisecond").format("h:mma on dddd");
-    } else {
-      let day = dayjs(crimeArray[index].timeCrimeWillEnd, "millsecond").format("D");
-      let ordinal = "";
-      switch (day) {
-        case "1":
-          ordinal = "st";
-          break;
-        case "2":
-          ordinal = "nd";
-          break;
-        case "3":
-          ordinal = "rd"
-          break;
-        default:
-          ordinal = "th";
-          break;
-      }
-
-
-      finishTime = dayjs(crimeArray[index].timeCrimeWillEnd, "millisecond").format("h:mma D") + ordinal + dayjs(crimeArray[index].timeCrimeWillEnd, "millisecond").format(" MMM YYYY");
-
-    }
-    newHTML += "<br><br>crime will complete at:<br>" + finishTime;
-  }
-  return newHTML;
+  return ordinal;
 }
 
 // a more generic form of this. if anything clicked in the gizmozone
@@ -284,8 +220,8 @@ function gizmoClicked_Start(elementClickedPointerEvent) {
 
 function gizmoClicked_Crime(elementClickedPointerEvent) {
   let elementClickedTarget = elementClickedPointerEvent.target;
-  let crimeIDofClickedGizmo = getCrimeIDofGizmo(elementClickedPointerEvent);
-  let crimeIDNumberofClickedGizmo = getNumberFromCrimeID(crimeIDofClickedGizmo);
+  let crimeIDofClickedGizmo = getGizmoID(elementClickedPointerEvent);
+  let crimeIDNumberofClickedGizmo = getNumberFromID(crimeIDofClickedGizmo);
   // manage plus and minus buttons
   if (crimeIDofClickedGizmo == null) {
     return;
@@ -305,8 +241,34 @@ function gizmoClicked_Crime(elementClickedPointerEvent) {
   }
 }
 
-function gizmoClicked_Facility(elementClickedPointerEvent) { }
-function gizmoClicked_Research(elementClickedPointerEvent) { }
+function gizmoClicked_Facility(elementClickedPointerEvent) {
+  let elementClickedTarget = elementClickedPointerEvent.target;
+  let facilityID = getGizmoID(elementClickedPointerEvent);
+  let facilityIDNumber = getNumberFromID(facilityID);
+  if (facilityIDNumber == null) {
+    return;
+  }
+
+  let gizmoClass = elementClickedTarget.getAttribute("class");
+  switch (gizmoClass) {
+    case "gizmoTitle":
+      showModal("facility", facilityIDNumber);
+  }
+}
+function gizmoClicked_Research(elementClickedPointerEvent) {
+  let elementClickedTarget = elementClickedPointerEvent.target;
+  let researchID = getGizmoID(elementClickedPointerEvent);
+  let researchIDNumber = getNumberFromID(researchID);
+  if (researchIDNumber == null) {
+    return;
+  }
+
+  let gizmoClass = elementClickedTarget.getAttribute("class");
+  switch (gizmoClass) {
+    case "gizmoTitle":
+      showModal("research", researchIDNumber);
+  }
+}
 
 // when + or - buttons pressed
 function recruitClicked(index, polarity) {
@@ -352,7 +314,7 @@ function updateCrimeProgressDiv() {
   for (let index = 0; index < crimeArray.length; index++) {
     // get the crimeID so can apply data
     let currentElement = crimeArray[index].progressElement;
-    let currentCrimeID = getNumberFromCrimeID(currentElement.getAttribute("data-ProgressID"));
+    let currentCrimeID = getNumberFromID(currentElement.getAttribute("data-ProgressID"));
     let currentCrime = crimeArray[currentCrimeID];
     let currentProgress = currentCrime.progress;
     let newProgressText = "";
@@ -457,7 +419,7 @@ function getCrimeTimeLeft(index) {
   }
   // console.log(timeLeft);
 
-
+  return formatTime(timeLeft);
   return dayjs(timeLeft).format("mm:ss");
 }
 

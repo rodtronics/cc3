@@ -32,7 +32,8 @@ const crimesConst = [
     ttc: 200000,
     mpc: 0,
   },
-  { crime: "long crime", ttc: 7000000000, description: "takes fuckin forvere man" }
+  { crime: "long crime", ttc: 7000000000, description: "takes fuckin forvere man" },
+  { crime: "day crime", ttc: 86410000 },
 ];
 // define the class
 // none of this should duplicate what is in the crimes const
@@ -100,7 +101,8 @@ for (let index = 0; index < facilityConst.length; index++) {
 const researchConst = [
   {
     name: "r/crimes",
-    description: "you can learn about crimes here on reddit, the front page of the internet",
+    description:
+      "Hunched over my computer screen, drowning in the glow of a thousand subreddits, I stumbled upon r/crimes. Maybe this would fill the hole in my life. With trembling fingers, I delved into stories of heists and capers, losing myself deeper and deeper. Hours turned to days, but as dawn approached, I realized the void remained. Maybe it was time to step away, or perhaps... just one more post.",
     buildingPrereqs: [],
     researchPrereqs: [],
     baseTimeToCompleteMS: 600000,
