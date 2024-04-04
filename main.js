@@ -13,7 +13,21 @@ let refreshRate = 50; //ms between frames
 let globalPrecision = 4; // precision of display of floating points
 let cpsAveragedOnThisTime = 5000;
 let mainCrimeNumbersRefreshRate = 50; // how often to refresh main crime numbers
-let cpsAverageNumber = ((cpsAveragedOnThisTime / 1000) * 1000) / mainCrimeNumbersRefreshRate; // how many refreshes to maintain average
+let cpsAverageNumber = cpsAveragedOnThisTime / mainCrimeNumbersRefreshRate; // how many refreshes to maintain average
+
+/*
+
+totaltime = 2000
+rr =50
+2000/50 = 40
+40 values over 2 seconds
+
+cpsav = 2000/1000 = 2
+
+
+
+
+*/
 
 // extracts the integer number from the ID word
 function getNumberFromID(crimeID) {
@@ -169,7 +183,7 @@ function formatTime(timeInMS) {
   timeUntilComplete.hours = timeUntilComplete.format("H");
   timeUntilComplete.minutes = timeUntilComplete.format("mm");
   timeUntilComplete.seconds = timeUntilComplete.format("ss");
-  timeUntilComplete.milliseconds = timeUntilComplete.format("sss");
+  timeUntilComplete.milliseconds = timeUntilComplete.format("SSS");
 
   if (timeUntilComplete.days > 0) {
     formattedTime += timeUntilComplete.days + "d " + timeUntilComplete.hours + "h " + timeUntilComplete.minutes + "m ";
@@ -179,9 +193,9 @@ function formatTime(timeInMS) {
     formattedTime += timeUntilComplete.minutes + "m ";
   }
   formattedTime += timeUntilComplete.seconds + "s";
-  // if (timeInMS < 10000) {
-  //   formattedTime += timeUntilComplete.milliseconds + "ms";
-  // }
+  if (timeInMS < 10000) {
+    formattedTime += " " + timeUntilComplete.milliseconds + "ms";
+  }
   return formattedTime;
 }
 
@@ -516,7 +530,7 @@ function updateMainCrimeNumbers() {
   cpsAverage.forEach((index) => {
     rollingAveTotal += index;
   });
-  rollingAve = rollingAveTotal / cpsAverage.length;
+  rollingAve = (rollingAveTotal / cpsAverage.length) * 20;
   shiftcpsAverage();
   let newHTML =
     "crime committer " +
