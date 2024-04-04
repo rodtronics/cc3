@@ -48,7 +48,7 @@ class crimeObjectClass {
     this.category = null;
     this.timeCrimeStarted = 0;
     this.timeCrimeWillEnd = 0;
-    this.state = 2; // 0 means paused & 1 is running. 3 means not ever started
+    this.state = 2; // 0 means paused & 1 is running. 2 means not ever started
     // 4 means now in crimes per second mode
     this.auto = 1;
     this.progress = 0.0;
@@ -89,6 +89,9 @@ class facilityObjectClass {
     this.element = null;
     this.buildingPrereqs = [];
     this.researchPrereqs = [];
+
+    this.leadsToBuilding = [];
+    this.leadsToFacility = [];
   }
 }
 
@@ -119,6 +122,8 @@ class researchObjectClass {
     this.level = 1;
     this.buildingPrereqs = [];
     this.researchPrereqs = [];
+    this.leadsToBuilding = [];
+    this.leadsToFacility = [];
   }
 }
 
