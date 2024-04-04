@@ -10,6 +10,10 @@ const ccCodeName = "deep alpha";
 let totalCrimesCommitted = 0;
 let money = 0;
 let refreshRate = 50; //ms between frames
+let globalPrecision = 4; // precision of display of floating points
+let cpsAveragedOnThisTime = 5000;
+let mainCrimeNumbersRefreshRate = 50; // how often to refresh main crime numbers
+let cpsAverageNumber = ((cpsAveragedOnThisTime / 1000) * 1000) / mainCrimeNumbersRefreshRate; // how many refreshes to maintain average
 
 // extracts the integer number from the ID word
 function getNumberFromID(crimeID) {
@@ -436,20 +440,6 @@ function updateTimesDoneText(index) {
   crimeArray[index].timesDoneElement.innerHTML = "<bs>times done: " + crimeArray[index].timesDone.toFixed(0);
 }
 
-function updateMainCrimeNumbers() {
-  let newHTML =
-    "crime committer " +
-    ccVersion +
-    "<br>" +
-    ccCodeName +
-    "<br><br><br>you got $" +
-    money +
-    "<br><br>" +
-    "total crimes committed:<br>" +
-    totalCrimesCommitted.toFixed(0);
-  document.getElementById("titleAndVersionID").innerHTML = newHTML;
-}
-
 function updateCriminalNumbers(index) {
   for (let index = 0; index < crimeArray.length; index++) {
     crimeArray[index].numCrimElement.innerHTML = "<br>" + " active criminals: <br> " + crimeArray[index].numOfCriminals;
@@ -512,6 +502,45 @@ function calculateVisibility() {
   });
 }
 
+let lastTotalCrimesCommitted = 0;
+let cpsAverage = Array(cpsAverageNumber).fill(0);
+
+let rollingAve = 0;
+let rollingAveTotal = 0;
+
+function updateMainCrimeNumbers() {
+  let cps = totalCrimesCommitted - lastTotalCrimesCommitted;
+
+  cpsAverage[0] = cps;
+  rollingAveTotal = 0;
+  cpsAverage.forEach((index) => {
+    rollingAveTotal += index;
+  });
+  rollingAve = rollingAveTotal / cpsAverage.length;
+  shiftcpsAverage();
+  let newHTML =
+    "crime committer " +
+    ccVersion +
+    "<br>" +
+    ccCodeName +
+    "<br><br>you got $" +
+    money +
+    "<br>" +
+    "total crimes committed:" +
+    totalCrimesCommitted.toFixed(0) +
+    "<br>cps: " +
+    rollingAve.toPrecision(globalPrecision);
+  document.getElementById("titleAndVersionID").innerHTML = newHTML;
+  lastTotalCrimesCommitted = totalCrimesCommitted;
+}
+
+function shiftcpsAverage() {
+  for (let index = cpsAverageNumber; index > 0; index--) {
+    cpsAverage[index] = cpsAverage[index - 1];
+    // console.log(cpsAverage[index]);
+  }
+}
+
 // initialisations before main loop
 
 // this seems ridic and it is
@@ -525,7 +554,6 @@ updateCrimeProgressDiv();
 
 //mainloop
 function gameLoop() {
-  updateMainCrimeNumbers();
   updateCriminalNumbers();
   updateCrimeProgressDiv();
   updateCrimeProgressValue();
@@ -543,4 +571,5 @@ function gameLoop() {
   // console.log(dayjs(durationStartToFinish).format("mm:ss:sss"));
 }
 
-setInterval(gameLoop, refreshRate);
+setInterval(() => gameLoop(), refreshRate);
+setInterval(() => updateMainCrimeNumbers(), mainCrimeNumbersRefreshRate);
