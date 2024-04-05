@@ -179,11 +179,14 @@ function formatTime(timeInMS) {
   let formattedTime = "";
   let timeUntilComplete = 0;
   timeUntilComplete = dayjs.duration(dayjs(timeInMS), "millisecond");
+  timeUntilComplete.months = timeUntilComplete.format("M");
   timeUntilComplete.days = timeUntilComplete.format("D");
   timeUntilComplete.hours = timeUntilComplete.format("H");
   timeUntilComplete.minutes = timeUntilComplete.format("mm");
   timeUntilComplete.seconds = timeUntilComplete.format("ss");
   timeUntilComplete.milliseconds = timeUntilComplete.format("SSS");
+
+  if (timeUntilComplete.months > 0) { formattedTime += timeUntilComplete.months + "mo "; }
 
   if (timeUntilComplete.days > 0) {
     formattedTime += timeUntilComplete.days + "d " + timeUntilComplete.hours + "h " + timeUntilComplete.minutes + "m ";
