@@ -34,6 +34,7 @@ const crimesConst = [
   },
   { crime: "long crime", ttc: 7000000000, description: "takes fuckin forvere man" },
   { crime: "day crime", ttc: 86410000 },
+  { crime: "long term crime", ttc: 31556952000, description: "what the fuck" }
 ];
 // define the class
 // none of this should duplicate what is in the crimes const
