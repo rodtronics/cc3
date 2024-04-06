@@ -19,8 +19,6 @@ function writeSingleCrimeCookie(index) {
   let cookieContent = "";
   let currentCrime = crimeArray[index];
 
-  cookieContentJSON = JSON.stringify(currentCrime);
-
   cookieContent += currentCrime.visible + ";";
   cookieContent += currentCrime.running + ";";
   cookieContent += currentCrime.numOfCriminals + ";";
@@ -34,7 +32,7 @@ function writeSingleCrimeCookie(index) {
   cookieContent += currentCrime.progress + ";";
   cookieContent += currentCrime.timesDone + ";";
 
-  Cookies.set(cookieName, cookieContentJSON, { expires: 365 });
+  Cookies.set(cookieName, cookieContent, { expires: 365 });
   console.log(cookieContentJSON);
 }
 
@@ -51,15 +49,6 @@ function readCrimeCookies() {
       console.log("no cookies, starting game fresh");
       return null;
     } else {
-      try {
-        crimeArray[index] = JSON.parse(cookieContent);
-      } catch (error) {
-        console.log(index + " " + error);
-      }
-
-      /*
-
-
       // turn the single string into an array
       cookieContentArray = cookieContent.split(";");
       // write the members of the array
@@ -76,12 +65,7 @@ function readCrimeCookies() {
       currentCrime.state = parseInt(cookieContentArray[7]);
       currentCrime.auto = parseInt(cookieContentArray[8]);
       currentCrime.progress = parseFloat(cookieContentArray[9]);
-        currentCrime.timesDone = parseInt(cookieContentArray[10]);
-        
-
-
-
-        */
+      currentCrime.timesDone = parseInt(cookieContentArray[10]);
     }
   }
 }
