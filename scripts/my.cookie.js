@@ -19,7 +19,6 @@ function writeSingleCrimeCookie(index) {
   let cookieName = "'crimeCookieName" + index + "'";
   let cookieContent = "";
   let currentCrime = crimeArray[index];
-  console.log("index " + index + " cookiename " + cookieName);
   if (currentCrime == null) {
     return;
   }
@@ -36,10 +35,7 @@ function writeSingleCrimeCookie(index) {
   cookieContent += currentCrime.auto + ";";
   cookieContent += currentCrime.progress + ";";
   cookieContent += currentCrime.timesDone + ";";
-
-  if (index == 0) {
-    console.log("index " + index + " " + cookieContent);
-  }
+  console.log("writing index " + index + " " + cookieContent);
   Cookies.set(cookieName, cookieContent, { expires: 365 });
 }
 
