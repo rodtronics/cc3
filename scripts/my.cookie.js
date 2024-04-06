@@ -35,7 +35,7 @@ function writeSingleCrimeCookie(index) {
   cookieContent += currentCrime.timesDone + ";";
 
   Cookies.set(cookieName, cookieContentJSON, { expires: 365 });
-  console.log(stringy);
+  console.log(cookieContentJSON);
 }
 
 function readCrimeCookies() {
@@ -49,6 +49,7 @@ function readCrimeCookies() {
       console.log("no cookies, starting game fresh");
       return null;
     } else {
+      console.log(cookieContent);
       crimeArray[index] = JSON.parse(cookieContent);
 
       /*
