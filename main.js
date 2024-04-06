@@ -460,9 +460,7 @@ function crimeCompleted(index) {
   // console.log("crime committed " + crimeArray[index].timesDone);
   initCrime(index);
 
-  for (let index = 0; index < crimeArray.length; index++) {
-    writeCrimeCookie(index);
-  }
+  writeSingleCrimeCookie(index);
 }
 
 function updateTimesDoneText(index) {
@@ -607,3 +605,4 @@ function gameLoop() {
 
 setInterval(() => gameLoop(), refreshRate);
 setInterval(() => updateMainCrimeNumbers(), mainCrimeNumbersRefreshRate);
+setInterval(() => WriteAllCrimeCookies(), 10000); // save game to cookies every 10 seconds

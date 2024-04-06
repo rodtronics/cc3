@@ -6,12 +6,20 @@
 // into an array with cookieContent.split(";")
 // E Z P Z
 
-function writeCrimeCookie(index) {
+function WriteAllCrimeCookies() {
+  for (let index = 0; index < crimesConst.length; index++) {
+    writeSingleCrimeCookie(index);
+  }
+}
+
+function writeSingleCrimeCookie(index) {
   // build cookie name
   // the ' at the start and finish is essential
   let cookieName = "'crimeCookieName" + index + "'";
   let cookieContent = "";
   let currentCrime = crimeArray[index];
+
+  cookieContent.JSON = JSON.stringify(currentCrime);
 
   cookieContent += currentCrime.visible + ";";
   cookieContent += currentCrime.running + ";";
@@ -26,7 +34,7 @@ function writeCrimeCookie(index) {
   cookieContent += currentCrime.progress + ";";
   cookieContent += currentCrime.timesDone + ";";
 
-  Cookies.set(cookieName, cookieContent, { expires: 365 });
+  Cookies.set(cookieName, cookieContent.JSON, { expires: 365 });
 }
 
 function readCrimeCookies() {
@@ -40,6 +48,11 @@ function readCrimeCookies() {
       console.log("no cookies, starting game fresh");
       return null;
     } else {
+      crimeArray[index] = JSON.parse(cookieContent);
+
+      /*
+
+
       // turn the single string into an array
       cookieContentArray = cookieContent.split(";");
       // write the members of the array
@@ -56,28 +69,12 @@ function readCrimeCookies() {
       currentCrime.state = parseInt(cookieContentArray[7]);
       currentCrime.auto = parseInt(cookieContentArray[8]);
       currentCrime.progress = parseFloat(cookieContentArray[9]);
-      currentCrime.timesDone = parseInt(cookieContentArray[10]);
+        currentCrime.timesDone = parseInt(cookieContentArray[10]);
+        
+
+
+
+        */
     }
   }
 }
-
-// this.crimeIndexID = "crimeIndexID_" + this.crimeIndex;
-//     this.visible = true;
-//     this.running = false;
-//     this.numOfCriminals = 0;
-//     this.multiplier = 0; // this is ADDED onto 1
-//     this.category = null;
-//     this.timeCrimeStarted = 0;
-//     this.timeCrimeWillEnd = 0;
-//     this.state = 2; // 0 means paused & 1 is running. 2 means not ever started
-//     // 4 means now in crimes per second mode
-//     this.auto = 1;
-//     this.progress = 0.0;
-//     this.progressElement = null;
-//     this.containerElement = null;
-//     this.recruitmentAddElement = null;
-//     this.recruitmentSubElement = null;
-//     this.numCrimElement = null;
-//     this.timesDoneElement = null;
-//     this.timesDone = 0;
-//     this.cpsRate = 0.0;
