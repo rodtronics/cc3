@@ -19,7 +19,7 @@ function writeSingleCrimeCookie(index) {
   let cookieContent = "";
   let currentCrime = crimeArray[index];
 
-  cookieContent.JSON = JSON.stringify(currentCrime);
+  cookieContentJSON = JSON.stringify(currentCrime);
 
   cookieContent += currentCrime.visible + ";";
   cookieContent += currentCrime.running + ";";
@@ -34,7 +34,8 @@ function writeSingleCrimeCookie(index) {
   cookieContent += currentCrime.progress + ";";
   cookieContent += currentCrime.timesDone + ";";
 
-  Cookies.set(cookieName, cookieContent.JSON, { expires: 365 });
+  Cookies.set(cookieName, cookieContentJSON, { expires: 365 });
+  console.log(stringy);
 }
 
 function readCrimeCookies() {
