@@ -10,6 +10,7 @@ function WriteAllCrimeCookies() {
   for (let index = 0; index < crimesConst.length; index++) {
     writeSingleCrimeCookie(index);
   }
+  console.log("all written");
 }
 
 function writeSingleCrimeCookie(index) {
@@ -32,6 +33,9 @@ function writeSingleCrimeCookie(index) {
   cookieContent += currentCrime.progress + ";";
   cookieContent += currentCrime.timesDone + ";";
 
+  if (index == 0) {
+    console.log(cookieContent);
+  }
   Cookies.set(cookieName, cookieContent, { expires: 365 });
 }
 
