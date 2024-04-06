@@ -33,7 +33,6 @@ function writeSingleCrimeCookie(index) {
   cookieContent += currentCrime.timesDone + ";";
 
   Cookies.set(cookieName, cookieContent, { expires: 365 });
-  console.log(cookieContentJSON);
 }
 
 function readCrimeCookies() {
@@ -43,29 +42,27 @@ function readCrimeCookies() {
     let cookieName = "'crimeCookieName" + index + "'";
     let cookieContent = "";
     cookieContent = Cookies.get(cookieName);
-    console.log(cookieContent);
 
     if (cookieContent == undefined) {
-      console.log(cookieName);
+      console.log("starting fresh");
       return null;
     } else {
       // turn the single string into an array
       cookieContentArray = cookieContent.split(";");
       // write the members of the array
       // much careful with this, atm it just relies on everything being in order lol
-      currentCrime.visible = cookieContentArray[0];
-
-      currentCrime.running = cookieContentArray[1];
-      currentCrime.numOfCriminals = cookieContentArray[2];
-      currentCrime.multiplier = cookieContentArray[3];
-      currentCrime.category = cookieContentArray[4];
+      currentCrime.visible = JSON.parse(cookieContentArray[0]);
+      currentCrime.running = JSON.parse(cookieContentArray[1]);
+      currentCrime.numOfCriminals = JSON.parse(cookieContentArray[2]);
+      currentCrime.multiplier = JSON.parse(cookieContentArray[3]);
+      currentCrime.category = JSON.parse(cookieContentArray[4]);
       // convert from unixtime
       currentCrime.timeCrimeStarted = dayjs.unix(cookieContentArray[5]);
       currentCrime.timeCrimeWillEnd = dayjs.unix(cookieContentArray[6]);
-      currentCrime.state = cookieContentArray[7];
-      currentCrime.auto = cookieContentArray[8];
-      currentCrime.progress = cookieContentArray[9];
-      currentCrime.timesDone = cookieContentArray[10];
+      currentCrime.state = JSON.parse(cookieContentArray[7]);
+      currentCrime.auto = JSON.parse(cookieContentArray[8]);
+      currentCrime.progress = JSON.parse(cookieContentArray[9]);
+      currentCrime.timesDone = JSON.parse(cookieContentArray[10]);
     }
   }
 }
