@@ -198,6 +198,10 @@ h1 {
   color: black;
 }
 
+.tabs[data-tabState="inactive"]:hover {
+  color: white;
+}
+
 #tabA_ID[data-tabState="active"] {
   background-color: var(--tab1-Active);
 }

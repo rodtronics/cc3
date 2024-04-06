@@ -188,9 +188,13 @@ function formatTime(timeInMS) {
   timeUntilComplete.seconds = timeUntilComplete.format("ss");
   timeUntilComplete.milliseconds = timeUntilComplete.format("SSS");
 
-  if (timeUntilComplete.years > 0) { formattedTime += timeUntilComplete.years + "y " + timeUntilComplete.months + "mo "; }
+  if (timeUntilComplete.years > 0) {
+    formattedTime += timeUntilComplete.years + "y " + timeUntilComplete.months + "mo ";
+  }
 
-  if (timeUntilComplete.months > 0) { formattedTime += timeUntilComplete.months + "mo "; }
+  if (timeUntilComplete.months > 0) {
+    formattedTime += timeUntilComplete.months + "mo ";
+  }
 
   if (timeUntilComplete.days > 0) {
     formattedTime += timeUntilComplete.days + "d " + timeUntilComplete.hours + "h " + timeUntilComplete.minutes + "m ";
@@ -455,6 +459,10 @@ function crimeCompleted(index) {
   updateMainCrimeNumbers();
   // console.log("crime committed " + crimeArray[index].timesDone);
   initCrime(index);
+
+  for (let index = 0; index < crimeArray.length; index++) {
+    writeCrimeCookie(index);
+  }
 }
 
 function updateTimesDoneText(index) {
@@ -573,24 +581,29 @@ updateMainCrimeNumbers();
 updateCriminalNumbers();
 updateCrimeProgressDiv();
 
+// this will read all the cookies, and if there will overright what is there
+readCrimeCookies();
 //mainloop
 function gameLoop() {
   updateCriminalNumbers();
   updateCrimeProgressDiv();
   updateCrimeProgressValue();
+
+  // I should probably find a better way to do this, or just make it impossible
   for (let index = 0; index < crimeArray.length; index++) {
     if (crimeArray[index].state == 3) {
       cpsMode(index);
     }
   }
-  // window.requestAnimationFrame(gameLoop);
-
-  // let currentCrime = crimeArray[2];
-  // let initTime = currentCrime.timeCrimeStarted;
-  // let finishTime = currentCrime.timeCrimeWillEnd;
-  // let durationStartToFinish = dayjs(finishTime).diff(dayjs(initTime));
-  // console.log(dayjs(durationStartToFinish).format("mm:ss:sss"));
 }
+
+// window.requestAnimationFrame(gameLoop);
+
+// let currentCrime = crimeArray[2];
+// let initTime = currentCrime.timeCrimeStarted;
+// let finishTime = currentCrime.timeCrimeWillEnd;
+// let durationStartToFinish = dayjs(finishTime).diff(dayjs(initTime));
+// console.log(dayjs(durationStartToFinish).format("mm:ss:sss"));
 
 setInterval(() => gameLoop(), refreshRate);
 setInterval(() => updateMainCrimeNumbers(), mainCrimeNumbersRefreshRate);

@@ -34,7 +34,7 @@ const crimesConst = [
   },
   { crime: "long crime", ttc: 7000000000, description: "takes fuckin forvere man" },
   { crime: "day crime", ttc: 86410000 },
-  { crime: "long term crime", ttc: 31556952000, description: "what the fuck" }
+  { crime: "long term crime", ttc: 31556952000, description: "what the fuck" },
 ];
 // define the class
 // none of this should duplicate what is in the crimes const
@@ -61,8 +61,6 @@ class crimeObjectClass {
     this.timesDoneElement = null;
     this.timesDone = 0;
     this.cpsRate = 0.0;
-    this.buildingPrereqs = [];
-    this.researchPrereqs = [];
   }
 }
 // generate array of crimes
@@ -76,23 +74,23 @@ for (let index = 0; index < crimesConst.length; index++) {
 }
 
 const facilityConst = [
-  { name: "Parent's basement", description: "Often used for illegal activities such as drug dealing, money laundering, or hosting illegal gambling." },
+  {
+    name: "Parent's basement",
+    description:
+      " dimly lit basement, cluttered with an assortment of mismatched furniture and storage boxes stacked haphazardly against the walls. the air is thick with the scent of mustiness, a lingering reminder of neglect and despair.",
+  },
 ];
 
+// remember don't duplicate data here that can just be access from the const
 class facilityObjectClass {
   constructor(index) {
     this.name = facilityConst[index].name;
     this.facilityIndex = index;
     this.facilityIndexID = "facilityIndexID_" + index;
     this.visible = true;
-    this.done = false;
+    this.built = false;
     this.level = 1;
     this.element = null;
-    this.buildingPrereqs = [];
-    this.researchPrereqs = [];
-
-    this.leadsToBuilding = [];
-    this.leadsToFacility = [];
   }
 }
 
@@ -112,7 +110,7 @@ const researchConst = [
     baseTimeToCompleteMS: 600000,
   },
 ];
-
+// remember don't duplicate data here that can just be access from the const
 class researchObjectClass {
   constructor(index) {
     this.name = researchConst[index].name;
@@ -121,10 +119,6 @@ class researchObjectClass {
     this.visible = true;
     this.done = false;
     this.level = 1;
-    this.buildingPrereqs = [];
-    this.researchPrereqs = [];
-    this.leadsToBuilding = [];
-    this.leadsToFacility = [];
   }
 }
 
