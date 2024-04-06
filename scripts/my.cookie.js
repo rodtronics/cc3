@@ -34,7 +34,7 @@ function writeSingleCrimeCookie(index) {
   cookieContent += currentCrime.timesDone + ";";
 
   if (index == 0) {
-    console.log(cookieContent);
+    // console.log(cookieContent);
   }
   Cookies.set(cookieName, cookieContent, { expires: 365 });
 }
@@ -46,13 +46,14 @@ function readCrimeCookies() {
     let cookieName = "'crimeCookieName" + index + "'";
     let cookieContent = "";
     cookieContent = Cookies.get(cookieName);
+    // console.log("reading " + cookieContent);
 
     if (cookieContent == undefined) {
       console.log("starting fresh");
       return null;
     } else {
       // turn the single string into an array
-      cookieContentArray = cookieContent.split(";");
+      let cookieContentArray = cookieContent.split(";");
       // write the members of the array
       // much careful with this, atm it just relies on everything being in order lol
       currentCrime.visible = JSON.parse(cookieContentArray[0]);
