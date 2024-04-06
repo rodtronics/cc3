@@ -45,12 +45,17 @@ function readCrimeCookies() {
     let cookieName = "'crimeCookieName" + index + "'";
     let cookieContent = "";
     cookieContent = Cookies.get(cookieName);
+    console.log(cookieContent);
+
     if (cookieContent == undefined) {
       console.log("no cookies, starting game fresh");
       return null;
     } else {
-      console.log(cookieContent);
-      crimeArray[index] = JSON.parse(cookieContent);
+      try {
+        crimeArray[index] = JSON.parse(cookieContent);
+      } catch (error) {
+        console.log(index + " " + error);
+      }
 
       /*
 
