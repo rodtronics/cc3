@@ -37,26 +37,26 @@ function readCrimeCookies() {
     let cookieContent = "";
     cookieContent = Cookies.get(cookieName);
     if (cookieContent == undefined) {
-      console.log(cookieName);
+      console.log("no cookies, starting game fresh");
       return null;
     } else {
       // turn the single string into an array
       cookieContentArray = cookieContent.split(";");
       // write the members of the array
       // much careful with this, atm it just relies on everything being in order lol
-      currentCrime.visible = cookieContentArray[0];
-
-      currentCrime.running = cookieContentArray[1];
-      currentCrime.numOfCriminals = cookieContentArray[2];
-      currentCrime.multiplier = cookieContentArray[3];
-      currentCrime.category = cookieContentArray[4];
+      // use JSON.parse to convert "true" into actual true
+      currentCrime.visible = JSON.parse(cookieContentArray[0]);
+      currentCrime.running = JSON.parse(cookieContentArray[1]);
+      currentCrime.numOfCriminals = parseInt(cookieContentArray[2]);
+      currentCrime.multiplier = parseInt(cookieContentArray[3]);
+      currentCrime.category = parseInt(cookieContentArray[4]);
       // convert from unixtime
       currentCrime.timeCrimeStarted = dayjs.unix(cookieContentArray[5]);
       currentCrime.timeCrimeWillEnd = dayjs.unix(cookieContentArray[6]);
-      currentCrime.state = cookieContentArray[7];
-      currentCrime.auto = cookieContentArray[8];
-      currentCrime.progress = cookieContentArray[9];
-      currentCrime.timesDone = cookieContentArray[10];
+      currentCrime.state = parseInt(cookieContentArray[7]);
+      currentCrime.auto = parseInt(cookieContentArray[8]);
+      currentCrime.progress = parseFloat(cookieContentArray[9]);
+      currentCrime.timesDone = parseInt(cookieContentArray[10]);
     }
   }
 }
