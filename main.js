@@ -352,10 +352,11 @@ function updateCrimeProgressDiv() {
     // console.log(currentState);
     switch (currentState) {
       case 0: // paused
-        newProgressText = "remaining: ∞";
+        newProgressText = "∞";
         break;
       case 1: // running
-        newProgressText = "remaining " + getCrimeTimeLeft(index);
+        newProgressText = "" + getCrimeTimeLeft(index);
+        updateCrimeProgressProgressBar(index);
         break;
       case 2: // never done
         newProgressText = "never done";
@@ -374,7 +375,15 @@ function updateCrimeProgressDiv() {
 
 function updateCrimeProgressProgressBar(index) {
   let divElement = crimeArray[index].progressElement;
-  divElement;
+  // construct the moving progress bar
+  let currentProgress = crimeArray[index].progress * 100;
+
+  //  background: linear-gradient(0deg, #845ec2 0%, #d65db1 20%, #ff6f91 40%, #ff9671 60%, #ffc75f 80%, #f9f871 100%);
+  let newBackground = "";
+  newBackground = "linear-gradient(66deg, white 0%, white ";
+  newBackground += currentProgress + "%, var(--palette-4) " + currentProgress + "%, var(--palette-4) 100%";
+
+  divElement.style.background = newBackground;
 }
 
 function updateCrimeProgressValue(index) {
@@ -461,7 +470,7 @@ function crimeCompleted(index) {
   crimeArray[index].timesDone++;
   updateTimesDoneText(index);
   totalCrimesCommitted++;
-  updateMainCrimeNumbers();
+  // updateMainCrimeNumbers();
   // console.log("crime committed " + crimeArray[index].timesDone);
   initCrime(index);
 
@@ -572,7 +581,7 @@ function shiftcpsAverage() {
 setColorStyle(0);
 setGamePalette(0);
 
-updateMainCrimeNumbers();
+// updateMainCrimeNumbers();
 updateCriminalNumbers();
 updateCrimeProgressDiv();
 
@@ -601,5 +610,5 @@ function gameLoop() {
 // console.log(dayjs(durationStartToFinish).format("mm:ss:sss"));
 
 setInterval(() => gameLoop(), refreshRate);
-setInterval(() => updateMainCrimeNumbers(), mainCrimeNumbersRefreshRate);
+// setInterval(() => updateMainCrimeNumbers(), mainCrimeNumbersRefreshRate);
 setInterval(() => WriteAllCrimeCookies(), 60000); // save game to cookies every minute
