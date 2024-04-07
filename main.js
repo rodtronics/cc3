@@ -5,7 +5,7 @@
 // this is the code for the all new crime committer
 
 // init some variables needed before functions
-const ccVersion = 3.1;
+const ccVersion = 3.2;
 const ccCodeName = "deep alpha";
 let totalCrimesCommitted = 0;
 let money = 0;
@@ -551,17 +551,9 @@ function updateMainCrimeNumbers() {
   rollingAve = (rollingAveTotal / cpsAverage.length) * 20;
   shiftcpsAverage();
   let newHTML =
-    "crime committer " +
-    ccVersion +
-    "<br>" +
-    ccCodeName +
-    "<br><br>you got $" +
-    money +
-    "<br>" +
-    "total crimes committed:" +
-    totalCrimesCommitted.toFixed(0) +
-    "<br>cps: " +
-    rollingAve.toPrecision(globalPrecision);
+    "crime committer " + ccVersion + "<br>" + ccCodeName + "<br><br>you got $" + money + "<br>" + "total crimes committed:" + totalCrimesCommitted.toFixed(0);
+  // "<br>cps: " +
+  // rollingAve.toPrecision(globalPrecision);
   document.getElementById("titleAndVersionID").innerHTML = newHTML;
   lastTotalCrimesCommitted = totalCrimesCommitted;
 }

@@ -1,7 +1,7 @@
 document.getElementById("settingsLinkID").addEventListener("click", () => settingsDisplay());
 
-let settingsModalContainer = document.getElementById("settingsContainerID");
-let settingsModalContent = document.getElementById("settingsContentID");
+let settingsModalContainer = document.getElementById("modal_Settings_Container");
+let settingsModalContent = document.getElementById("modal_Settings_Inner");
 
 function settingsDisplay() {
   settingsModalContainer.style.display = "block";
@@ -44,3 +44,23 @@ settingsClearCookiesButton.innerHTML = "CLEAR COOKIES";
 settingsModalContent.append(settingsClearCookiesButton);
 
 settingsClearCookiesButton.addEventListener("click", () => settingsClearCookies());
+
+/*
+
+
+
+
+*/
+
+document.getElementById("aboutLinkID").addEventListener("click", () => aboutDisplay());
+document.getElementById("modal_About_Container").addEventListener("click", () => aboutClose());
+
+let aboutModalContainer = document.getElementById("modal_About_Container");
+
+function aboutDisplay() {
+  aboutModalContainer.style.display = "block";
+}
+
+function aboutClose() {
+  aboutModalContainer.style.display = "none";
+}

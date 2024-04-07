@@ -75,6 +75,21 @@ h1 {
   font-size: 1.5em;
 }
 
+b {
+  color: #01baef;
+}
+
+c {
+  color: #9400d3;
+}
+
+d {
+  color: #f9dc5c;
+}
+
+e {
+  color: brown;
+}
 #everythingContainerID {
   display: flex;
   margin: 0 auto;
@@ -92,9 +107,10 @@ h1 {
   top: 0;
   width: 100vw;
   height: 100vh;
+  z-index: 5;
 }
 
-.modalContent {
+.modalInner {
   border-style: solid;
   margin: 5vh;
   padding: 5vh;
@@ -103,52 +119,35 @@ h1 {
   line-height: 1em;
 }
 
-.modalCrimeContainerClass {
-  justify-content: center;
-  /* display: none;
-  position: fixed;
-  z-index: 2;
-  margin: auto;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh; */
+#modal_CrimeInfo_Container {
   background: rgba(251, 141, 63, 0.9);
   background: linear-gradient(0, rgba(251, 141, 63, 0.8) 0%, rgba(252, 70, 107, 0.8) 100%);
   color: black;
 }
 
-.modalCrimeContentClass {
-  /* border-style: solid;
-  margin: 5vh;
-  padding: 5vh;
-  font-size: 1em;
-  font-weight: 800;
-  line-height: 1em; */
+#modal_CrimeInfo_Inner {
   background: #017fa2;
   background: linear-gradient(0, rgba(1, 127, 162, 1) 0%, rgba(100, 178, 240, 1) 100%);
 }
 
-.modalSettingsContainerClass {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background: black;
+#modal_Settings_Container {
   background: repeating-linear-gradient(-45deg, black 0%, black 4.999%, yellow 5%, yellow 10%);
 }
-.modalSettingsContentClass {
-  margin: 2em;
-  display: flex;
-  flex-direction: column;
-  padding: 5vh;
-  font-size: 1em;
-  font-weight: 800;
-  line-height: 1em;
-  background: linear-gradient(0, rgba(1, 127, 162, 1) 0%, rgba(100, 178, 240, 1) 100%);
+
+#modal_Settings_Inner {
+  background: repeating-linear-gradient(45deg, black 0%, black 4.999%, yellow 5%, yellow 10%);
+  background: linear-gradient(0deg, #845ec2 0%, #d65db1 20%, #ff6f91 40%, #ff9671 60%, #ffc75f 80%, #f9f871 100%);
+  background: radial-gradient(at 50% 100%, #845ec2 0%, #d65db1 20%, #ff6f91 40%, #ff9671 60%, #ffc75f 80%, #f9f871 100%);
+}
+
+#modal_About_Container {
+  background: black;
+}
+
+#modal_About_Inner {
+  font-size: 2em;
+  color: white;
+  line-height: 0.5em;
 }
 
 #settingsCloseButtonID {
@@ -157,6 +156,9 @@ h1 {
   border-style: solid;
   border-color: black;
   margin: 1em;
+  background: black;
+  font-size: 2em;
+  /* justify-content: center; */
 }
 
 #settingsClearCookiesButtonID {
@@ -166,6 +168,13 @@ h1 {
   border-style: solid;
   border-color: black;
   margin: 1em;
+}
+
+#settingsLinkID:hover {
+  color: white;
+}
+#aboutLinkID:hover {
+  color: white;
 }
 
 #titleContainerID {
