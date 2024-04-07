@@ -15,17 +15,6 @@ let cpsAveragedOnThisTime = 5000;
 let mainCrimeNumbersRefreshRate = 50; // how often to refresh main crime numbers
 let cpsAverageNumber = cpsAveragedOnThisTime / mainCrimeNumbersRefreshRate; // how many refreshes to maintain average
 
-
-
-
-addEventListener
-
-
-document.getElementById("settingsLinkID").addEventListener("click", () => settingsMenu());
-
-function settingsMenu() {
-  console.log("working")
-}
 /*
 
 totaltime = 2000
@@ -383,6 +372,10 @@ function updateCrimeProgressDiv() {
   }
 }
 
+function updateCrimeProgressProgressBar(index) {
+  let divElement = crimeArray[index].progressElement;
+}
+
 function updateCrimeProgressValue(index) {
   for (let index = 0; index < crimeArray.length; index++) {
     let currentCrime = crimeArray[index];
@@ -616,4 +609,4 @@ function gameLoop() {
 
 setInterval(() => gameLoop(), refreshRate);
 setInterval(() => updateMainCrimeNumbers(), mainCrimeNumbersRefreshRate);
-setInterval(() => WriteAllCrimeCookies(), 10000); // save game to cookies every 10 seconds
+setInterval(() => WriteAllCrimeCookies(), 60000); // save game to cookies every minute

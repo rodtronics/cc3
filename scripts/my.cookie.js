@@ -10,6 +10,7 @@ function WriteAllCrimeCookies() {
   for (let index = 0; index < crimesConst.length; index++) {
     writeSingleCrimeCookie(index);
   }
+  console.log("autosave: " + dayjs().format("YYYY/MM/DD H:mm"));
 }
 
 function writeSingleCrimeCookie(index) {

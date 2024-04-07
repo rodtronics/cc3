@@ -1,63 +1,61 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>crime committer</title>
 
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>crime committer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheet.css" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" type="text/css" media="screen" href="stylesheet.css" />
+    <!-- <link rel="icon" type="image/x-icon" href="images/faviconc64.png" /> -->
 
-  <!-- <link rel="icon" type="image/x-icon" href="images/faviconc64.png" /> -->
+    <!-- import a lot of fonts lol -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet" />
 
-  <!-- import a lot of fonts lol -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet"
-  />
+    <link rel="apple-touch-icon" sizes="180x180" href="content/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="content/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="content/favicon/favicon-16x16.png" />
+    <link rel="manifest" href="content/favicon/site.webmanifest" />
 
-  <link rel="apple-touch-icon" sizes="180x180" href="content/favicon/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="content/favicon/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="content/favicon/favicon-16x16.png" />
-  <link rel="manifest" href="content/favicon/site.webmanifest" />
-
-  <script src="scripts/js.cookie.js"></script>
-  <script src="scripts/dayjs.js"></script>
-  <script src="scripts/dayjsPlugins.js"></script>
-  <script src="scripts/color-math-min.js"></script>
-  <script src="scripts/colorstyle.js"></script>
-  <script src="scripts/tabCode.js"></script>
-  <script src="scripts/data.js"></script>
-  <script src="scripts/my.cookie.js"></script>
-  <!-- I incorporated all dayjs plugins into one js file and these add them
+    <script src="scripts/thirdparty/js.cookie.js"></script>
+    <script src="scripts/thirdparty/dayjs.js"></script>
+    <script src="scripts/thirdparty/dayjsPlugins.js"></script>
+    <script src="scripts/thirdparty/color-math-min.js"></script>
+    <script src="scripts/colorstyle.js"></script>
+    <script src="scripts/tabCode.js"></script>
+    <script src="scripts/data.js"></script>
+    <script src="scripts/my.cookie.js"></script>
+    <!-- I incorporated all dayjs plugins into one js file and these add them
      -->
-  <script>
-    dayjs.extend(dayjs_plugin_relativeTime);
-  </script>
-  <script>
-    dayjs.extend(dayjs_plugin_duration);
-  </script>
-  <script>
-    dayjs.extend(dayjs_plugin_isToday);
-  </script>
-  <script>
-    dayjs.extend(dayjs_plugin_isTomorrow);
-  </script>
-</head>
+    <script>
+      dayjs.extend(dayjs_plugin_relativeTime);
+    </script>
+    <script>
+      dayjs.extend(dayjs_plugin_duration);
+    </script>
+    <script>
+      dayjs.extend(dayjs_plugin_isToday);
+    </script>
+    <script>
+      dayjs.extend(dayjs_plugin_isTomorrow);
+    </script>
+  </head>
 
-<body>
-  <div id="infoModalContainerID" class="modalContainerClass">
-    <div id="infoModalContentID" class="modalContentClass"></div>
-  </div>
-  <div id="settingsModalContainerID" class="settingsContainerClass">
-    <div id="settingsModalContentID" class="settingsContentClass"></div>
-  </div>
-  <div id="everythingContainerID">
-    <div id="titleContainerID">
-      <div id="titleID">
-        <div>
-          <pre>
+  <body>
+    <div id="infoContainerID" class="modalContainerClass">
+      <div id="infoContentID" class="modalContentClass"></div>
+    </div>
+    <div id="settingsContainerID" class="settingsContainerClass">
+      <div id="settingsContentID" class="settingsContentClass"></div>
+    </div>
+    <div id="everythingContainerID">
+      <div id="titleContainerID">
+        <div id="titleID">
+          <div>
+            <pre>
                /$$                      
               |__/
   /$$$$$$$ /$$$$$$ /$$/$$$$$$/$$$$  /$$$$$$ 
@@ -80,7 +78,7 @@
           something fucked up
         </div>
         <div id="titleLinksID">
-            <div id="settingsLinkID">SETTINGS</div>
+          <div id="settingsLinkID">SETTINGS</div>
 
           <a href="https://crimecommitter.com/about.html" target="_blank" rel="noopener noreferrer">about</a>
         </div>
@@ -97,7 +95,7 @@
       </div>
     </div>
   </body>
-
+  <script src="scripts/settings.js"></script>
   <script src="scripts/logoColorCycle.js"></script>
   <script src="scripts/facilities.js"></script>
   <script src="scripts/modals.js"></script>

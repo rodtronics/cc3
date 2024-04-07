@@ -1,6 +1,7 @@
-let modalContainerElement = document.getElementById("infoModalContainerID");
-let modalContentElement = document.getElementById("infoModalContentID");
+let modalContainerElement = document.getElementById("infoContainerID");
+let modalContentElement = document.getElementById("infoContentID");
 let crimeModalUpdateIntervalID;
+
 function showModal(infoType, index) {
   let newHTML = "";
   switch (infoType) {
