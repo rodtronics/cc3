@@ -15,6 +15,17 @@ let cpsAveragedOnThisTime = 5000;
 let mainCrimeNumbersRefreshRate = 50; // how often to refresh main crime numbers
 let cpsAverageNumber = cpsAveragedOnThisTime / mainCrimeNumbersRefreshRate; // how many refreshes to maintain average
 
+
+
+
+addEventListener
+
+
+document.getElementById("settingsLinkID").addEventListener("click", () => settingsMenu());
+
+function settingsMenu() {
+  console.log("working")
+}
 /*
 
 totaltime = 2000
