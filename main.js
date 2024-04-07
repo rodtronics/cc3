@@ -9,7 +9,7 @@ const ccVersion = 3.2;
 const ccCodeName = "deep alpha";
 let totalCrimesCommitted = 0;
 let money = 0;
-let refreshRate = 50; //ms between frames
+let refreshRate = 33; //ms between frames
 let globalPrecision = 4; // precision of display of floating points
 let cpsAveragedOnThisTime = 5000;
 let mainCrimeNumbersRefreshRate = 50; // how often to refresh main crime numbers
@@ -352,14 +352,14 @@ function updateCrimeProgressDiv() {
     // console.log(currentState);
     switch (currentState) {
       case 0: // paused
-        newProgressText = "∞";
+        newProgressText = "halted";
         break;
       case 1: // running
         newProgressText = "" + getCrimeTimeLeft(index);
         updateCrimeProgressProgressBar(index);
         break;
       case 2: // never done
-        newProgressText = "never done";
+        newProgressText = "uncommitted";
         break;
       case 3:
         newProgressText = "cps " + currentCrime.cpsRate.toFixed(3).replace(/\.?0*$/, "");
