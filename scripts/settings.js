@@ -13,6 +13,8 @@ function settingsClose() {
 }
 
 function settingsClearCookies() {
+  // this function sucks a bit,
+  // because have to manually track what cookies are stored in order to clear
   // clear crime cookies
   for (let index = 0; index < crimeArray.length; index++) {
     let cookieName = "'crimeCookieName" + index + "'";

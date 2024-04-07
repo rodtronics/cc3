@@ -374,6 +374,7 @@ function updateCrimeProgressDiv() {
 
 function updateCrimeProgressProgressBar(index) {
   let divElement = crimeArray[index].progressElement;
+  divElement;
 }
 
 function updateCrimeProgressValue(index) {

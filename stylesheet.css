@@ -85,33 +85,51 @@ h1 {
   min-height: 95vh;
 }
 
-.modalContainerClass {
-  justify-content: center;
+.modalContainer {
   display: none;
   position: fixed;
-  z-index: 2;
-  margin: auto;
   left: 0;
   top: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(251, 141, 63, 0.9);
-  background: linear-gradient(0, rgba(251, 141, 63, 0.8) 0%, rgba(252, 70, 107, 0.8) 100%);
-  color: black;
 }
 
-.modalContentClass {
+.modalContent {
   border-style: solid;
   margin: 5vh;
   padding: 5vh;
   font-size: 1em;
   font-weight: 800;
   line-height: 1em;
+}
+
+.modalCrimeContainerClass {
+  justify-content: center;
+  /* display: none;
+  position: fixed;
+  z-index: 2;
+  margin: auto;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh; */
+  background: rgba(251, 141, 63, 0.9);
+  background: linear-gradient(0, rgba(251, 141, 63, 0.8) 0%, rgba(252, 70, 107, 0.8) 100%);
+  color: black;
+}
+
+.modalCrimeContentClass {
+  /* border-style: solid;
+  margin: 5vh;
+  padding: 5vh;
+  font-size: 1em;
+  font-weight: 800;
+  line-height: 1em; */
   background: #017fa2;
   background: linear-gradient(0, rgba(1, 127, 162, 1) 0%, rgba(100, 178, 240, 1) 100%);
 }
 
-.settingsContainerClass {
+.modalSettingsContainerClass {
   display: none;
   position: fixed;
   z-index: 1;
@@ -122,7 +140,7 @@ h1 {
   background: black;
   background: repeating-linear-gradient(-45deg, black 0%, black 4.999%, yellow 5%, yellow 10%);
 }
-.settingsContentClass {
+.modalSettingsContentClass {
   margin: 2em;
   display: flex;
   flex-direction: column;
