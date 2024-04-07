@@ -50,6 +50,7 @@ function readCrimeCookies() {
       console.log("starting fresh");
       return null;
     } else {
+      console.log("load successful");
       // turn the single string into an array
       let cookieContentArray = cookieContent.split(";");
       // write the members of the array

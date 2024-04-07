@@ -42,9 +42,9 @@ function setGamePalette(version) {
     if (currentColor == null) {
       currentColor = "1AB7DC";
     }
-    let dimmedColor = ColorMath.evaluate(currentColor + " <<<10% <<30%").result.hex();
-    let vdimmedColor = ColorMath.evaluate(currentColor + " <<<50% <<50%").result.hex();
-    let brightColor = ColorMath.evaluate(currentColor + " >>>50% >>50%").result.hex();
+    let dimmedColor = ColorMath.evaluate(currentColor + " <<<10% ").result.hex();
+    let vdimmedColor = ColorMath.evaluate(currentColor + " <<<50% ").result.hex();
+    let brightColor = ColorMath.evaluate(currentColor + " >>>50% ").result.hex();
 
     let currentColorName = "--palette-" + (index + 1);
     let dimmedColorName = "--palette-" + (index + 1) + "dim";

@@ -10,7 +10,7 @@
   --color-D3: #045a72;
   --color-D4: #043947;
   --color-E: #171738;
-  --color-E2: #472e6d;
+  --color-E2: rgb(71, 46, 109);
 
   --color-F: #09bc8a;
   --color-G: #8fd694;
@@ -30,7 +30,7 @@
   /* --running-color: rgba(34, 118, 195, 1); */
   /* --running-color: radial-gradient(circle, rgba(49, 122, 255, 1) 0%, rgba(43, 110, 232, 1) 100%); */
   --running-color: radial-gradient(circle, rgba(38, 132, 218, 1) 0%, rgba(34, 118, 195, 1) 100%);
-  --neighbourhood-color: radial-gradient(circle, rgba(0, 159, 255, 1) 0%, rgba(0, 147, 236, 1) 100%);
+  --neighbourhood-color: radial-gradient(circle, #009dff 0%, rgba(0, 147, 236, 1) 100%);
   /* --complete-color: linear-gradient(0deg, rgba(195, 53, 34, 1) 0%, rgba(255, 119, 161, 1) 100%); */
   --complete-color: linear-gradient(
     0deg,
@@ -46,6 +46,9 @@
   --inv-color: var(--color-B);
   font-family: "Source Code Pro", monospace;
   background: var(--background-color);
+  background: repeating-linear-gradient(0deg, rgb(0, 157, 255) 0px, #009dff 2px, rgba(0, 0, 0, 0) 2px, black 10px),
+    repeating-linear-gradient(90deg, #009dff 0px, #009dff 2px, black 2px, black 10px);
+  background: black;
   font-weight: 400;
   color: var(--palette-6);
   line-height: 70%;
@@ -98,6 +101,16 @@ e {
   max-width: 90vw;
   max-height: 95vh;
   min-height: 95vh;
+}
+
+#backgroundGrid {
+  z-index: -1;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  /* transform: perspective(200px) rotateX(1deg); */
 }
 
 .modalContainer {
@@ -190,6 +203,7 @@ e {
   /* border-style: dotted; */
   border-color: var(--palette-5);
   overflow: hidden;
+  /* transform: perspective(200px) rotateX(5deg); */
 }
 
 #titleID {
@@ -344,14 +358,11 @@ e {
 }
 
 .gizmoTitle {
-  background-color: var(--palette-5);
-  color: var(--palette-5);
+  background: var(--palette-5);
+
   color: white;
   padding: 0.5vh;
-  /* border-width: 0.1vh;
-  border-style: solid;
-  border-color: var(--color-I); */
-  /* margin: 0.5vh; */
+
   line-height: 90%;
   justify-items: right;
   text-align: center;

@@ -380,7 +380,8 @@ function updateCrimeProgressProgressBar(index) {
 
   //  background: linear-gradient(0deg, #845ec2 0%, #d65db1 20%, #ff6f91 40%, #ff9671 60%, #ffc75f 80%, #f9f871 100%);
   let newBackground = "";
-  newBackground = "linear-gradient(66deg, white 0%, white ";
+  let newDeg = 70;
+  newBackground = "linear-gradient(" + newDeg + "deg, white 0%, white ";
   newBackground += currentProgress + "%, var(--palette-4) " + currentProgress + "%, var(--palette-4) 100%";
 
   divElement.style.background = newBackground;
@@ -580,6 +581,29 @@ function shiftcpsAverage() {
 
 setColorStyle(0);
 setGamePalette(0);
+
+function defineGrid(thickness, spacing) {
+  let newRLG_string_0 = "";
+  let newRLG_string_90 = "";
+  let newRLG_string_end = "";
+  newRLG_string_0 = "repeating-linear-gradient(0deg, ";
+  newRLG_string_90 = "repeating-linear-gradient(90deg, ";
+
+  let RLG_units = "em";
+  let RLG_colorA = "rgba(71, 46, 109,1)";
+  let RLG_colorB = "rgba(0,0,0,0)";
+
+  newRLG_string_end = RLG_colorA + " 0" + RLG_units + ", " + RLG_colorA + " " + thickness + RLG_units + ", ";
+  newRLG_string_end += RLG_colorB + " " + thickness + RLG_units + ", " + RLG_colorB + " " + spacing + RLG_units + ")";
+
+  let newString = newRLG_string_0 + newRLG_string_end + "," + newRLG_string_90 + newRLG_string_end;
+
+  console.log(newString);
+
+  return newString;
+}
+
+document.getElementById("backgroundGrid").style.background = defineGrid(0.2, 4);
 
 // updateMainCrimeNumbers();
 updateCriminalNumbers();
