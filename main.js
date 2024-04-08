@@ -603,7 +603,7 @@ function defineGrid(thickness, spacing) {
   return newString;
 }
 
-document.getElementById("backgroundGrid").style.background = defineGrid(0.2, 4);
+document.getElementById("gizmoContainer_ID").style.background = defineGrid(0.2, 4);
 
 // updateMainCrimeNumbers();
 updateCriminalNumbers();

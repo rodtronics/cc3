@@ -161,6 +161,7 @@ e {
   font-size: 2em;
   color: white;
   line-height: 0.5em;
+  transform: perspective(200px) rotateX(5deg);
 }
 
 #settingsCloseButtonID {
@@ -213,6 +214,10 @@ e {
   flex-wrap: wrap;
   font-size: 0.9vmin;
   line-height: 0.9em;
+}
+
+#titleID::after {
+  background-image: "";
 }
 
 #titleAndVersionID {
