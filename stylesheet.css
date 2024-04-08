@@ -214,10 +214,7 @@ e {
   flex-wrap: wrap;
   font-size: 0.9vmin;
   line-height: 0.9em;
-}
-
-#titleID::after {
-  background-image: "";
+  text-shadow: rgba(255, 255, 255, 1) 0px 0px 7px;
 }
 
 #titleAndVersionID {
@@ -279,6 +276,7 @@ e {
 
 .tabs[data-tabState="active"] {
   color: white;
+  text-shadow: rgba(255, 255, 255, 0.6) 0px 0px 10px;
 }
 .tabs[data-tabState="inactive"] {
   color: black;
@@ -360,6 +358,7 @@ e {
   /* border-style: solid; */
   border-width: 0.5vh;
   border-color: var(--palette-2vdim);
+  box-shadow: 0px 2em 5em 0.3em rgba(0, 0, 0, 1);
 }
 
 .gizmoTitle {
@@ -373,6 +372,7 @@ e {
   text-align: center;
   text-transform: uppercase;
   font-size: 1.2em;
+  text-shadow: rgba(255, 255, 255, 0.6) 0px 0px 7px;
 }
 
 .gizmoTitle:hover {
