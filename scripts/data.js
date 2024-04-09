@@ -90,7 +90,7 @@ class facilityObjectClass {
     this.visible = true;
     this.built = false;
     this.level = 1;
-    this.element = null;
+    this.baseElement = null;
   }
 }
 
@@ -123,6 +123,8 @@ class researchObjectClass {
     this.state = 0;
     this.timeStarted = 0;
     this.timeWillEnd = 0;
+    this.baseElement = null;
+    this.statusElement = null;
   }
 }
 

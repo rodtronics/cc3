@@ -153,6 +153,8 @@ e {
   background: radial-gradient(at 50% 100%, #845ec2 0%, #d65db1 20%, #ff6f91 40%, #ff9671 60%, #ffc75f 80%, #f9f871 100%);
 }
 
+
+
 #modal_About_Container {
   top:-100px;
   background: black;
@@ -169,14 +171,21 @@ e {
 }
 
 #settingsCloseButtonID {
-  padding: 2em;
+  padding: 20px;
   color: wheat;
   border-style: solid;
   border-color: black;
   margin: 1em;
   background: black;
   font-size: 2em;
+  text-align: right;
   /* justify-content: center; */
+}
+
+#settingsCloseButtonID:hover{
+  background:rgb(0, 157, 255);
+  color: black;
+
 }
 
 #settingsClearCookiesButtonID {
@@ -190,6 +199,12 @@ e {
 
 #settingsLinkID:hover {
   color: white;
+}
+
+#settingsTitleID{
+  font-size: 3em;
+  text-align: center;
+  color: black;
 }
 #aboutLinkID:hover {
   color: white;
@@ -399,11 +414,16 @@ e {
   text-transform: uppercase;
   font-size: 1.2em;
   text-shadow: rgba(255, 255, 255, 0.6) 0px 0px 7px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333333;
+  border-radius: 15px;
+
   /* box-shadow: var(--palette-5Alpha) 0 0 10px 3px; */
 }
 
 .gizmoTitle:hover {
-  border-radius: 25px 25px 0 0;
+  border-radius: 15px;
 
   background-color: var(--palette-5bright);
   background: linear-gradient(0deg, var(--palette-5) 0%, var(--palette-5bright) 100%);
@@ -522,4 +542,17 @@ e {
   background: var(--palette-2);
 
   /* box-shadow: var(--palette-2Alpha) 0 0 10px 3px; */
+}
+
+.researchStatusClass{
+  padding: 5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333333;
+  border-radius: 20px;
+  background: var(--palette-5);
+  height: 200px;
+  text-align: center;
+  font-size: 3em;
+  color: black;
 }

@@ -31,17 +31,22 @@ function settingsClearCookies() {
 
 */
 
+let settingsTitleDiv = document.createElement("div");
+settingsTitleDiv.innerHTML = "settings";
+settingsTitleDiv.setAttribute("id", "settingsTitleID");
+settingsModalContent.append(settingsTitleDiv);
+
 let settingsCloseButton = document.createElement("div");
 settingsCloseButton.setAttribute("id", "settingsCloseButtonID");
-settingsCloseButton.innerHTML = "CLOSE";
-settingsModalContent.append(settingsCloseButton);
+settingsCloseButton.innerHTML = "RETURN TO GAME";
+settingsModalContent.appendChild(settingsCloseButton);
 
 settingsCloseButton.addEventListener("click", () => settingsClose());
 
 let settingsClearCookiesButton = document.createElement("div");
 settingsClearCookiesButton.setAttribute("id", "settingsClearCookiesButtonID");
 settingsClearCookiesButton.innerHTML = "CLEAR COOKIES";
-settingsModalContent.append(settingsClearCookiesButton);
+settingsModalContent.appendChild(settingsClearCookiesButton);
 
 settingsClearCookiesButton.addEventListener("click", () => settingsClearCookies());
 
