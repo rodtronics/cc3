@@ -197,6 +197,7 @@ e {
   margin: 1em;
 }
 
+
 #settingsLinkID:hover {
   color: white;
 }
@@ -370,6 +371,32 @@ e {
   border-color: var(--tab5-Active);
   box-shadow: var(--tab5-ActiveAlpha) 0 0 30px 10px;
 }
+
+.secondaryTabContainer_Class{
+  display: flex;
+  flex-direction: row;
+  width: 600px;
+  height: 100px;
+
+}
+
+.secondaryTabElement_Class{
+  background: #009dff;
+  padding: 5px;
+  border-radius: 10px;
+  margin: 5px;
+  font-size: 1.5em;
+  font-weight: 800;
+  justify-content: right;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  border-radius: 5px 5px 0 0;
+  
+}
+
+
+
 .gizmoContainer {
   background-color: black;
   margin: 0 0.2vh 0.2vh 0.2vh;

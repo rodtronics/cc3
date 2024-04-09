@@ -550,31 +550,6 @@ let cpsAverage = Array(cpsAverageNumber).fill(0);
 let rollingAve = 0;
 let rollingAveTotal = 0;
 
-function updateMainCrimeNumbers() {
-  let cps = totalCrimesCommitted - lastTotalCrimesCommitted;
-
-  cpsAverage[0] = cps;
-  rollingAveTotal = 0;
-  cpsAverage.forEach((index) => {
-    rollingAveTotal += index;
-  });
-  rollingAve = (rollingAveTotal / cpsAverage.length) * 20;
-  shiftcpsAverage();
-  let newHTML =
-    "crime committer " + ccVersion + "<br>" + ccCodeName + "<br><br>you got $" + money + "<br>" + "total crimes committed:" + totalCrimesCommitted.toFixed(0);
-  // "<br>cps: " +
-  // rollingAve.toPrecision(globalPrecision);
-  document.getElementById("titleAndVersionID").innerHTML = newHTML;
-  lastTotalCrimesCommitted = totalCrimesCommitted;
-}
-
-function shiftcpsAverage() {
-  for (let index = cpsAverageNumber; index > 0; index--) {
-    cpsAverage[index] = cpsAverage[index - 1];
-    // console.log(cpsAverage[index]);
-  }
-}
-
 // initialisations before main loop
 
 // this seems ridic and it is
@@ -582,55 +557,24 @@ function shiftcpsAverage() {
 setColorStyle(0);
 setGamePalette(0);
 
-function defineGrid(thickness, spacing) {
-  let newRLG_string_0 = "";
-  let newRLG_string_90 = "";
-  let newRLG_string_end = "";
-  newRLG_string_0 = "repeating-linear-gradient(0deg, ";
-  newRLG_string_90 = "repeating-linear-gradient(90deg, ";
-
-  let RLG_units = "em";
-  let RLG_colorA = "rgba(71, 46, 109,1)";
-  let RLG_colorB = "rgba(0,0,0,0)";
-
-  newRLG_string_end = RLG_colorA + " 0" + RLG_units + ", " + RLG_colorA + " " + thickness + RLG_units + ", ";
-  newRLG_string_end += RLG_colorB + " " + thickness + RLG_units + ", " + RLG_colorB + " " + spacing + RLG_units + ")";
-
-  let newString = newRLG_string_0 + newRLG_string_end + "," + newRLG_string_90 + newRLG_string_end;
-
-  return newString;
-}
-
-document.getElementById("gizmoContainer_ID").style.background = defineGrid(0.2, 4);
-
 // updateMainCrimeNumbers();
 updateCriminalNumbers();
 updateCrimeProgressDiv();
 
 // this will read all the cookies, and if there will overright what is there
 readCrimeCookies();
+
 //mainloop
 function gameLoop() {
   updateCriminalNumbers();
   updateCrimeProgressDiv();
   updateCrimeProgressValue();
-
   // I should probably find a better way to do this, or just make it impossible
-  for (let index = 0; index < crimeArray.length; index++) {
-    if (crimeArray[index].state == 3) {
-      cpsMode(index);
-    }
-  }
+  // for (let index = 0; index < crimeArray.length; index++) {
+  //   if (crimeArray[index].state == 3) {
+  //     cpsMode(index);
+  //   }
 }
 
-// window.requestAnimationFrame(gameLoop);
-
-// let currentCrime = crimeArray[2];
-// let initTime = currentCrime.timeCrimeStarted;
-// let finishTime = currentCrime.timeCrimeWillEnd;
-// let durationStartToFinish = dayjs(finishTime).diff(dayjs(initTime));
-// console.log(dayjs(durationStartToFinish).format("mm:ss:sss"));
-
 setInterval(() => gameLoop(), refreshRate);
-// setInterval(() => updateMainCrimeNumbers(), mainCrimeNumbersRefreshRate);
 setInterval(() => WriteAllCrimeCookies(), 60000); // save game to cookies every minute

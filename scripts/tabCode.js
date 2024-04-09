@@ -8,6 +8,9 @@ function setTabElements() {
   }
 }
 
+// this is for secondary tabs in crime
+let secondaryCrimeTabContainer = createCrimeSectionTabs();
+
 // callback function to deal with what to do when a tab is clicked
 function tabClicked(elementClicked) {
   let tabClickedID = elementClicked.target.id;
@@ -48,6 +51,14 @@ function setActiveTab(tabNumber) {
 function redrawElements(tabNumber) {
   switch (tabNumber) {
     case 0:
+      gizmoContainerElement.appendChild(secondaryCrimeTabContainer);
+
+      for (let index = 0; index < secondaryCrimeTabsArray.length; index++) {
+        if (secondaryCrimeTabsArray[index].visible == true) {
+          secondaryCrimeTabContainer.appendChild(secondaryCrimeTabsArray[index].element);
+        }
+      }
+
       for (let index = 0; index < crimeArray.length; index++) {
         if (crimeArray[index].visible == true) {
           gizmoContainerElement.appendChild(crimeArray[index].containerElement);
@@ -74,6 +85,9 @@ function redrawElements(tabNumber) {
 }
 // removes all the elements from the main game box
 function clearGizmoElements() {
+  while (gizmoContainerElement.firstChild) {
+    gizmoContainerElement.removeChild(gizmoContainerElement.lastChild);
+  }
   while (gizmoContainerElement.firstChild) {
     gizmoContainerElement.removeChild(gizmoContainerElement.lastChild);
   }
