@@ -119,7 +119,7 @@ e {
   left: 0;
   top: 0;
   width: 100vw;
-  height: 100vh;
+  height: 120vh;
   z-index: 5;
 }
 
@@ -154,14 +154,18 @@ e {
 }
 
 #modal_About_Container {
+  top:-100px;
   background: black;
+  display: none;
+  justify-content: center;
 }
 
 #modal_About_Inner {
-  font-size: 2em;
+  font-size: 30px;
   color: white;
   line-height: 0.5em;
   transform: perspective(200px) rotateX(5deg);
+  border-style: none;
 }
 
 #settingsCloseButtonID {
@@ -200,6 +204,9 @@ e {
   max-height: 25vh;
   /* border-style: solid; */
   align-content: flex-start;
+  align-content: space-around;
+  justify-content: space-between
+
   flex-flow: row;
   /* border-style: dotted; */
   border-color: var(--palette-5);
@@ -217,24 +224,29 @@ e {
   /* text-shadow: rgba(255, 255, 255, 1) 0px 0px 7px; */
 }
 
-#titleAndVersionID {
+#titleMiddleID {
   padding: 0.5vh;
   line-height: 100%;
   color: var(--palette-3dim);
 }
 
 #titleLinksID {
-  text-transform: uppercase;
-  font-size: 1.5em;
-  line-height: normal;
-  align-self: top;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0);
-  padding: 1vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 
+  background: #333333;
+  text-transform: uppercase;
+  font-size: 30px;
+  line-height: 0.8em;
+  align-self: top;
+  text-align: right;
+  padding: 1vh;
   position: fixed;
   right: 5vw;
   color: var(--palette-3dim);
+  border-radius: 20px;
+  padding: 10px;
 }
 
 #personnelID {
@@ -363,15 +375,15 @@ e {
   display: flex;
   flex-flow: column;
   background-color: #333333;
-  width: 15vh;
-  height: 15vh;
-  margin: 1vh;
+  width: 200px;
+  height: 200px;
+  margin: 10px;
   letter-spacing: -0.05em;
   /* border-style: solid; */
   border-width: 0.5vh;
   border-color: var(--palette-2vdim);
   box-shadow: 0px 2em 5em 0.3em rgba(0, 0, 0, 1);
-  border-radius: 25px;
+  border-radius: 15px;
 }
 
 .gizmoTitle {
@@ -383,6 +395,7 @@ e {
   line-height: 90%;
   justify-items: right;
   text-align: center;
+
   text-transform: uppercase;
   font-size: 1.2em;
   text-shadow: rgba(255, 255, 255, 0.6) 0px 0px 7px;
@@ -441,7 +454,8 @@ e {
 }
 
 .criminalText {
-  text-align: center;
+  padding: 10px;
+  text-align: left;
   line-height: 1em;
   color: white;
 }

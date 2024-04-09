@@ -58,7 +58,7 @@ document.getElementById("modal_About_Container").addEventListener("click", () =>
 let aboutModalContainer = document.getElementById("modal_About_Container");
 
 function aboutDisplay() {
-  aboutModalContainer.style.display = "block";
+  aboutModalContainer.style.display = "flex";
 }
 
 function aboutClose() {
