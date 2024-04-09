@@ -598,8 +598,6 @@ function defineGrid(thickness, spacing) {
 
   let newString = newRLG_string_0 + newRLG_string_end + "," + newRLG_string_90 + newRLG_string_end;
 
-  console.log(newString);
-
   return newString;
 }
 

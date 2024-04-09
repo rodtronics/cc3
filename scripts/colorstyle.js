@@ -24,11 +24,15 @@ function setColorStyle(version) {
     let inactiveColor = ColorMath.evaluate(colors[version][index % colorsLength] + " <<<10% <<30%").result.hex();
     let activeTabName = "--tab" + (index + 1) + "-Active";
     let inactiveTabName = "--tab" + (index + 1) + "-Inactive";
+    let activeTabNameAlpha = "--tab" + (index + 1) + "-ActiveAlpha";
+    let evaluateText = ColorMath.evaluate(activeColor).result.css();
+    let activeTabColourAlpha = ColorMath.evaluate(evaluateText + " @a 30%").result.css();
 
     // console.log(activeColor);
     // console.log(inactiveColor);
     root.style.setProperty(activeTabName, activeColor);
     root.style.setProperty(inactiveTabName, inactiveColor);
+    root.style.setProperty(activeTabNameAlpha, activeTabColourAlpha);
   }
 }
 
@@ -45,17 +49,18 @@ function setGamePalette(version) {
     let dimmedColor = ColorMath.evaluate(currentColor + " <<<10% ").result.hex();
     let vdimmedColor = ColorMath.evaluate(currentColor + " <<<50% ").result.hex();
     let brightColor = ColorMath.evaluate(currentColor + " >>>50% ").result.hex();
+    let normalColorAlpha = ColorMath.evaluate(currentColor + " @a 30%").result.css();
 
     let currentColorName = "--palette-" + (index + 1);
     let dimmedColorName = "--palette-" + (index + 1) + "dim";
     let vdimmedColorName = "--palette-" + (index + 1) + "vdim";
-
     let brightColorName = "--palette-" + (index + 1) + "bright";
+    let normalColorAlphaName = "--palette-" + (index + 1) + "Alpha";
 
     root.style.setProperty(currentColorName, currentColor);
     root.style.setProperty(dimmedColorName, dimmedColor);
     root.style.setProperty(vdimmedColorName, vdimmedColor);
-
     root.style.setProperty(brightColorName, brightColor);
+    root.style.setProperty(normalColorAlphaName, normalColorAlpha);
   }
 }

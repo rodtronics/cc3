@@ -10,6 +10,10 @@ function researchCreateElement(index) {
   newResearchElementTitle.classList.add("gizmoTitle");
   newResearchElement.appendChild(newResearchElementTitle);
 
+  let newResearchElementButton = document.createElement("div");
+  newResearchElementButton.innerHTML = "BEGIu";
+  newResearchElement.appendChild(newResearchElementButton);
+
   return newResearchElement;
 }
 
