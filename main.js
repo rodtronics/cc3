@@ -287,18 +287,18 @@ function gizmoClicked_Facility(elementClickedPointerEvent) {
 function gizmoClicked_Research(elementClickedPointerEvent) {
   let elementClickedTarget = elementClickedPointerEvent.target;
   let researchID = getGizmoID(elementClickedPointerEvent);
+  //
   let researchIDNumber = getNumberFromID(researchID);
   if (researchIDNumber == null) {
     return;
   }
 
-  let gizmoClass = elementClickedTarget.getAttribute("class");
-
-  switch (gizmoClass) {
-    case "gizmoTitle":
-      showModal("research", researchIDNumber);
-      return;
-    case "researchButtonClass":
+  // I wanted to do a bunch of switches here but no luck lmao
+  if (elementClickedTarget.classList.contains("researchTitleClass")) {
+    showModal("research", researchIDNumber);
+  } else if (elementClickedTarget.classList.contains("researchButtonClass"));
+  {
+    researchGoButtonClicked(researchIDNumber);
   }
 }
 

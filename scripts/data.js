@@ -119,7 +119,7 @@ class researchObjectClass {
     this.visible = true;
     this.done = false;
     this.level = 1;
-    // state 0 is unstarted, 1 is running, 0 is paused
+    // state 0 is unstarted, 1 is running, 2 is paused
     this.state = 0;
     this.timeStarted = 0;
     this.timeWillEnd = 0;

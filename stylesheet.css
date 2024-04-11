@@ -434,8 +434,8 @@ e {
   /* background: var(--palette-5); */
 
   color: white;
-  padding: 0.5vh;
-  height: 35px;
+  /* padding: 0.5vh; */
+  /* height: 35px; */
   line-height: 90%;
   justify-items: right;
   text-align: center;
@@ -534,74 +534,68 @@ e {
 }
 
 .researchGizmo {
-  /* display: flex;
-  flex-flow: column; */
   background-color: #333333;
   width: 200px;
   height: 200px;
   margin: 20px;
   letter-spacing: -0.05em;
-  /* border-style: solid; */
   border-width: 0.5vh;
   border-color: var(--palette-2vdim);
   box-shadow: 0px 2em 5em 0.3em rgba(0, 0, 0, 1);
   border-radius: 25px;
-  display: grid;
 
+  display: grid;
   grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-rows: repeat(5, 1fr) 0.5fr;
 }
 
 .researchTitleClass {
-  /* background: var(--palette-5); */
   color: white;
-  padding: 20px;
-
+  padding: 10px;
   line-height: 90%;
-  /* justify-items: right; */
-  /* text-align: right; */
   text-transform: uppercase;
   font-size: 1.2em;
   text-shadow: rgba(255, 255, 255, 0.6) 0px 0px 7px;
+  border-radius: 25px 25px 0px 0px;
+  grid-area: 1 / 1 / 2 / 4;
+
+  /* these three together seem to centre text X and Y */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .researchTitleClass:hover {
-  border-radius: 25px 25px 0px 0px;
-
-  background: radial-gradient(circle at 50% -80%, #666666 0%, #333333 60%);
   background: var(--palette-2);
-  background: linear-gradient(180deg, var(--palette-5) 0%, #333333 100%);
-  background: radial-gradient(circle at 50% -80%, var(--palette-5) 0%, #333333 60%);
-  background: var(--palette-2);
-
-  /* box-shadow: var(--palette-2Alpha) 0 0 10px 3px; */
 }
 
-.researchStatusContainerClass {
-  display: grid;
+.researchProgressClass {
   padding: 5px;
   border-width: 5px;
   border-style: solid;
   border-color: #333333;
   border-radius: 20px;
   background: var(--palette-5);
-  height: 200px;
   text-align: center;
   font-size: 3em;
   color: black;
-  justify-content: center;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(3, 1fr) 2fr 1fr;
+  grid-area: 2 / 1 / 7 / 4;
 }
 
 .researchProgressTextClass {
-  grid-area: 2 / 2 / 3 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-area: 2 / 2 / 4 / 3;
+  text-align: center;
 }
 
 .researchButtonClass {
-  grid-area: 4 / 2 / 5 / 5;
-  /* width: 100px;
-  height: 50px; */
-  border-radius: 5px;
+  grid-area: 4 / 2 / 6 / 3;
   background: rgba(251, 141, 63, 0.9);
+  border-radius: 15px;
+  /* text-align: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

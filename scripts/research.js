@@ -11,12 +11,12 @@ function researchCreateElement(index) {
   // title of gizmo
   let newResearchElementTitle = document.createElement("div");
   newResearchElementTitle.innerHTML = researchArray[index].name;
-  newResearchElementTitle.classList.add("gizmoTitle");
+  newResearchElementTitle.classList.add("gizmoTitle", "researchTitleClass");
   newResearchElement.appendChild(newResearchElementTitle);
 
   // progress container
   let newResearchElementStatusContainer = document.createElement("div");
-  newResearchElementStatusContainer.classList.add("researchStatusContainerClass");
+  newResearchElementStatusContainer.classList.add("researchProgressClass");
   newResearchElement.appendChild(newResearchElementStatusContainer);
   // researchArray[index].progressContainerElement = newResearchElementStatusContainer;
   researchElementArray[index].progressContainerElement = newResearchElementStatusContainer;
@@ -25,7 +25,7 @@ function researchCreateElement(index) {
   let newResearchProgressString = document.createElement("div");
   newResearchProgressString.innerHTML = "0%";
   newResearchProgressString.classList.add("researchProgressTextClass");
-  newResearchElementStatusContainer.appendChild(newResearchProgressString);
+  newResearchElement.appendChild(newResearchProgressString);
   // researchArray[index].progressTextElement = newResearchProgressString;
   researchElementArray[index].progressTextElement = newResearchProgressString;
 
@@ -33,7 +33,7 @@ function researchCreateElement(index) {
   let newResearchButtonElement = document.createElement("div");
   newResearchButtonElement.innerHTML = "go";
   newResearchButtonElement.classList.add("researchButtonClass");
-  newResearchElementStatusContainer.appendChild(newResearchButtonElement);
+  newResearchElement.appendChild(newResearchButtonElement);
   // researchArray[index].buttonElement = newResearchButtonElement;
   researchElementArray[index].buttonElement = newResearchButtonElement;
 }
@@ -63,4 +63,8 @@ function updateResearchProgressBar22(index) {
   newBackground += currentProgress + "%, var(--palette-4) " + currentProgress + "%, var(--palette-4) 100%";
 
   divElement.style.background = newBackground;
+}
+
+function researchGoButtonClicked(index) {
+  let researchState = researchArray[index].state;
 }
