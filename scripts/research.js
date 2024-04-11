@@ -1,38 +1,62 @@
 function researchCreateElement(index) {
   let researchIndexID = "researchIndexID_" + index;
 
+  // base of the gizmo
   let newResearchElement = document.createElement("div");
   newResearchElement.classList.add("gizmoBase", "researchGizmo");
   newResearchElement.setAttribute("data-gizmoID", researchIndexID);
-  researchArray[index].baseElement = newResearchElement;
+  // researchArray[index].baseElement = newResearchElement;
+  researchElementArray[index].baseElement = newResearchElement;
 
+  // title of gizmo
   let newResearchElementTitle = document.createElement("div");
   newResearchElementTitle.innerHTML = researchArray[index].name;
   newResearchElementTitle.classList.add("gizmoTitle");
   newResearchElement.appendChild(newResearchElementTitle);
 
-  let newResearchElementStatus = document.createElement("div");
-  newResearchElementStatus.innerHTML = "<br><br>0%";
-  newResearchElementStatus.classList.add("researchStatusClass");
-  newResearchElement.appendChild(newResearchElementStatus);
+  // progress container
+  let newResearchElementStatusContainer = document.createElement("div");
+  newResearchElementStatusContainer.classList.add("researchStatusContainerClass");
+  newResearchElement.appendChild(newResearchElementStatusContainer);
+  // researchArray[index].progressContainerElement = newResearchElementStatusContainer;
+  researchElementArray[index].progressContainerElement = newResearchElementStatusContainer;
 
-  return newResearchElement;
+  // progress text
+  let newResearchProgressString = document.createElement("div");
+  newResearchProgressString.innerHTML = "0%";
+  newResearchProgressString.classList.add("researchProgressTextClass");
+  newResearchElementStatusContainer.appendChild(newResearchProgressString);
+  // researchArray[index].progressTextElement = newResearchProgressString;
+  researchElementArray[index].progressTextElement = newResearchProgressString;
+
+  // progress button
+  let newResearchButtonElement = document.createElement("div");
+  newResearchButtonElement.innerHTML = "go";
+  newResearchButtonElement.classList.add("researchButtonClass");
+  newResearchElementStatusContainer.appendChild(newResearchButtonElement);
+  // researchArray[index].buttonElement = newResearchButtonElement;
+  researchElementArray[index].buttonElement = newResearchButtonElement;
 }
 
 for (let index = 0; index < researchArray.length; index++) {
-  researchArray[index].element = researchCreateElement(index);
+  researchCreateElement(index);
 }
 
-function updateResearchProgress(index) {
-  let progressElement = researchArray[index].progressElement;
+function updateResearchProgressBar(index) {
+  let progressElement = researchArray[index].progressContainerElement;
+  let newBackground = "";
+  let newDeg = 70;
+  newBackground = "linear-gradient(" + newDeg + "deg, white 0%, white ";
+  newBackground += currentProgress + "%, var(--palette-4) " + currentProgress + "%, var(--palette-4) 100%";
+
+  divElement.style.background = newBackground;
 }
 
-function updateCrimeProgressProgressBar2(index) {
-  let divElement = crimeArray[index].progressElement;
+function updateResearchProgressBar22(index) {
+  let divElement = crimeArray[index].progressContainerElement;
   // construct the moving progress bar
   let currentProgress = crimeArray[index].progress * 100;
 
-  //  background: linear-gradient(0deg, #845ec2 0%, #d65db1 20%, #ff6f91 40%, #ff9671 60%, #ffc75f 80%, #f9f871 100%);
   let newBackground = "";
   let newDeg = 70;
   newBackground = "linear-gradient(" + newDeg + "deg, white 0%, white ";

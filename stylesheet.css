@@ -153,10 +153,8 @@ e {
   background: radial-gradient(at 50% 100%, #845ec2 0%, #d65db1 20%, #ff6f91 40%, #ff9671 60%, #ffc75f 80%, #f9f871 100%);
 }
 
-
-
 #modal_About_Container {
-  top:-100px;
+  top: -100px;
   background: black;
   display: none;
   justify-content: center;
@@ -182,10 +180,9 @@ e {
   /* justify-content: center; */
 }
 
-#settingsCloseButtonID:hover{
-  background:rgb(0, 157, 255);
+#settingsCloseButtonID:hover {
+  background: rgb(0, 157, 255);
   color: black;
-
 }
 
 #settingsClearCookiesButtonID {
@@ -197,12 +194,11 @@ e {
   margin: 1em;
 }
 
-
 #settingsLinkID:hover {
   color: white;
 }
 
-#settingsTitleID{
+#settingsTitleID {
   font-size: 3em;
   text-align: center;
   color: black;
@@ -221,7 +217,7 @@ e {
   /* border-style: solid; */
   align-content: flex-start;
   align-content: space-around;
-  justify-content: space-between
+  justify-content: space-between;
 
   flex-flow: row;
   /* border-style: dotted; */
@@ -372,30 +368,36 @@ e {
   box-shadow: var(--tab5-ActiveAlpha) 0 0 30px 10px;
 }
 
-.secondaryTabContainer_Class{
+.secondaryTabContainer_Class {
   display: flex;
   flex-direction: row;
-  width: 600px;
+  width: 100vw;
   height: 100px;
-
+  line-height: 1em;
+  justify-content: space-evenly;
 }
 
-.secondaryTabElement_Class{
+.secondaryTabElement_Class {
   background: #009dff;
+  background: linear-gradient(20deg, #0066a6 0%, #3ab3ff 100%);
   padding: 5px;
-  border-radius: 10px;
-  margin: 5px;
+  margin: 0 5px 5px 5px;
   font-size: 1.5em;
   font-weight: 800;
   justify-content: right;
   font-style: italic;
   text-transform: uppercase;
   letter-spacing: -0.05em;
-  border-radius: 5px 5px 0 0;
-  
+  border-radius: 0px 0px 10px 10px;
+  color: black;
+  justify-self: right;
+  flex: 1;
+  box-shadow: 0px 2em 5em 0.3em rgba(0, 0, 0, 0.5);
 }
 
-
+.secondaryTabElement_Class:hover {
+  color: white;
+}
 
 .gizmoContainer {
   background-color: black;
@@ -452,9 +454,9 @@ e {
 .gizmoTitle:hover {
   border-radius: 15px;
 
-  background-color: var(--palette-5bright);
   background: linear-gradient(0deg, var(--palette-5) 0%, var(--palette-5bright) 100%);
   background: radial-gradient(circle, var(--palette-5bright) 0%, var(--palette-5) 100%);
+  background: var(--palette-5);
 }
 
 .gizmoProgress {
@@ -544,6 +546,10 @@ e {
   border-color: var(--palette-2vdim);
   box-shadow: 0px 2em 5em 0.3em rgba(0, 0, 0, 1);
   border-radius: 25px;
+  display: grid;
+
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
 }
 
 .researchTitleClass {
@@ -571,7 +577,8 @@ e {
   /* box-shadow: var(--palette-2Alpha) 0 0 10px 3px; */
 }
 
-.researchStatusClass{
+.researchStatusContainerClass {
+  display: grid;
   padding: 5px;
   border-width: 5px;
   border-style: solid;
@@ -582,4 +589,19 @@ e {
   text-align: center;
   font-size: 3em;
   color: black;
+  justify-content: center;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr) 2fr 1fr;
+}
+
+.researchProgressTextClass {
+  grid-area: 2 / 2 / 3 / 5;
+}
+
+.researchButtonClass {
+  grid-area: 4 / 2 / 5 / 5;
+  /* width: 100px;
+  height: 50px; */
+  border-radius: 5px;
+  background: rgba(251, 141, 63, 0.9);
 }

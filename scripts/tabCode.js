@@ -56,6 +56,7 @@ function redrawElements(tabNumber) {
       for (let index = 0; index < secondaryCrimeTabsArray.length; index++) {
         if (secondaryCrimeTabsArray[index].visible == true) {
           secondaryCrimeTabContainer.appendChild(secondaryCrimeTabsArray[index].element);
+          console.log("tu");
         }
       }
 
@@ -75,7 +76,7 @@ function redrawElements(tabNumber) {
     case 2:
       for (let index = 0; index < researchArray.length; index++) {
         if (researchArray[index].visible == true) {
-          gizmoContainerElement.appendChild(researchArray[index].element);
+          gizmoContainerElement.appendChild(researchElementArray[index].baseElement);
         }
       }
       break;

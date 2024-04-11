@@ -156,9 +156,9 @@ for (let index = 0; index < crimesConst.length; index++) {
   }
 }
 
-for (let index = 0; index < researchArray.length; index++) {
-  researchArray[index].element = researchCreateElement(index);
-}
+// for (let index = 0; index < researchArray.length; index++) {
+//   researchArray[index].element = researchCreateElement(index);
+// }
 
 /*
 this is all the tab code
@@ -293,9 +293,12 @@ function gizmoClicked_Research(elementClickedPointerEvent) {
   }
 
   let gizmoClass = elementClickedTarget.getAttribute("class");
+
   switch (gizmoClass) {
     case "gizmoTitle":
       showModal("research", researchIDNumber);
+      return;
+    case "researchButtonClass":
   }
 }
 
