@@ -68,3 +68,57 @@ function updateResearchProgressBar22(index) {
 function researchGoButtonClicked(index) {
   let researchState = researchArray[index].state;
 }
+
+let researchMultiplier = 1;
+
+class researchClass {
+  constructor(index) {
+    this.index = index;
+    this.indexID = "researchIndexID_" + index;
+    this.data = {};
+    this.data.visible = true;
+    this.data.state = 0; // 0 is unstarted, 1 is running, 2 is paused, 3 is completed
+    this.data.timeStarted = null;
+    this.data.timeWillEnd = null;
+    this.data.progress = 0;
+    this.elements = {};
+    this.elements.baseElement = null;
+    this.elements.progressBarElement = null;
+    this.elements.progressTextElement = null;
+    this.elements.buttonElement = null;
+    this.timerFunction = null;
+    this.timerRefresh = 100; // ms
+  }
+
+  startResearch() {
+    if (!this.timerFunction) {
+      this.timerFunction = 
+    }
+
+  }
+
+  running(interval) {
+    this.addProgress(this.calcProgressOverInterval);
+    if (this.data.progress > researchConst[this.index].baseTimeToCompleteMS)
+    {
+      this.data.state = 3;
+      clearInterval(this.timerFunction);
+    }
+
+  }
+
+  updateProgressBar() {
+    
+  }
+
+  calcProgressOverInterval(interval) {
+    // calc how many units researched over interval
+    return unitsPerInterval = interval * researchMultiplier;
+  }
+
+  addProgress(value) {
+    this.data.progress += value;
+  }
+
+
+}
