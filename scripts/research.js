@@ -1,3 +1,35 @@
+let researchElementBuilder = {
+
+  baseElement(index) {
+    let researchIndexID = "researchIndexID_" + index;
+    let newResearchElement = document.createElement("div");
+    newResearchElement.classList.add("gizmoBase", "researchGizmo");
+    newResearchElement.setAttribute("data-gizmoID", researchIndexID);
+    return newResearchElement;
+  },
+
+  titleElement(index) {
+    let newResearchElementTitle = document.createElement("div");
+    newResearchElementTitle.innerHTML = researchArray[index].name;
+    newResearchElementTitle.classList.add("gizmoTitle", "researchTitleClass");
+    return newResearchElementTitle;
+  },
+  progressBar() {
+    let newResearchElementStatusContainer = document.createElement("div");
+    newResearchElementStatusContainer.classList.add("researchProgressClass");
+    return newResearchElementStatusContainer
+  },
+  progressText() {
+    let newResearchProgressString = document.createElement("div");
+    newResearchProgressString.innerHTML = "0%";
+    newResearchProgressString.classList.add("researchProgressTextClass");
+    return newResearchProgressString;
+  }
+
+
+};
+
+
 function researchCreateElement(index) {
   let researchIndexID = "researchIndexID_" + index;
 
@@ -65,6 +97,15 @@ function updateResearchProgressBar22(index) {
   divElement.style.background = newBackground;
 }
 
+function getLinearGradientCSS(progress) {
+  let currentProgress = progress * 100;
+  let newBackground = "";
+  let newDeg = 70;
+  newBackground = "linear-gradient(" + newDeg + "deg, white 0%, white ";
+  newBackground += currentProgress + "%, var(--palette-4) " + currentProgress + "%, var(--palette-4) 100%";
+  return newBackground;
+}
+
 function researchGoButtonClicked(index) {
   let researchState = researchArray[index].state;
 }
@@ -92,15 +133,22 @@ class researchClass {
 
   startResearch() {
     if (!this.timerFunction) {
-      this.timerFunction = 
+      switch (this.data.state) {
+        case 1:
+        case 3: break;
+        case 0:
+        case 2:
+          this.timerFunction = setInterval(this.running(100), 100);
+          break;
+
+      }
     }
 
   }
 
   running(interval) {
-    this.addProgress(this.calcProgressOverInterval);
-    if (this.data.progress > researchConst[this.index].baseTimeToCompleteMS)
-    {
+    this.data.progress += interval * researchMultiplier;
+    if (this.data.progress > researchConst[this.index].baseTimeToCompleteMS) {
       this.data.state = 3;
       clearInterval(this.timerFunction);
     }
@@ -108,17 +156,10 @@ class researchClass {
   }
 
   updateProgressBar() {
-    
+
   }
 
-  calcProgressOverInterval(interval) {
-    // calc how many units researched over interval
-    return unitsPerInterval = interval * researchMultiplier;
-  }
 
-  addProgress(value) {
-    this.data.progress += value;
-  }
 
 
 }
