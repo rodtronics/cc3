@@ -32,64 +32,28 @@ let researchElementBuilder = {
   },
 };
 
-function researchCreateElement(index) {
-  let researchIndexID = "researchIndexID_" + index;
-
-  // base of the gizmo
-  let newResearchElement = document.createElement("div");
-  newResearchElement.classList.add("gizmoBase", "researchGizmo");
-  newResearchElement.setAttribute("data-gizmoID", researchIndexID);
-  // researchArray[index].baseElement = newResearchElement;
-  researchElementArray[index].baseElement = newResearchElement;
-
-  // title of gizmo
-  let newResearchElementTitle = document.createElement("div");
-  newResearchElementTitle.innerHTML = researchArray[index].name;
-  newResearchElementTitle.classList.add("gizmoTitle", "researchTitleClass");
-  newResearchElement.appendChild(newResearchElementTitle);
-
-  // progress container
-  let newResearchElementStatusContainer = document.createElement("div");
-  newResearchElementStatusContainer.classList.add("researchProgressClass");
-  newResearchElement.appendChild(newResearchElementStatusContainer);
-  // researchArray[index].progressContainerElement = newResearchElementStatusContainer;
-  researchElementArray[index].progressContainerElement = newResearchElementStatusContainer;
-
-  // progress text
-  let newResearchProgressString = document.createElement("div");
-  newResearchProgressString.innerHTML = "0%";
-  newResearchProgressString.classList.add("researchProgressTextClass");
-  newResearchElement.appendChild(newResearchProgressString);
-  // researchArray[index].progressTextElement = newResearchProgressString;
-  researchElementArray[index].progressTextElement = newResearchProgressString;
-
-  // progress button
-  let newResearchButtonElement = document.createElement("div");
-  newResearchButtonElement.innerHTML = "go";
-  newResearchButtonElement.classList.add("researchButtonClass");
-  newResearchElement.appendChild(newResearchButtonElement);
-  // researchArray[index].buttonElement = newResearchButtonElement;
-  researchElementArray[index].buttonElement = newResearchButtonElement;
-}
-
-// for (let index = 0; index < researchArray.length; index++) {
-//   researchCreateElement(index);
-// }
-
 function getLinearGradientCSS(progress) {
   let currentProgress = progress * 100;
+  let endColor = "var(--palette-5)";
+  let startColor = "black";
   let newBackground = "";
   let newDeg = 70;
-  newBackground = "linear-gradient(" + newDeg + "deg, white 0%, white ";
-  newBackground += currentProgress + "%, var(--palette-4) " + currentProgress + "%, var(--palette-4) 100%";
+  newBackground = "linear-gradient(" + newDeg + "deg, " + endColor + " 0%, " + endColor + " ";
+  newBackground += currentProgress + "%, " + startColor + " " + currentProgress + "%, " + startColor + " 100%";
   return newBackground;
 }
 
 function researchGoButtonClicked(index) {
   let researchState = researchArray[index].data.state;
+
   switch (researchState) {
     case 0:
     case 2:
+      researchArray[index].startResearch();
+      break;
+    case 1:
+      researchArray[index].pauseResearch();
+      break;
   }
 }
 
@@ -115,17 +79,20 @@ class researchClass {
     this.timerRefresh = 100; // ms
   }
 
+  pauseResearch() {
+    if (this.timerFunction) {
+      this.elements.buttonElement.innerHTML = "paused";
+      clearInterval(this.timerFunction);
+      this.timerFunction = null;
+      this.data.state = 2;
+    }
+  }
+
   startResearch() {
     if (!this.timerFunction) {
-      switch (this.data.state) {
-        case 1:
-        case 3:
-          break;
-        case 0:
-        case 2:
-          this.timerFunction = setInterval(this.running(100), 100);
-          break;
-      }
+      this.data.state = 1;
+      this.elements.buttonElement.innerHTML = "pause";
+      this.timerFunction = setInterval(() => this.running(mainCrimeNumbersRefreshRate), mainCrimeNumbersRefreshRate);
     }
   }
 
@@ -133,15 +100,23 @@ class researchClass {
     this.updateProgressBar();
     this.data.progress += interval * researchMultiplier;
     if (this.data.progress > researchConst[this.index].baseTimeToCompleteMS) {
-      this.data.state = 3;
-      clearInterval(this.timerFunction);
+      this.completed();
     }
+  }
+
+  completed() {
+    this.data.state = 3;
+    clearInterval(this.timerFunction);
+    this.elements.progressTextElement.innerHTML = "completed";
   }
 
   updateProgressBar() {
     let progress = this.data.progress / researchConst[this.index].baseTimeToCompleteMS;
     let css = getLinearGradientCSS(progress);
     this.elements.progressBarElement.style.background = css;
+    let msLeft = (researchConst[this.index].baseTimeToCompleteMS - this.data.progress) / researchMultiplier;
+    let newProgressText = formatTime(msLeft);
+    this.elements.progressTextElement.innerHTML = newProgressText;
   }
 }
 

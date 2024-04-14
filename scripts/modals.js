@@ -39,10 +39,10 @@ function createFacilityModalText(index) {
 }
 
 function createCrimeModalText(index) {
-  let formattedTime = formatTime(crimesConst[index].ttc);
+  let formattedTime = formatTime(crimesConst[index].baseTimeToCompleteMS);
   let carriageReturn = "<br>";
 
-  // let timeToCompleteText = crimesConst[index].ttc;
+  // let timeToCompleteText = crimesConst[index].baseTimeToCompleteMS;
   let numCrims = crimeArray[index].numOfCriminals;
 
   let newHTML = "";
@@ -93,9 +93,11 @@ function createCrimeModalText(index) {
         newCompletionTime = "<br>no modifiers";
       } else {
         newCompletionTime =
-          "<br>modifiers: multiple criminals" + "<br>current duration: " + formatTime(crimesConst[index].ttc / crimeArray[index].numOfCriminals);
+          "<br>modifiers: multiple criminals" +
+          "<br>current duration: " +
+          formatTime(crimesConst[index].baseTimeToCompleteMS / crimeArray[index].numOfCriminals);
         // newCompletionTime =
-        //   "<br>with " + numCrims + " on the job, the new completion time: " + formatTime(crimesConst[index].ttc / crimeArray[index].numOfCriminals);
+        //   "<br>with " + numCrims + " on the job, the new completion time: " + formatTime(crimesConst[index].baseTimeToCompleteMS / crimeArray[index].numOfCriminals);
       }
       break;
     case 2: // never ran

@@ -5,8 +5,8 @@
 // this is the code for the all new crime committer
 
 // init some variables needed before functions
-const ccVersion = 3.2;
-const ccCodeName = "deep alpha";
+const ccVersion = 3.3;
+const ccCodeName = "shallow alpha";
 let totalCrimesCommitted = 0;
 let money = 0;
 let refreshRate = 33; //ms between frames
@@ -114,6 +114,7 @@ function addNewGizmoToContainer(index) {
   newGizmoCrimeProgress.innerHTML = "not committing";
   newGizmo.appendChild(newGizmoCrimeProgress);
   crimeArray[index].progressElement = newGizmoCrimeProgress;
+  crimeArray[index].elements.progressBarElement = newGizmoCrimeProgress;
 
   //container for recruitment buttons
   let newGizmoRecruitContainer = document.createElement("div");
@@ -296,8 +297,7 @@ function gizmoClicked_Research(elementClickedPointerEvent) {
   // I wanted to do a bunch of switches here but no luck lmao
   if (elementClickedTarget.classList.contains("researchTitleClass")) {
     showModal("research", researchIDNumber);
-  } else if (elementClickedTarget.classList.contains("researchButtonClass"));
-  {
+  } else if (elementClickedTarget.classList.contains("researchButtonClass")) {
     researchGoButtonClicked(researchIDNumber);
   }
 }
@@ -430,11 +430,11 @@ function calcTimeToComplete(index) {
   if (currentCrime.numOfCriminals == 0) {
     return null;
   }
-  let msLeft = ((1 - currentProgress) * crimesConst[index].ttc) / currentCrime.numOfCriminals;
+  let msLeft = ((1 - currentProgress) * crimesConst[index].baseTimeToCompleteMS) / currentCrime.numOfCriminals;
   // if (msLeft < 250) {
   //   msLeft = 250;
   // }
-  if (crimesConst[index].ttc / currentCrime.numOfCriminals < 1000) {
+  if (crimesConst[index].baseTimeToCompleteMS / currentCrime.numOfCriminals < 1000) {
     currentCrime.state = 3; // go into cps mode
   } else {
     currentCrime.state = 1;
@@ -494,7 +494,7 @@ function updateCriminalNumbers(index) {
 function cpsMode(index) {
   let refreshRateInverse = 1000 / refreshRate;
   let currentCrime = crimeArray[index];
-  let cpsRate = 1000 / (crimesConst[index].ttc / currentCrime.numOfCriminals);
+  let cpsRate = 1000 / (crimesConst[index].baseTimeToCompleteMS / currentCrime.numOfCriminals);
   currentCrime.cpsRate = cpsRate;
   currentCrime.timesDone = currentCrime.timesDone + cpsRate / refreshRateInverse;
   totalCrimesCommitted = totalCrimesCommitted + cpsRate / refreshRateInverse;
