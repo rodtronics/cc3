@@ -1,5 +1,4 @@
 let researchElementBuilder = {
-
   baseElement(index) {
     let researchIndexID = "researchIndexID_" + index;
     let newResearchElement = document.createElement("div");
@@ -17,18 +16,15 @@ let researchElementBuilder = {
   progressBar() {
     let newResearchElementStatusContainer = document.createElement("div");
     newResearchElementStatusContainer.classList.add("researchProgressClass");
-    return newResearchElementStatusContainer
+    return newResearchElementStatusContainer;
   },
   progressText() {
     let newResearchProgressString = document.createElement("div");
     newResearchProgressString.innerHTML = "0%";
     newResearchProgressString.classList.add("researchProgressTextClass");
     return newResearchProgressString;
-  }
-
-
+  },
 };
-
 
 function researchCreateElement(index) {
   let researchIndexID = "researchIndexID_" + index;
@@ -135,15 +131,14 @@ class researchClass {
     if (!this.timerFunction) {
       switch (this.data.state) {
         case 1:
-        case 3: break;
+        case 3:
+          break;
         case 0:
         case 2:
           this.timerFunction = setInterval(this.running(100), 100);
           break;
-
       }
     }
-
   }
 
   running(interval) {
@@ -152,14 +147,7 @@ class researchClass {
       this.data.state = 3;
       clearInterval(this.timerFunction);
     }
-
   }
 
-  updateProgressBar() {
-
-  }
-
-
-
-
+  updateProgressBar() {}
 }
