@@ -50,7 +50,7 @@ function setActiveTab(tabNumber) {
 
 function redrawElements(tabNumber) {
   switch (tabNumber) {
-    case 0:
+    case 0: // crimes
       gizmoContainerElement.appendChild(secondaryCrimeTabContainer);
 
       for (let index = 0; index < secondaryCrimeTabsArray.length; index++) {
@@ -65,17 +65,17 @@ function redrawElements(tabNumber) {
         }
       }
       break;
-    case 1:
+    case 1: // facilities
       for (let index = 0; index < facilityArray.length; index++) {
         if (facilityArray[index].visible == true) {
           gizmoContainerElement.appendChild(facilityArray[index].element);
         }
       }
       break;
-    case 2:
+    case 2: // research
       for (let index = 0; index < researchArray.length; index++) {
-        if (researchArray[index].visible == true) {
-          gizmoContainerElement.appendChild(researchElementArray[index].baseElement);
+        if (researchArray[index].data.visible == true) {
+          gizmoContainerElement.appendChild(researchArray[index].elements.baseElement);
         }
       }
       break;

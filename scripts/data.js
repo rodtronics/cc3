@@ -134,13 +134,13 @@ class researchElementObjectClass {
   }
 }
 
-// generate array of researches
-let researchArray = [];
-for (let index = 0; index < researchConst.length; index++) {
-  researchArray[index] = new researchObjectClass(index);
-}
+// // generate array of researches
+// let researchArray = [];
+// for (let index = 0; index < researchConst.length; index++) {
+//   researchArray[index] = new researchObjectClass(index);
+// }
 
-let researchElementArray = [];
-for (let index = 0; index < researchConst.length; index++) {
-  researchElementArray[index] = new researchElementObjectClass(index);
-}
+// let researchElementArray = [];
+// for (let index = 0; index < researchConst.length; index++) {
+//   researchElementArray[index] = new researchElementObjectClass(index);
+// }

@@ -9,7 +9,7 @@ let researchElementBuilder = {
 
   titleElement(index) {
     let newResearchElementTitle = document.createElement("div");
-    newResearchElementTitle.innerHTML = researchArray[index].name;
+    newResearchElementTitle.innerHTML = researchConst[index].name;
     newResearchElementTitle.classList.add("gizmoTitle", "researchTitleClass");
     return newResearchElementTitle;
   },
@@ -23,6 +23,12 @@ let researchElementBuilder = {
     newResearchProgressString.innerHTML = "0%";
     newResearchProgressString.classList.add("researchProgressTextClass");
     return newResearchProgressString;
+  },
+  buttonElement() {
+    let newResearchButtonElement = document.createElement("div");
+    newResearchButtonElement.innerHTML = "go";
+    newResearchButtonElement.classList.add("researchButtonClass");
+    return newResearchButtonElement;
   },
 };
 
@@ -66,32 +72,9 @@ function researchCreateElement(index) {
   researchElementArray[index].buttonElement = newResearchButtonElement;
 }
 
-for (let index = 0; index < researchArray.length; index++) {
-  researchCreateElement(index);
-}
-
-function updateResearchProgressBar(index) {
-  let progressElement = researchArray[index].progressContainerElement;
-  let newBackground = "";
-  let newDeg = 70;
-  newBackground = "linear-gradient(" + newDeg + "deg, white 0%, white ";
-  newBackground += currentProgress + "%, var(--palette-4) " + currentProgress + "%, var(--palette-4) 100%";
-
-  divElement.style.background = newBackground;
-}
-
-function updateResearchProgressBar22(index) {
-  let divElement = crimeArray[index].progressContainerElement;
-  // construct the moving progress bar
-  let currentProgress = crimeArray[index].progress * 100;
-
-  let newBackground = "";
-  let newDeg = 70;
-  newBackground = "linear-gradient(" + newDeg + "deg, white 0%, white ";
-  newBackground += currentProgress + "%, var(--palette-4) " + currentProgress + "%, var(--palette-4) 100%";
-
-  divElement.style.background = newBackground;
-}
+// for (let index = 0; index < researchArray.length; index++) {
+//   researchCreateElement(index);
+// }
 
 function getLinearGradientCSS(progress) {
   let currentProgress = progress * 100;
@@ -103,7 +86,11 @@ function getLinearGradientCSS(progress) {
 }
 
 function researchGoButtonClicked(index) {
-  let researchState = researchArray[index].state;
+  let researchState = researchArray[index].data.state;
+  switch (researchState) {
+    case 0:
+    case 2:
+  }
 }
 
 let researchMultiplier = 1;
@@ -120,6 +107,7 @@ class researchClass {
     this.data.progress = 0;
     this.elements = {};
     this.elements.baseElement = null;
+    this.elements.titleElement = null;
     this.elements.progressBarElement = null;
     this.elements.progressTextElement = null;
     this.elements.buttonElement = null;
@@ -142,6 +130,7 @@ class researchClass {
   }
 
   running(interval) {
+    this.updateProgressBar();
     this.data.progress += interval * researchMultiplier;
     if (this.data.progress > researchConst[this.index].baseTimeToCompleteMS) {
       this.data.state = 3;
@@ -149,5 +138,50 @@ class researchClass {
     }
   }
 
-  updateProgressBar() {}
+  updateProgressBar() {
+    let progress = this.data.progress / researchConst[this.index].baseTimeToCompleteMS;
+    let css = getLinearGradientCSS(progress);
+    this.elements.progressBarElement.style.background = css;
+  }
 }
+
+let researchArray = [];
+for (let index = 0; index < researchConst.length; index++) {
+  // new object
+  researchArray[index] = new researchClass(index);
+  // build elements in array
+  thisResearch = researchArray[index];
+  thisResearch.elements.baseElement = researchElementBuilder.baseElement(index);
+  thisResearch.elements.titleElement = researchElementBuilder.titleElement(index);
+  thisResearch.elements.progressBarElement = researchElementBuilder.progressBar(index);
+  thisResearch.elements.progressTextElement = researchElementBuilder.progressText(index);
+  thisResearch.elements.buttonElement = researchElementBuilder.buttonElement(index);
+  // append elements
+  thisResearch.elements.baseElement.appendChild(thisResearch.elements.titleElement);
+  thisResearch.elements.baseElement.appendChild(thisResearch.elements.progressBarElement);
+  thisResearch.elements.baseElement.appendChild(thisResearch.elements.progressTextElement);
+  thisResearch.elements.baseElement.appendChild(thisResearch.elements.buttonElement);
+}
+
+// function updateResearchProgressBar(index) {
+//   let progressElement = researchArray[index].progressContainerElement;
+//   let newBackground = "";
+//   let newDeg = 70;
+//   newBackground = "linear-gradient(" + newDeg + "deg, white 0%, white ";
+//   newBackground += currentProgress + "%, var(--palette-4) " + currentProgress + "%, var(--palette-4) 100%";
+
+//   divElement.style.background = newBackground;
+// }
+
+// function updateResearchProgressBar22(index) {
+//   let divElement = crimeArray[index].progressContainerElement;
+//   // construct the moving progress bar
+//   let currentProgress = crimeArray[index].progress * 100;
+
+//   let newBackground = "";
+//   let newDeg = 70;
+//   newBackground = "linear-gradient(" + newDeg + "deg, white 0%, white ";
+//   newBackground += currentProgress + "%, var(--palette-4) " + currentProgress + "%, var(--palette-4) 100%";
+
+//   divElement.style.background = newBackground;
+// }
