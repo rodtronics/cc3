@@ -36,9 +36,10 @@ function createCrimeSectionTabs() {
 class crimeObjectClass {
   constructor(index) {
     this.crimeIndex = index;
+    this.index = index;
     this.crimeIndexID = "crimeIndexID_" + this.crimeIndex;
     this.visible = true;
-    this.running = false;
+    // this.running = false;
     this.numOfCriminals = 0;
     this.multiplier = 0; // this is ADDED onto 1
     this.category = null;
@@ -67,6 +68,17 @@ class crimeObjectClass {
     this.timer = null;
   }
 
+  recruitClicked(polarity) {
+    switch (polarity) {
+      case "add":
+        this.addRecruit();
+        break;
+      case "sub":
+        this.removeRecruit();
+        break;
+    }
+  }
+
   addRecruit() {
     this.numOfCriminals += 1;
     if (!this.timer) {
@@ -75,7 +87,7 @@ class crimeObjectClass {
     }
   }
 
-  removeRecriut() {
+  removeRecruit() {
     this.numOfCriminals -= 1;
     if (this.numOfCriminals < 1) {
       this.state = 0;
@@ -85,20 +97,30 @@ class crimeObjectClass {
 
   pause() {
     clearInterval(this.timer);
+    this.elements.progressBarElement.innerHTML = "∞";
+
     this.timer = null;
   }
 
   running(interval) {
     this.data.progress += interval * this.numOfCriminals;
+    if (this.data.progress > crimesConst[this.index].baseTimeToCompleteMS) {
+      this.crimeCompleted();
+    }
     this.updateProgressBar();
   }
   updateProgressBar() {
     let progress = this.data.progress / crimesConst[this.index].baseTimeToCompleteMS;
-    let css = getLinearGradientCSS(progress);
+    let css = getLinearGradientCSS(progress, "white", "var(--palette-4)");
     this.elements.progressBarElement.style.background = css;
-    let msLeft = (researchConst[this.index].baseTimeToCompleteMS - this.data.progress) / this.numOfCriminals;
+    let msLeft = (crimesConst[this.index].baseTimeToCompleteMS - this.data.progress) / this.numOfCriminals;
     let newProgressText = formatTime(msLeft);
-    this.elements.progressTextElement.innerHTML = newProgressText;
+    this.elements.progressBarElement.innerHTML = newProgressText;
+  }
+
+  crimeCompleted() {
+    this.timesDone += 1;
+    this.data.progress = 0;
   }
 }
 // generate array of crimes

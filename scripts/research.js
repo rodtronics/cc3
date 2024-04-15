@@ -1,3 +1,5 @@
+function elementBuilder(object) {}
+
 let researchElementBuilder = {
   baseElement(index) {
     let researchIndexID = "researchIndexID_" + index;
@@ -32,10 +34,11 @@ let researchElementBuilder = {
   },
 };
 
-function getLinearGradientCSS(progress) {
+function getLinearGradientCSS(progress, endColorArg, startColorArg) {
   let currentProgress = progress * 100;
-  let endColor = "var(--palette-5)";
-  let startColor = "black";
+  let endColor = endColorArg == null ? "var(--palette-5)" : endColorArg;
+  let startColor = startColorArg == null ? "black" : startColorArg;
+  console.log(startColor + " " + endColor);
   let newBackground = "";
   let newDeg = 70;
   newBackground = "linear-gradient(" + newDeg + "deg, " + endColor + " 0%, " + endColor + " ";

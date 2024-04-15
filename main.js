@@ -151,6 +151,7 @@ function addNewGizmoToContainer(index) {
   crimeArray[index].timesDoneElement = newGizmoTimesDone;
 }
 // create some gizmos
+
 for (let index = 0; index < crimesConst.length; index++) {
   if (crimeArray[index].visible == true) {
     addNewGizmoToContainer(index);
@@ -261,7 +262,10 @@ function gizmoClicked_Crime(elementClickedPointerEvent) {
   switch (gizmoClass) {
     case "gizmoRecruitButton":
       let polarity = elementClickedTarget.getAttribute("data-polarity");
-      recruitClicked(crimeIDNumberofClickedGizmo, polarity);
+
+      crimeArray[crimeIDNumberofClickedGizmo].recruitClicked(polarity);
+
+      // recruitClicked(crimeIDNumberofClickedGizmo, polarity);
       break;
     case "gizmoTitle":
       showModal("crime", crimeIDNumberofClickedGizmo);
@@ -579,5 +583,5 @@ function gameLoop() {
   //   }
 }
 
-setInterval(() => gameLoop(), refreshRate);
+// setInterval(() => gameLoop(), refreshRate);
 setInterval(() => WriteAllCrimeCookies(), 60000); // save game to cookies every minute
