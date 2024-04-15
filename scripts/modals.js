@@ -38,16 +38,17 @@ function createFacilityModalText(index) {
   return newHTML;
 }
 
+let modalInfoTitle = document.getElementById("modal_CrimeInfo_Title");
+
 function createCrimeModalText(index) {
   let formattedTime = formatTime(crimesConst[index].baseTimeToCompleteMS);
-  let carriageReturn = "<br>";
 
   // let timeToCompleteText = crimesConst[index].baseTimeToCompleteMS;
   let numCrims = crimeArray[index].data.numOfCriminals;
 
   let newHTML = "";
-
-  let title = "<h1>" + crimesConst[index].crime + "</h1>" + crimesConst[index].description;
+  modalInfoTitle.innerHTML = crimesConst[index].crime;
+  let title = crimesConst[index].description;
 
   let baseTime = "base duration: " + formattedTime;
   let crimsOnJob = "";

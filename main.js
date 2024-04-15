@@ -8,26 +8,20 @@
 const ccVersion = 3.3;
 const ccCodeName = "shallow alpha";
 let totalCrimesCommitted = 0;
-let money = 0;
+let moneyElement = document.getElementById("moneyID");
 let refreshRate = 61.8; //ms between frames - genius to use phi so numbers dont have static numbers
 let globalPrecision = 4; // precision of display of floating points
 let cpsAveragedOnThisTime = 5000;
 let mainCrimeNumbersRefreshRate = 61.8; // how often to refresh main crime numbers
 let cpsAverageNumber = cpsAveragedOnThisTime / mainCrimeNumbersRefreshRate; // how many refreshes to maintain average
 
-/*
-
-totaltime = 2000
-rr =50
-2000/50 = 40
-40 values over 2 seconds
-
-cpsav = 2000/1000 = 2
-
-
-
-
-*/
+let global = {
+  money: 10,
+  updateMoney() {
+    moneyElement.innerHTML = `$${this.money}`;
+  },
+};
+global.updateMoney();
 
 // extracts the integer number from the ID word
 function getNumberFromID(crimeID) {

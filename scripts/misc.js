@@ -1,28 +1,5 @@
 // these are functions that don't belong anywhere else
 
-function defineGrid(thickness, spacing) {
-  let newRLG_string_0 = "";
-  let newRLG_string_90 = "";
-  let newRLG_string_end = "";
-  newRLG_string_0 = "repeating-linear-gradient(0deg, ";
-  newRLG_string_90 = "repeating-linear-gradient(90deg, ";
-
-  let RLG_units = "px";
-  let RLG_colorA = "rgba(71, 46, 109,1)";
-  let RLG_colorB = "rgba(0,0,0,0)";
-
-  newRLG_string_end = RLG_colorA + " 0" + RLG_units + ", "; //color at 0%
-  newRLG_string_end += RLG_colorA + " " + thickness + RLG_units + ", "; // color ending at thickness %
-  newRLG_string_end += RLG_colorB + " " + thickness + RLG_units + ", "; //  color starting at thick%
-  newRLG_string_end += RLG_colorB + " " + spacing + RLG_units + ")"; // fill color to end of repeat
-
-  let newString = newRLG_string_0 + newRLG_string_end + "," + newRLG_string_90 + newRLG_string_end;
-
-  return newString;
-}
-
-document.getElementById("gizmoContainer_ID").style.background = defineGrid(3, 25);
-
 /*
 
 

@@ -125,9 +125,25 @@ e {
   z-index: 5;
 }
 
+.modalTitle {
+  margin: 50px 50px 0 50px;
+  font-size: 3em;
+  font-weight: 800;
+  line-height: 1em;
+  color: black;
+  /* these three together seem to centre text X and Y */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px;
+  text-shadow: rgba(255, 255, 255, 1) 2px 2px 1px;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
 .modalInner {
   border-style: solid;
-  margin: 5vh;
+  margin: 0 50px 50px 50px;
   padding: 5vh;
   font-size: 1em;
   font-weight: 800;
@@ -210,38 +226,49 @@ e {
 }
 
 #titleContainerID {
-  display: flex;
+  /* display: flex; */
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr;
+
   margin: 10 auto;
-  flex-grow: 0;
-  flex-shrink: 0;
-  max-width: 90vw;
-  max-height: 25vh;
+  /* flex-grow: 0;
+  flex-shrink: 0; */
+  /* max-width: 90vw;
+  max-height: 25vh; */
   /* border-style: solid; */
   align-content: flex-start;
   align-content: space-around;
   justify-content: space-between;
 
-  flex-flow: row;
+  /* flex-flow: row; */
   /* border-style: dotted; */
   border-color: var(--palette-5);
-  overflow: hidden;
+  /* overflow: hidden; */
   /* transform: perspective(200px) rotateX(5deg); */
 }
 
 #titleID {
   padding: 0 0 0 1vw;
-  display: flex;
+  /* display: flex;
   flex-flow: row;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
   font-size: 0.9vmin;
   line-height: 0.9em;
+  /* grid-area: 1 / 1 / 2 /1; */
+  /* these three together seem to centre text X and Y */
+  /* display: flex;
+  align-items: top;
+  justify-content: left; */
   /* text-shadow: rgba(255, 255, 255, 1) 0px 0px 7px; */
 }
 
-#titleMiddleID {
+#moneyID {
   padding: 0.5vh;
   line-height: 100%;
   color: var(--palette-3dim);
+  grid-area: 1/ 2/ 1/ 2;
+  font-size: 3em;
 }
 
 #titleLinksID {
@@ -261,6 +288,7 @@ e {
   color: var(--palette-3dim);
   border-radius: 20px;
   padding: 10px;
+  grid-area: 1 / 3 / 2 / 4;
 }
 
 #personnelID {
@@ -373,8 +401,8 @@ e {
 .secondaryTabContainer_Class {
   display: flex;
   flex-direction: row;
-  width: 100vw;
-  height: 100px;
+  width: 100;
+  height: 50px;
   line-height: 1em;
   justify-content: space-evenly;
 }
@@ -405,12 +433,12 @@ e {
   background-color: black;
   margin: 0 0.2vh 0.2vh 0.2vh;
   display: flex;
-  flex-flow: row;
+  flex-flow: column;
   flex-wrap: wrap;
   overflow-y: scroll;
   scrollbar-gutter: stable;
   font-size: 1.2vh;
-  justify-content: space-around;
+  justify-content: flex-start;
   height: 100%;
   border-style: solid;
   border-width: 0.8vh;
@@ -421,19 +449,22 @@ e {
   display: flex;
   flex-flow: column;
   background-color: #333333;
-  width: 200px;
-  height: 250px;
-  margin: 10px;
+  width: 80vw;
+  height: 100px;
+  margin: 15px;
   letter-spacing: -0.05em;
   /* border-style: solid; */
   border-width: 0.5vh;
   border-color: var(--palette-2vdim);
-  box-shadow: 0px 2em 5em 0.3em rgba(0, 0, 0, 1);
+  box-shadow: 0px 2em 5em 1em rgba(0, 0, 0, 0.7);
   border-radius: 15px;
 
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1.5fr 1.5fr 1fr 1fr;
+  /* grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1.5fr 1.5fr 1fr 1fr; */
+
+  grid-template-columns: 2fr 4fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
 }
@@ -442,7 +473,7 @@ e {
   /* background: var(--palette-5); */
 
   color: white;
-  /* padding: 0.5vh; */
+  padding: 10px;
   /* height: 35px; */
   line-height: 90%;
   justify-items: right;
@@ -456,6 +487,7 @@ e {
   border-color: #333333;
   border-radius: 15px;
   grid-area: 1 / 1 / 2 / 3;
+  grid-area: 1 / 1 / 3 / 2;
   /* these three together seem to centre text X and Y */
   display: flex;
   align-items: center;
@@ -484,6 +516,7 @@ e {
   color: black;
   font-weight: 700;
   grid-area: 2 / 1 / 3 / 3;
+  grid-area: 1 / 2 / 3 / 3;
   /* box-shadow: var(--palette-4Alpha) 0 0 10px 3px; */
   /* these three together seem to centre text X and Y */
   display: flex;
@@ -528,9 +561,11 @@ e {
 
 .gizmoRecruitButton[data-polarity="add"] {
   grid-area: 3 / 1 / 3 /1;
+  grid-area: 1 / 4 / 2 / 5;
 }
 .gizmoRecruitButton[data-polarity="sub"] {
   grid-area: 4 / 1 / 4 / 1;
+  grid-area: 2 / 4 / 3 / 5;
 }
 
 .criminalText {
@@ -540,6 +575,7 @@ e {
   line-height: 1em;
   color: white;
   grid-area: 3/ 2/ 5/ 3;
+  grid-area: 1 / 3 / 3 / 4;
   /* these three together seem to centre text X and Y */
   display: flex;
   align-items: center;

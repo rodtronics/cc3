@@ -24,6 +24,7 @@ const crimesConst = [
     description: "It's just another reminder that even the smallest opponents can leave you feeling like a total loser",
     baseTimeToCompleteMS: 20000,
     mpc: 1,
+    money: 1,
   },
   {
     crime: "Staying up past bedtime",
@@ -32,6 +33,7 @@ const crimesConst = [
     baseTimeToCompleteMS: 200000,
     mpc: 0,
   },
+  { crime: "invest", baseTimeToCompleteMS: 100000, money: 20, cost: 5, description: "investments" },
   { crime: "long crime", baseTimeToCompleteMS: 7000000000, description: "takes fuckin forvere man" },
   { crime: "day crime", baseTimeToCompleteMS: 86410000 },
   { crime: "long term crime", baseTimeToCompleteMS: 31556952000, description: "what the fuck" },

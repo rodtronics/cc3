@@ -83,6 +83,21 @@ class crimeObjectClass {
   }
 
   addRecruit() {
+    let cost = crimesConst[this.index].cost || 0;
+
+    if (this.data.state != 1) {
+      // only check for money first time
+      if (cost > 0 && global.money >= cost) {
+        // if can afford, take off money
+        global.money -= cost;
+        global.updateMoney();
+      } else if (cost > 0) {
+        //must not be able to afford
+        this.elements.progressBarElement.innerHTML = "cannot afford";
+        return;
+      }
+    }
+
     this.data.numOfCriminals += 1;
     if (!this.timerFunction) {
       this.data.state = 1;
@@ -91,11 +106,12 @@ class crimeObjectClass {
     this.updateCriminalNumber();
     this.recruitmentSubElement.setAttribute("data-buttonState", "active");
     //
-    console.log(cssBuilder.stripedProgressBar(50));
-
   }
 
   removeRecruit() {
+    if (this.data.numOfCriminals == 0) {
+      return;
+    }
     this.data.numOfCriminals -= 1;
     this.data.numOfCriminals = Math.max(0, this.data.numOfCriminals);
     if (this.data.numOfCriminals < 1) {
@@ -128,8 +144,11 @@ class crimeObjectClass {
     let progress = this.data.progress / crimesConst[this.index].baseTimeToCompleteMS;
     let css = getLinearGradientCSS(progress, "white", "var(--palette-4)");
     // this.elements.progressBarElement.style.background = css;
-    this.elements.progressBarElement.style.background = cssBuilder.stripedProgressBar(this.progressAsPercent(progress));
-
+    this.elements.progressBarElement.style.background = cssBuilder.plainProgressBar(
+      this.progressAsPercent(progress),
+      "var(--palette-4)",
+      "var(--palette-4bright)"
+    );
 
     let msLeft = (crimesConst[this.index].baseTimeToCompleteMS - this.data.progress) / this.data.numOfCriminals;
     let newProgressText = formatTime(msLeft);
@@ -139,6 +158,8 @@ class crimeObjectClass {
   crimeCompleted() {
     this.timesDone += 1;
     this.data.progress = 0;
+    global.money += crimesConst[this.index].money == undefined ? 0 : crimesConst[this.index].money;
+    global.updateMoney();
   }
 
   updateCriminalNumber() {
