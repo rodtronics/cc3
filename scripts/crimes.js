@@ -90,6 +90,9 @@ class crimeObjectClass {
     }
     this.updateCriminalNumber();
     this.recruitmentSubElement.setAttribute("data-buttonState", "active");
+    //
+    console.log(cssBuilder.stripedProgressBar(50));
+
   }
 
   removeRecruit() {
@@ -124,7 +127,10 @@ class crimeObjectClass {
   updateProgressBar() {
     let progress = this.data.progress / crimesConst[this.index].baseTimeToCompleteMS;
     let css = getLinearGradientCSS(progress, "white", "var(--palette-4)");
-    this.elements.progressBarElement.style.background = css;
+    // this.elements.progressBarElement.style.background = css;
+    this.elements.progressBarElement.style.background = cssBuilder.stripedProgressBar(this.progressAsPercent(progress));
+
+
     let msLeft = (crimesConst[this.index].baseTimeToCompleteMS - this.data.progress) / this.data.numOfCriminals;
     let newProgressText = formatTime(msLeft);
     this.elements.progressBarElement.innerHTML = newProgressText;
