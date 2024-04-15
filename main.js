@@ -9,10 +9,10 @@ const ccVersion = 3.3;
 const ccCodeName = "shallow alpha";
 let totalCrimesCommitted = 0;
 let money = 0;
-let refreshRate = 33; //ms between frames
+let refreshRate = 61.8; //ms between frames - genius to use phi so numbers dont have static numbers
 let globalPrecision = 4; // precision of display of floating points
 let cpsAveragedOnThisTime = 5000;
-let mainCrimeNumbersRefreshRate = 50; // how often to refresh main crime numbers
+let mainCrimeNumbersRefreshRate = 61.8; // how often to refresh main crime numbers
 let cpsAverageNumber = cpsAveragedOnThisTime / mainCrimeNumbersRefreshRate; // how many refreshes to maintain average
 
 /*
@@ -486,7 +486,7 @@ function calculateVisibility() {
 }
 
 let lastTotalCrimesCommitted = 0;
-let cpsAverage = Array(cpsAverageNumber).fill(0);
+// let cpsAverage = Array(cpsAverageNumber).fill(0);
 
 let rollingAve = 0;
 let rollingAveTotal = 0;
@@ -500,7 +500,7 @@ setGamePalette(0);
 
 // updateMainCrimeNumbers();
 // updateCriminalNumbers();
-updateCrimeProgressDiv();
+// updateCrimeProgressDiv();
 
 // this will read all the cookies, and if there will overright what is there
 readCrimeCookies();

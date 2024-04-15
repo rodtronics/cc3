@@ -45,6 +45,8 @@
   --stats-color: var(--color-D);
   --inv-color: var(--color-B);
   font-family: "Source Code Pro", monospace;
+  font-family: "Sometype Mono", monospace;
+
   background: var(--background-color);
   background: repeating-linear-gradient(0deg, rgb(0, 157, 255) 0px, #009dff 2px, rgba(0, 0, 0, 0) 2px, black 10px),
     repeating-linear-gradient(90deg, #009dff 0px, #009dff 2px, black 2px, black 10px);
@@ -496,7 +498,7 @@ e {
 .gizmoRecruitButton {
   padding: 0.3em;
   font-size: 2em;
-  background-color: var(--palette-2dim);
+  background-color: var(--palette-2);
   flex: 1;
   text-align: center;
   border-radius: 10px;
@@ -511,9 +513,11 @@ e {
 
 .gizmoRecruitButton[data-buttonState="active"] {
   color: var(--palette-5bright);
+  box-shadow: inset 2px 3px 5px rgba(255, 255, 255, 0.2);
 }
 .gizmoRecruitButton[data-buttonState="inactive"] {
   color: black;
+  box-shadow: inset 2px 3px 5px rgba(0, 0, 0, 0.2);
 }
 
 .gizmoRecruitButton[data-buttonState="active"]:hover {

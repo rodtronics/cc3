@@ -94,7 +94,7 @@ class researchClass {
     if (!this.timerFunction) {
       this.data.state = 1;
       this.elements.buttonElement.innerHTML = "pause";
-      this.timerFunction = setInterval(() => this.running(mainCrimeNumbersRefreshRate), mainCrimeNumbersRefreshRate);
+      this.timerFunction = setInterval(() => this.running(refreshRate), refreshRate);
     }
   }
 

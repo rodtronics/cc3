@@ -120,9 +120,9 @@ function createCrimeModalText(index) {
   }
 
   let finishTime = "";
-  let durationNowToFinish = dayjs(crimeArray[index].timeCrimeWillEnd).diff(dayjs());
+  // let durationNowToFinish = dayjs(crimeArray[index].timeCrimeWillEnd).diff(dayjs());
 
-  if (msLeft > 86400000) {
+  if (msLeft > 86400000 && crimeArray[index].data.state == 1) {
     // if more than a day, give the actual date/time the crime will end
 
     // this gets the ordinal eg "the first"

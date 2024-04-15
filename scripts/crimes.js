@@ -86,15 +86,18 @@ class crimeObjectClass {
     this.data.numOfCriminals += 1;
     if (!this.timerFunction) {
       this.data.state = 1;
-      this.timerFunction = setInterval(() => this.running(mainCrimeNumbersRefreshRate), mainCrimeNumbersRefreshRate);
+      this.timerFunction = setInterval(() => this.running(refreshRate), refreshRate);
     }
     this.updateCriminalNumber();
+    this.recruitmentSubElement.setAttribute("data-buttonState", "active");
   }
 
   removeRecruit() {
     this.data.numOfCriminals -= 1;
     this.data.numOfCriminals = Math.max(0, this.data.numOfCriminals);
     if (this.data.numOfCriminals < 1) {
+      this.recruitmentSubElement.setAttribute("data-buttonState", "inactive");
+
       this.data.state = 2;
       this.pause();
     }
@@ -107,7 +110,7 @@ class crimeObjectClass {
 
   pause() {
     clearInterval(this.timerFunction);
-    this.elements.progressBarElement.innerHTML = this.progressAsPercent() + "% complete";
+    this.elements.progressBarElement.innerHTML = "halted<br>" + this.progressAsPercent() + "% complete";
     this.timerFunction = null;
   }
 
