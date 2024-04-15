@@ -43,7 +43,7 @@ function createCrimeModalText(index) {
   let carriageReturn = "<br>";
 
   // let timeToCompleteText = crimesConst[index].baseTimeToCompleteMS;
-  let numCrims = crimeArray[index].numOfCriminals;
+  let numCrims = crimeArray[index].data.numOfCriminals;
 
   let newHTML = "";
 
@@ -51,13 +51,13 @@ function createCrimeModalText(index) {
 
   let baseTime = "base duration: " + formattedTime;
   let crimsOnJob = "";
-  if (crimeArray[index].state != 2) {
+  if (crimeArray[index].data.state != 0) {
     crimsOnJob = "criminals: " + numCrims + "<br>";
   }
 
   let timesCommitted = "";
   if (crimeArray[index].timesDone == 0 || crimeArray[index].timesDone == undefined) {
-    timesCommitted = "you have not committed this crime yet wtf";
+    timesCommitted = "you have not committed this crime yet.. wtf";
   } else {
     let timesDone = "";
     switch (crimeArray[index].timesDone) {
@@ -80,11 +80,11 @@ function createCrimeModalText(index) {
   timesCommitted += "<br><br>";
   let currentProgress = "";
 
-  if (crimeArray[index].state != 2) {
-    currentProgress = "current progress: " + (crimeArray[index].progress * 100).toPrecision(globalPrecision) + "%<br>";
+  if (crimeArray[index].data.state != 0) {
+    currentProgress = "current progress: " + crimeArray[index].progressAsPercent() + "%<br>";
   }
   let newCompletionTime = "";
-  switch (crimeArray[index].state) {
+  switch (crimeArray[index].data.state) {
     case 0: // no crims
       newCompletionTime = "<br><br>committing crime paused";
       break;
@@ -95,9 +95,9 @@ function createCrimeModalText(index) {
         newCompletionTime =
           "<br>modifiers: multiple criminals" +
           "<br>current duration: " +
-          formatTime(crimesConst[index].baseTimeToCompleteMS / crimeArray[index].numOfCriminals);
+          formatTime(crimesConst[index].baseTimeToCompleteMS / crimeArray[index].data.numOfCriminals);
         // newCompletionTime =
-        //   "<br>with " + numCrims + " on the job, the new completion time: " + formatTime(crimesConst[index].baseTimeToCompleteMS / crimeArray[index].numOfCriminals);
+        //   "<br>with " + numCrims + " on the job, the new completion time: " + formatTime(crimesConst[index].baseTimeToCompleteMS / crimeArray[index].data.numOfCriminals);
       }
       break;
     case 2: // never ran
@@ -112,22 +112,31 @@ function createCrimeModalText(index) {
   if (crimesConst[index].mpc > 0) {
     moneyPerCrime = "money per crime: " + crimesConst[index].mpc;
   }
+  let msLeft = (crimesConst[index].baseTimeToCompleteMS - crimeArray[index].data.progress) / crimeArray[index].data.numOfCriminals;
+
   let timeLeft = "";
-  if (crimeArray[index].state == 1) {
-    timeLeft = "time left: " + getCrimeTimeLeft(index) + "<br>";
+  if (crimeArray[index].data.state == 1) {
+    timeLeft = "time left: " + formatTime(msLeft) + "<br>";
   }
 
   let finishTime = "";
   let durationNowToFinish = dayjs(crimeArray[index].timeCrimeWillEnd).diff(dayjs());
 
-  if (durationNowToFinish > 86400000) {
-    let day = dayjs(crimeArray[index].timeCrimeWillEnd, "millsecond").format("D");
+  if (msLeft > 86400000) {
+    // if more than a day, give the actual date/time the crime will end
+
+    // this gets the ordinal eg "the first"
+
+    let msLeft = (crimesConst[index].baseTimeToCompleteMS - crimeArray[index].data.progress) / crimeArray[index].data.numOfCriminals;
+
+    let timeCrimeWillEnd = dayjs().add(dayjs(msLeft, "millsecond"));
+
+    let day = dayjs(timeCrimeWillEnd, "millsecond").format("D");
     let ordinal = getOrdinal(day);
 
-    finishTime =
-      dayjs(crimeArray[index].timeCrimeWillEnd, "millisecond").format("h:mma on dddd [the] D") +
-      ordinal +
-      dayjs(crimeArray[index].timeCrimeWillEnd, "millisecond").format(" MMM YYYY");
+    finishTime = dayjs(timeCrimeWillEnd, "millisecond").format("h:mma on dddd [the] D") + ordinal + dayjs(timeCrimeWillEnd, "millisecond").format(" MMM YYYY");
+
+    //   let newCompletionTime = dayjs().add(dayjs(msLeft, "millisecond"));
 
     finishTime = "crime will complete at:<br>" + finishTime;
   }

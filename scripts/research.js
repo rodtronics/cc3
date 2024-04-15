@@ -38,7 +38,6 @@ function getLinearGradientCSS(progress, endColorArg, startColorArg) {
   let currentProgress = progress * 100;
   let endColor = endColorArg == null ? "var(--palette-5)" : endColorArg;
   let startColor = startColorArg == null ? "black" : startColorArg;
-  console.log(startColor + " " + endColor);
   let newBackground = "";
   let newDeg = 70;
   newBackground = "linear-gradient(" + newDeg + "deg, " + endColor + " 0%, " + endColor + " ";

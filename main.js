@@ -88,75 +88,6 @@ function getBaseElementofGizmoClicked(elementClickedPointerEvent) {
 }
 
 // make a crime gizmo
-function addNewGizmoToContainer(index) {
-  let crimeIndex = index;
-  let crimeIndexID = "crimeIndexID_" + crimeIndex;
-
-  // create the base of the gizmo
-  // and give it the class gizmobase
-  // meaning it holds the ID of the whole gizmo
-  let newGizmo = document.createElement("div");
-  newGizmo.classList.add("gizmoBase", "crimeGizmo");
-  newGizmo.setAttribute("data-gizmoID", crimeIndexID);
-  crimeArray[index].containerElement = newGizmo;
-  gizmoContainerElement.appendChild(newGizmo);
-
-  // put the title element in the gizmo
-  let newGizmoTitle = document.createElement("div");
-  newGizmoTitle.classList.add("gizmoTitle");
-  newGizmoTitle.innerHTML = crimesConst[crimeIndex].crime;
-  newGizmo.appendChild(newGizmoTitle);
-
-  // progress bar - also info about click to committ etc
-  let newGizmoCrimeProgress = document.createElement("div");
-  newGizmoCrimeProgress.setAttribute("data-progressID", crimeIndexID);
-  newGizmoCrimeProgress.classList.add("gizmoProgress");
-  newGizmoCrimeProgress.innerHTML = "not committing";
-  newGizmo.appendChild(newGizmoCrimeProgress);
-  crimeArray[index].progressElement = newGizmoCrimeProgress;
-  crimeArray[index].elements.progressBarElement = newGizmoCrimeProgress;
-
-  //container for recruitment buttons
-  let newGizmoRecruitContainer = document.createElement("div");
-  newGizmoRecruitContainer.classList.add("gizmoRecruitContainer");
-  newGizmo.appendChild(newGizmoRecruitContainer);
-
-  // the subtract button
-  let newGizmoRecruitSub = document.createElement("div");
-  newGizmoRecruitSub.classList.add("gizmoRecruitButton");
-  newGizmoRecruitSub.innerHTML = "-";
-  newGizmoRecruitSub.setAttribute("data-buttonState", "inactive");
-  newGizmoRecruitSub.setAttribute("data-polarity", "sub");
-  newGizmoRecruitContainer.appendChild(newGizmoRecruitSub);
-  crimeArray[index].recruitmentSubElement = newGizmoRecruitSub;
-
-  // the add button
-  let newGizmoRecruitAdd = document.createElement("div");
-  newGizmoRecruitAdd.classList.add("gizmoRecruitButton");
-  newGizmoRecruitAdd.innerHTML = "+";
-  newGizmoRecruitAdd.setAttribute("data-buttonState", "active");
-  newGizmoRecruitAdd.setAttribute("data-polarity", "add");
-  newGizmoRecruitContainer.appendChild(newGizmoRecruitAdd);
-  crimeArray[index].recruitmentAddElement = newGizmoRecruitAdd;
-
-  // crimepeople
-  let newGizmoActiveCriminals = document.createElement("div");
-  newGizmo.appendChild(newGizmoActiveCriminals);
-  newGizmoActiveCriminals.classList.add("criminalText");
-  crimeArray[index].numCrimElement = newGizmoActiveCriminals;
-  // times done
-  let newGizmoTimesDone = document.createElement("div");
-  newGizmo.appendChild(newGizmoTimesDone);
-  newGizmoTimesDone.classList.add("criminalText");
-  crimeArray[index].timesDoneElement = newGizmoTimesDone;
-}
-// create some gizmos
-
-for (let index = 0; index < crimesConst.length; index++) {
-  if (crimeArray[index].visible == true) {
-    addNewGizmoToContainer(index);
-  }
-}
 
 // for (let index = 0; index < researchArray.length; index++) {
 //   researchArray[index].element = researchCreateElement(index);
@@ -462,7 +393,10 @@ function setCrimeCompletionTime(index) {
 function getCrimeTimeLeft(index) {
   let currentCrime = crimeArray[index];
 
+  let msLeft = (crimesConst[index].baseTimeToCompleteMS - crimeArray[index].data.progress) / crimeArray[index].data.numOfCriminals;
+
   let timeLeft = dayjs(currentCrime.timeCrimeWillEnd).diff(dayjs());
+
   if (timeLeft < 0) {
     crimeCompleted(index);
     return "restarting";
@@ -486,7 +420,7 @@ function crimeCompleted(index) {
 }
 
 function updateTimesDoneText(index) {
-  crimeArray[index].timesDoneElement.innerHTML = "<bs>times done: " + crimeArray[index].timesDone.toFixed(0);
+  // crimeArray[index].timesDoneElement.innerHTML = "<bs>times done: " + crimeArray[index].timesDone.toFixed(0);
 }
 
 function updateCriminalNumbers(index) {
@@ -565,7 +499,7 @@ setColorStyle(0);
 setGamePalette(0);
 
 // updateMainCrimeNumbers();
-updateCriminalNumbers();
+// updateCriminalNumbers();
 updateCrimeProgressDiv();
 
 // this will read all the cookies, and if there will overright what is there

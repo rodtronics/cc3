@@ -420,7 +420,7 @@ e {
   flex-flow: column;
   background-color: #333333;
   width: 200px;
-  height: 200px;
+  height: 250px;
   margin: 10px;
   letter-spacing: -0.05em;
   /* border-style: solid; */
@@ -431,7 +431,7 @@ e {
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: 1.5fr 1.5fr 1fr 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
 }
@@ -503,13 +503,17 @@ e {
   border-style: solid;
   border-width: 5px;
   border-color: #333333;
+  /* these three together seem to centre text X and Y */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .gizmoRecruitButton[data-buttonState="active"] {
   color: var(--palette-5bright);
 }
 .gizmoRecruitButton[data-buttonState="inactive"] {
-  color: var(--palette-5vdim);
+  color: black;
 }
 
 .gizmoRecruitButton[data-buttonState="active"]:hover {
@@ -518,12 +522,20 @@ e {
   color: white;
 }
 
+.gizmoRecruitButton[data-polarity="add"] {
+  grid-area: 3 / 1 / 3 /1;
+}
+.gizmoRecruitButton[data-polarity="sub"] {
+  grid-area: 4 / 1 / 4 / 1;
+}
+
 .criminalText {
   padding: 10px;
+  font-size: 4em;
   text-align: left;
   line-height: 1em;
   color: white;
-  grid-area: 4 / 1 / 5 / 3;
+  grid-area: 3/ 2/ 5/ 3;
   /* these three together seem to centre text X and Y */
   display: flex;
   align-items: center;
