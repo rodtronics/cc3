@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>crime committer</title>
 
+<<<<<<< HEAD
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheet.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="css/modal.css" />
+=======
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>crime committer</title>
+>>>>>>> 2a2324dd35ffbf151b334c771f88d3d54bda61fc
 
-    <!-- <link rel="icon" type="image/x-icon" href="images/faviconc64.png" /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" type="text/css" media="screen" href="stylesheet.css" />
 
+<<<<<<< HEAD
     <!-- import a lot of fonts lol -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,46 +23,55 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+Symbols+2&family=Sometype+Mono:ital,wght@0,400..700;1,400..700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap"
       rel="stylesheet"
     />
+=======
+  <!-- <link rel="icon" type="image/x-icon" href="images/faviconc64.png" /> -->
+>>>>>>> 2a2324dd35ffbf151b334c771f88d3d54bda61fc
 
-    <link rel="apple-touch-icon" sizes="180x180" href="content/favicon/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="content/favicon/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="content/favicon/favicon-16x16.png" />
-    <link rel="manifest" href="content/favicon/site.webmanifest" />
+  <!-- import a lot of fonts lol -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Michroma&family=Noto+Sans+Symbols+2&family=Sometype+Mono:ital,wght@0,400..700;1,400..700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap"
+    rel="stylesheet">
 
-    <script src="scripts/thirdparty/js.cookie.js"></script>
-    <script src="scripts/thirdparty/dayjs.js"></script>
-    <script src="scripts/thirdparty/dayjsPlugins.js"></script>
-    <script src="scripts/thirdparty/color-math-min.js"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="content/favicon/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="content/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="content/favicon/favicon-16x16.png" />
+  <link rel="manifest" href="content/favicon/site.webmanifest" />
 
-    <!-- I incorporated all dayjs plugins into one js file and these add them
+  <script src="scripts/thirdparty/js.cookie.js"></script>
+  <script src="scripts/thirdparty/dayjs.js"></script>
+  <script src="scripts/thirdparty/dayjsPlugins.js"></script>
+  <script src="scripts/thirdparty/color-math-min.js"></script>
+
+  <!-- I incorporated all dayjs plugins into one js file and these add them
      -->
-    <script>
-      dayjs.extend(dayjs_plugin_relativeTime);
-    </script>
-    <script>
-      dayjs.extend(dayjs_plugin_duration);
-    </script>
-    <script>
-      dayjs.extend(dayjs_plugin_isToday);
-    </script>
-    <script>
-      dayjs.extend(dayjs_plugin_isTomorrow);
-    </script>
-  </head>
+  <script>
+    dayjs.extend(dayjs_plugin_relativeTime);
+  </script>
+  <script>
+    dayjs.extend(dayjs_plugin_duration);
+  </script>
+  <script>
+    dayjs.extend(dayjs_plugin_isToday);
+  </script>
+  <script>
+    dayjs.extend(dayjs_plugin_isTomorrow);
+  </script>
+</head>
 
-  <body>
-    <div id="backgroundGrid"></div>
-    <div id="modal_CrimeInfo_Container" class="modalContainer">
-      <div id="modal_CrimeInfo_Title" class="modalTitle"></div>
+<body>
+  <div id="backgroundGrid"></div>
+  <div id="modal_CrimeInfo_Container" class="modalContainer">
+    <div id="modal_CrimeInfo_Title" class="modalTitle"></div>
 
-      <div id="modal_CrimeInfo_Inner" class="modalInner"></div>
-    </div>
-    <div id="modal_Settings_Container" class="modalContainer">
-      <div id="modal_Settings_Inner" class="modalInner"></div>
-    </div>
-    <div id="modal_About_Container" class="modalContainer">
-      <div id="modal_About_Inner" class="modalInner">
-        <pre>
+    <div id="modal_CrimeInfo_Inner" class="modalInner"></div>
+  </div>
+  <div id="modal_Settings_Container" class="modalContainer">
+    <div id="modal_Settings_Inner" class="modalInner"></div>
+  </div>
+  <div id="modal_About_Container" class="modalContainer">
+    <div id="modal_About_Inner" class="modalInner">
+      <pre>
 ░░░░░░░░░░┌──────┬────────┐░░░──┐░░░░┌──<br />
 ──┬───<c>┌┐</c>──┴┐░░░░░└┐░░░┌─┬─┴─────┴────┘░│ <br />
 ░░<c>┌─┬┬┼┼──┬─┐</c>────┬┴───┘░└┐░░┌───┬──────┘ <br />
@@ -90,13 +104,13 @@
 <e>░██▒░███▒▒░░░░█▒░░░███▒░░░█░░░█░░░░█▒░░░</e>
         <br />
         <br /><br /><br /><br /></pre>
-      </div>
     </div>
-    <div id="everythingContainerID">
-      <div id="titleContainerID">
-        <div id="titleID">
-          <div>
-            <pre>
+  </div>
+  <div id="everythingContainerID">
+    <div id="titleContainerID">
+      <div id="titleID">
+        <div>
+          <pre>
                /$$                      
               |__/
   /$$$$$$$ /$$$$$$ /$$/$$$$$$/$$$$  /$$$$$$ 
