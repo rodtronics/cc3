@@ -58,7 +58,7 @@ class crimeObjectClass {
     this.recruitmentSubElement = null;
     this.numCrimElement = null;
     this.timesDoneElement = null;
-    this.timesDone = 0;
+    this.data.timesDone = 0;
     this.cpsRate = 0.0;
     this.elements = {};
     this.elements.baseElement = null;
@@ -99,6 +99,7 @@ class crimeObjectClass {
     }
 
     this.data.numOfCriminals += 1;
+
     if (!this.timerFunction) {
       this.data.state = 1;
       this.timerFunction = setInterval(() => this.running(refreshRate), refreshRate);
@@ -156,7 +157,7 @@ class crimeObjectClass {
   }
 
   crimeCompleted() {
-    this.timesDone += 1;
+    this.data.timesDone += 1;
     this.data.progress = 0;
     global.money += crimesConst[this.index].money == undefined ? 0 : crimesConst[this.index].money;
     global.updateMoney();

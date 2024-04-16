@@ -25,6 +25,10 @@ const crimesConst = [
     baseTimeToCompleteMS: 20000,
     mpc: 1,
     money: 1,
+    loot: [
+      ["candy", [2, 5]],
+      ["sadness", 1],
+    ],
   },
   {
     crime: "Staying up past bedtime",
@@ -36,6 +40,12 @@ const crimesConst = [
   { crime: "invest", baseTimeToCompleteMS: 100000, money: 20, cost: 5, description: "investments" },
   { crime: "long crime", baseTimeToCompleteMS: 7000000000, description: "takes fuckin forvere man" },
   { crime: "day crime", baseTimeToCompleteMS: 86410000 },
+  { crime: "day crime2", baseTimeToCompleteMS: 86410000 },
+  {
+    crime: "loitering",
+    baseTimeToCompleteMS: 600000,
+    description: "this is your trademark. just being around. people don't want you here, that's why it's a crime",
+  },
   { crime: "long term crime", baseTimeToCompleteMS: 31556952000, description: "what the fuck" },
 ];
 

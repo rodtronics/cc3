@@ -434,7 +434,7 @@ e {
   margin: 0 0.2vh 0.2vh 0.2vh;
   display: flex;
   flex-flow: column;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   overflow-y: scroll;
   scrollbar-gutter: stable;
   font-size: 1.2vh;
