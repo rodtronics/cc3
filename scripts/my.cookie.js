@@ -24,7 +24,7 @@ function writeSingleCrimeCookie(index) {
   }
 
   cookieContent += currentCrime.visible + ";";
-  cookieContent += currentCrime.running + ";";
+  // cookieContent += currentCrime.running + ";";
   cookieContent += currentCrime.numOfCriminals + ";";
   cookieContent += currentCrime.multiplier + ";";
   cookieContent += currentCrime.category + ";";
@@ -56,7 +56,7 @@ function readCrimeCookies() {
       // write the members of the array
       // much careful with this, atm it just relies on everything being in order lol
       currentCrime.visible = JSON.parse(cookieContentArray[0]);
-      currentCrime.running = JSON.parse(cookieContentArray[1]);
+      // currentCrime.running = JSON.parse(cookieContentArray[1]);
       currentCrime.numOfCriminals = JSON.parse(cookieContentArray[2]);
       currentCrime.multiplier = JSON.parse(cookieContentArray[3]);
       currentCrime.category = JSON.parse(cookieContentArray[4]);
