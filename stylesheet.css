@@ -44,8 +44,14 @@
   --link-color: white;
   --stats-color: var(--color-D);
   --inv-color: var(--color-B);
+
+  font-family: "Michroma", sans-serif;
+  font-family: "Bebas Neue", sans-serif;
+  font-family: "Noto Sans Symbols 2", sans-serif;
   font-family: "Source Code Pro", monospace;
   font-family: "Sometype Mono", monospace;
+
+
 
   background: var(--background-color);
   background: repeating-linear-gradient(0deg, rgb(0, 157, 255) 0px, #009dff 2px, rgba(0, 0, 0, 0) 2px, black 10px),
@@ -56,6 +62,7 @@
   line-height: 70%;
   user-select: none;
 }
+
 
 a {
   color: var(--palette-4dim);
