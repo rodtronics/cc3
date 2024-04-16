@@ -26,11 +26,13 @@
 }
 
 modalh1 {
+  font-family: "Bebas Neue", sans-serif;
+  line-height: 1em;
   font-size: 2em;
 }
 
 .modalInner {
-  border-style: solid;
+  /* border-style: solid; */
   margin: 0 50px 50px 50px;
   padding: 5vh;
   font-size: 1em;
@@ -38,17 +40,35 @@ modalh1 {
   line-height: 1em;
 }
 
+.modalSection {
+  padding: 10px;
+  margin: 10px;
+}
+
+.modalSectionTitle {
+  border-style: solid;
+  border-width: 0 3px 0 0;
+  border-color: white;
+  text-align: right;
+}
+
 #modal_CrimeInfo_Container {
   background: rgba(251, 141, 63, 0.9);
   background: linear-gradient(0, rgba(251, 141, 63, 0.8) 0%, rgba(252, 70, 107, 0.8) 100%);
-  background: rgba(33, 33, 33, 0.95);
-  background: black;
-  color: black;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px) sepia(70%);
+  color: white;
 }
 
 #modal_CrimeInfo_Inner {
   background: #017fa2;
   background: linear-gradient(0, rgba(1, 127, 162, 1) 0%, rgba(100, 178, 240, 1) 100%);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px) sepia(70%);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(10 1fr);
 }
 
 #modal_Settings_Container {

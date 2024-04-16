@@ -45,6 +45,9 @@ function createFacilityModalText(index) {
 }
 
 function endTime(index) {
+  if (crimeArray[index].data.state != 1) {
+    return null;
+  }
   msLeft = msLeftf(index);
   let timeCrimeWillEnd = dayjs().add(dayjs(msLeft, "millsecond"));
   let day = dayjs(timeCrimeWillEnd, "millsecond").format("D");
@@ -68,46 +71,62 @@ function createResearchModalText(index) {
 }
 
 const modalElementConst = [
-  { id: "descriptionID", gridArea: "" },
-  { id: "timesDoneID", gridArea: "" },
-  { id: "progressID", gridArea: "" },
-  { id: "baseTimeToCompleteMSID", gridArea: "" },
-  { id: "newTimeID", gridArea: "" },
-  { id: "timeLeftID", gridArea: "" },
-  { id: "costID", gridArea: "" },
-  { id: "lootID", gridArea: "" },
-  { id: "resourcesNeededID", gridArea: "" },
-  { id: "endTimeID", gridArea: "" },
-  { id: "stateID", gridArea: "" },
+  { id: "timesDoneID", gridArea: "1 / 2 / 2 / 3", gridAreaTitle: "1 / 1 / 2 / 2" },
+  { id: "progressID", gridArea: "2 / 2 / 3 / 3", gridAreaTitle: "2 / 1 / 3 / 2" },
+  { id: "baseTimeToCompleteMSID", gridArea: "3 / 2 / 4 / 3", gridAreaTitle: "3 / 1 / 4 / 2" },
+  { id: "newTimeID", gridArea: "4 / 2 / 5 / 3", gridAreaTitle: "4 / 1 / 5 / 2" },
+  { id: "timeLeftID", gridArea: "5 / 2 / 6 / 3", gridAreaTitle: "5 / 1 /6 / 2" },
+  { id: "costID", gridArea: "6 / 2 / 7 / 3", gridAreaTitle: "6 / 1 / 7 / 2" },
+  { id: "lootID", gridArea: "7 / 2 / 8 / 3", gridAreaTitle: "7 / 1 / 8 / 2" },
+  { id: "endTimeID", gridArea: "9 / 2 / 10 / 3", gridAreaTitle: "9 / 1 / 10 / 2" },
 ];
 
 let modalElementArray = [];
+let modalElementArrayTitles = [];
 
 let modalElementBuilder = {
   createSimpleDiv() {
     let newDiv = document.createElement("div");
     return newDiv;
   },
-  setModalID(element, ID) {
+  setModalID(element, ID, title) {
     element.id = ID;
     element.classList.add("modalSection");
+    if (title == true) {
+      element.classList.add("modalSectionTitle");
+    }
   },
 
-  newElement(index) {
+  newElement(index, title) {
     let newElement = this.createSimpleDiv();
-    this.setModalID(newElement, modalElementConst[index].id);
-    newElement.style.setProperty("grid-area", modalElementConst[index].gridArea);
+    let titleText = title == true ? "_title" : "";
+    this.setModalID(newElement, modalElementConst[index].id + titleText, title);
+    let gridArea = title == true ? modalElementConst[index].gridAreaTitle : modalElementConst[index].gridArea;
+    newElement.style.setProperty("grid-area", gridArea);
     return newElement;
   },
   createAllFromConst() {
     for (let index = 0; index < modalElementConst.length; index++) {
       modalElementArray[index] = this.newElement(index);
+      modalElementArrayTitles[index] = this.newElement(index, true);
       document.getElementById("modal_CrimeInfo_Inner").appendChild(modalElementArray[index]);
+      document.getElementById("modal_CrimeInfo_Inner").appendChild(modalElementArrayTitles[index]);
     }
+  },
+  setAllTitles() {
+    document.getElementById("timesDoneID_title").innerText = "you've done this";
+    document.getElementById("progressID_title").innerText = "current progress";
+    document.getElementById("baseTimeToCompleteMSID_title").innerText = "base time to complete";
+    document.getElementById("newTimeID_title").innerText = "after modifers";
+    document.getElementById("timeLeftID_title").innerText = "time left to complete";
+    document.getElementById("costID_title").innerText = "will cost you";
+    document.getElementById("lootID_title").innerText = "you will gain";
+    document.getElementById("endTimeID_title").innerText = "will finish at";
   },
 };
 
 modalElementBuilder.createAllFromConst();
+modalElementBuilder.setAllTitles();
 
 let modalTextBuilder = {
   setTitle(index) {
@@ -116,7 +135,6 @@ let modalTextBuilder = {
     let titleElement = document.getElementById("modal_CrimeInfo_Title");
     let newTitle = `<modalh1>${localCrimeConst.crime}</modalh1><br>`;
     newTitle += localCrimeConst.description;
-    console.log(newTitle);
     titleElement.innerHTML = newTitle;
   },
 
@@ -128,12 +146,32 @@ let modalTextBuilder = {
   setTimesDone(index) {
     localCrimeConst = crimesConst[index];
     localCrimeArray = crimeArray[index];
-    document.getElementById("timesDoneID").innerHTML = localCrimeArray.data.timesDone || "";
+    let timesDone = localCrimeArray.data.timesDone || "";
+    // timesDone = timesDone ? timesDone : "none times";
+    switch (localCrimeArray.data.timesDone) {
+      case 0:
+        timesDone = "none times";
+        break;
+      case 1:
+        timesDone = "once";
+        break;
+      case 2:
+        timesDone = "twice";
+        break;
+      case 3:
+        timesDone = "thrice";
+        break;
+      default:
+        timesDone = localCrimeArray.data.timesDone + " times";
+        break;
+    }
+    document.getElementById("timesDoneID").innerHTML = timesDone;
   },
   setProgress(index) {
     localCrimeConst = crimesConst[index];
     localCrimeArray = crimeArray[index];
-    document.getElementById("progressID").innerHTML = localCrimeArray.progressAsPercent() || "";
+    let progressText = localCrimeArray.progressAsPercent() == 0 ? "none" : localCrimeArray.progressAsPercent() + "%";
+    document.getElementById("progressID").innerHTML = progressText;
   },
   setTimeToCompleteBase(index) {
     localCrimeConst = crimesConst[index];
@@ -144,28 +182,31 @@ let modalTextBuilder = {
   setTimeToCompleteMod(index) {
     localCrimeConst = crimesConst[index];
     localCrimeArray = crimeArray[index];
-    let newTime = "";
-    switch (localCrimeArray.data.state) {
-      case 1:
-        newTime = msLeftf(index, true);
-        break;
-      case 2:
-        newTime = "∞";
-        break;
-    }
-    formatTime(msLeftf(index));
-    document.getElementById("newTimeID").innerHTML = newTime || "";
+    let newTime = localCrimeArray.data.numOfCriminals <= 1 ? "no mods" : formatTime(localCrimeConst.baseTimeToCompleteMS / localCrimeArray.data.numOfCriminals);
+    document.getElementById("newTimeID").innerHTML = newTime;
   },
   setTimeLeft(index) {
     localCrimeConst = crimesConst[index];
     localCrimeArray = crimeArray[index];
+    let newTime = "";
+    switch (localCrimeArray.data.state) {
+      case 0:
+        newTime = "haven't even started";
+        break;
+      case 1:
+        newTime = msLeftf(index, true);
+        break;
+      case 2:
+        newTime = "halted";
+        break;
+    }
 
-    document.getElementById("timeLeftID").innerHTML = formatTime(msLeftf(index)) || "";
+    document.getElementById("timeLeftID").innerHTML = newTime;
   },
   setCost(index) {
     localCrimeConst = crimesConst[index];
     localCrimeArray = crimeArray[index];
-    let newCost = "cost: ";
+    let newCost = "";
     newCost += localCrimeConst.cost == 0 || localCrimeConst.cost == undefined ? "it's free baby" : "$" + localCrimeConst.cost;
     document.getElementById("costID").innerHTML = newCost || "";
   },
@@ -173,8 +214,7 @@ let modalTextBuilder = {
     localCrimeConst = crimesConst[index];
     localCrimeArray = crimeArray[index];
     let newGain = [];
-    newGain[0] = "you will gain: ";
-    newGain[1] = localCrimeConst.money > 0 ? "$" + localCrimeConst.money : "nothing";
+    newGain[0] = localCrimeConst.money > 0 ? "$" + localCrimeConst.money : "nothing";
     // test to see if loot exists and if so list it
     if (localCrimeConst.loot) {
       // cycle through loots
@@ -207,6 +247,7 @@ let modalTextBuilder = {
     // document.getElementById("resourcesNeededID").innerHTML = localCrimeConst.description || "";
 
     let newEndTime = endTime(index);
+    newEndTime = newEndTime ? newEndTime : "it won't";
     document.getElementById("endTimeID").innerHTML = newEndTime;
     // document.getElementById("stateID").innerHTML = localCrimeConst.description || "";
   },
