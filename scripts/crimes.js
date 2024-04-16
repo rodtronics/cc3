@@ -97,13 +97,13 @@ class crimeObjectClass {
         return;
       }
     }
-
     this.data.numOfCriminals += 1;
 
     if (!this.timerFunction) {
       this.data.state = 1;
-      this.timerFunction = setInterval(() => this.running(refreshRate), refreshRate);
+      this.timerFunction = setInterval(() => this.running(), global.refreshRate);
     }
+
     this.updateCriminalNumber();
     this.recruitmentSubElement.setAttribute("data-buttonState", "active");
     //
@@ -134,8 +134,8 @@ class crimeObjectClass {
     this.timerFunction = null;
   }
 
-  running(interval) {
-    this.data.progress += interval * this.data.numOfCriminals;
+  running() {
+    this.data.progress += global.refreshRate * this.data.numOfCriminals;
     if (this.data.progress > crimesConst[this.index].baseTimeToCompleteMS) {
       this.crimeCompleted();
     }

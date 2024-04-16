@@ -20,6 +20,8 @@ let global = {
   updateMoney() {
     moneyElement.innerHTML = `$${this.money}`;
   },
+  refreshRate: 61.8,
+  precision: 4,
 };
 global.updateMoney();
 
@@ -101,41 +103,6 @@ setActiveTab(0); // init tabs
 /*
 all other tab code in tabCode.js
 */
-
-function formatTime(timeInMS) {
-  let formattedTime = "";
-  let timeUntilComplete = 0;
-  timeUntilComplete = dayjs.duration(dayjs(timeInMS), "millisecond");
-  timeUntilComplete.years = timeUntilComplete.format("YY");
-
-  timeUntilComplete.months = timeUntilComplete.format("M");
-  timeUntilComplete.days = timeUntilComplete.format("D");
-  timeUntilComplete.hours = timeUntilComplete.format("H");
-  timeUntilComplete.minutes = timeUntilComplete.format("mm");
-  timeUntilComplete.seconds = timeUntilComplete.format("ss");
-  timeUntilComplete.milliseconds = timeUntilComplete.format("SSS");
-
-  if (timeUntilComplete.years > 0) {
-    formattedTime += timeUntilComplete.years + "y " + timeUntilComplete.months + "mo ";
-  }
-
-  if (timeUntilComplete.months > 0) {
-    formattedTime += timeUntilComplete.months + "mo ";
-  }
-
-  if (timeUntilComplete.days > 0) {
-    formattedTime += timeUntilComplete.days + "d " + timeUntilComplete.hours + "h " + timeUntilComplete.minutes + "m ";
-  } else if (timeUntilComplete.hours > 0) {
-    formattedTime += timeUntilComplete.hours + "h " + timeUntilComplete.minutes + "m ";
-  } else if (timeUntilComplete.minutes > 0) {
-    formattedTime += timeUntilComplete.minutes + "m ";
-  }
-  formattedTime += timeUntilComplete.seconds + "s";
-  if (timeInMS < 10000) {
-    formattedTime += " " + timeUntilComplete.milliseconds + "ms";
-  }
-  return formattedTime;
-}
 
 function getOrdinal(value) {
   let ordinal = "";
@@ -423,16 +390,6 @@ function updateCriminalNumbers(index) {
   }
 }
 
-function cpsMode(index) {
-  let refreshRateInverse = 1000 / refreshRate;
-  let currentCrime = crimeArray[index];
-  let cpsRate = 1000 / (crimesConst[index].baseTimeToCompleteMS / currentCrime.numOfCriminals);
-  currentCrime.cpsRate = cpsRate;
-  currentCrime.timesDone = currentCrime.timesDone + cpsRate / refreshRateInverse;
-  totalCrimesCommitted = totalCrimesCommitted + cpsRate / refreshRateInverse;
-  updateTimesDoneText(index);
-}
-
 function calculateVisibility() {
   crimeArray.forEach((element) => {
     if (element.visible == true) {
@@ -479,37 +436,10 @@ function calculateVisibility() {
   });
 }
 
-let lastTotalCrimesCommitted = 0;
-// let cpsAverage = Array(cpsAverageNumber).fill(0);
-
-let rollingAve = 0;
-let rollingAveTotal = 0;
-
-// initialisations before main loop
-
-// this seems ridic and it is
-
 setColorStyle(0);
 setGamePalette(0);
-
-// updateMainCrimeNumbers();
-// updateCriminalNumbers();
-// updateCrimeProgressDiv();
 
 // this will read all the cookies, and if there will overright what is there
 readCrimeCookies();
 
-//mainloop
-function gameLoop() {
-  updateCriminalNumbers();
-  updateCrimeProgressDiv();
-  updateCrimeProgressValue();
-  // I should probably find a better way to do this, or just make it impossible
-  // for (let index = 0; index < crimeArray.length; index++) {
-  //   if (crimeArray[index].state == 3) {
-  //     cpsMode(index);
-  //   }
-}
-
-// setInterval(() => gameLoop(), refreshRate);
 setInterval(() => WriteAllCrimeCookies(), 60000); // save game to cookies every minute
