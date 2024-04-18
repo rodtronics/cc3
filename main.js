@@ -22,6 +22,8 @@ let global = {
   },
   refreshRate: 61.8,
   precision: 4,
+  activeTab: 0,
+  basicThugs: 1,
 };
 global.updateMoney();
 

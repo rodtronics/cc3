@@ -19,6 +19,7 @@ let criminals = new criminalsClass();
 // baseTimeToCompleteMS: time to complete (in ms)
 // mpc: money earned per crime
 const crimesConst = [
+  // when adding array into loot, always have double depth array even if only one thing
   {
     crime: "Stealing Candy from a Baby",
     description: "It's just another reminder that even the smallest opponents can leave you feeling like a total loser",
@@ -34,19 +35,23 @@ const crimesConst = [
     crime: "Staying up past bedtime",
     description:
       "everyone else is snoozing away, dreaming of success and babes, while you're just scrolling through memes and regretting every life choice that brought you to this moment",
-    baseTimeToCompleteMS: 200000,
+    baseTimeToCompleteMS: 2000,
     mpc: 0,
+    loot: [["crusty towel", 1]],
   },
-  { crime: "invest", baseTimeToCompleteMS: 100000, money: 20, cost: 5, description: "investments" },
+  { crime: "jaywalking", description: "you feel pretty badass doing this, walking where you shouldn't", baseTimeToCompleteMS: 50000 },
+  { crime: "buy c4", description: "weirdly it's not too difficult to buy c4 in this town", cost: 200, baseTimeToCompleteMS: 100000, loot: [["c4", 2]] },
+  { crime: "invest", baseTimeToCompleteMS: 100000, money: 20, cost: 15, description: "investments" },
   { crime: "long crime", baseTimeToCompleteMS: 7000000000, description: "takes fuckin forvere man" },
   { crime: "day crime", baseTimeToCompleteMS: 86410000 },
   { crime: "day crime2", baseTimeToCompleteMS: 86410000 },
   {
     crime: "loitering",
-    baseTimeToCompleteMS: 600000,
+    baseTimeToCompleteMS: 6000,
     description: "this is your trademark. just being around. people don't want you here, that's why it's a crime",
+    loot: [["cigarettes", [0, 1]]],
   },
-  { crime: "long term crime", baseTimeToCompleteMS: 31556952000, description: "what the fuck" },
+  { crime: "long term crime", baseTimeToCompleteMS: 31556952000, description: "what the fuck", precision: 10 },
 ];
 
 const facilityConst = [

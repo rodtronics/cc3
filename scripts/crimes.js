@@ -125,7 +125,8 @@ class crimeObjectClass {
   }
 
   progressAsPercent() {
-    return ((this.data.progress / crimesConst[this.index].baseTimeToCompleteMS) * 100).toPrecision(globalPrecision);
+    let precision = crimesConst[this.index].precision ? crimesConst[this.index].precision : global.precision;
+    return ((this.data.progress / crimesConst[this.index].baseTimeToCompleteMS) * 100).toPrecision(precision);
   }
 
   pause() {
@@ -161,6 +162,7 @@ class crimeObjectClass {
     this.data.progress = 0;
     global.money += crimesConst[this.index].money == undefined ? 0 : crimesConst[this.index].money;
     global.updateMoney();
+    reapRewards(this.index);
   }
 
   updateCriminalNumber() {

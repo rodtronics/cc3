@@ -36,6 +36,7 @@ function tabClicked(elementClicked) {
 // sets one tab as active and the rest as inactive
 // also then switches and appends elements depending on tab
 function setActiveTab(tabNumber) {
+  global.activeTab = tabNumber;
   // clear all tabs to inactive
   for (let index = 0; index < tabElement.length; index++) {
     tabElement[index].setAttribute("data-tabState", "inactive");
@@ -79,7 +80,12 @@ function redrawElements(tabNumber) {
         }
       }
       break;
-    case 3:
+    case 3: //resources
+      for (let index = 0; index < resourcesConst.length; index++) {
+        if (resourceArray[index].totalEver > 0) {
+          gizmoContainerElement.appendChild(resourceArray[index].elements.base);
+        }
+      }
       break;
   }
 }

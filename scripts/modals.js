@@ -213,8 +213,14 @@ let modalTextBuilder = {
   setLoot(index) {
     localCrimeConst = crimesConst[index];
     localCrimeArray = crimeArray[index];
+    if (localCrimeConst.money == undefined && localCrimeConst.loot == undefined) {
+      document.getElementById("lootID").innerHTML = "nothing";
+      return;
+    }
     let newGain = [];
-    newGain[0] = localCrimeConst.money > 0 ? "$" + localCrimeConst.money : "nothing";
+    if (localCrimeConst.money > 0) {
+      newGain[0] = "$" + localCrimeConst.money;
+    }
     // test to see if loot exists and if so list it
     if (localCrimeConst.loot) {
       // cycle through loots
@@ -247,7 +253,7 @@ let modalTextBuilder = {
     // document.getElementById("resourcesNeededID").innerHTML = localCrimeConst.description || "";
 
     let newEndTime = endTime(index);
-    newEndTime = newEndTime ? newEndTime : "it won't";
+    newEndTime = newEndTime ? newEndTime : "it won't if you're not doing it";
     document.getElementById("endTimeID").innerHTML = newEndTime;
     // document.getElementById("stateID").innerHTML = localCrimeConst.description || "";
   },
