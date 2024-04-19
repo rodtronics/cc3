@@ -16,29 +16,8 @@ for different functionality
 
 going to try and do JSDoc as much as I can
 stay consistent with namings
-
-
-
-
 */
-// defines the different types of possible widgets
-// there will have to be some rules here
-// required: type
-// header
-// incdecButton
-// progress bar
-// quantity
 
- 
-
-const modularStructureData = [{
-    type: "basic crime", description: "just your basic, run of the mill crime"
-header: undefined, incdecButton: true
-},
-    { type: "investment" },
-    { type: "inventory" },
-    { type: "facility" },
-];
 //
 // used to drive the creation of each widget
 
@@ -56,10 +35,9 @@ const modularContentData = [
       { type: "money", quantity: 0 },
     ],
     cost: 0,
-        requirements: undefined,
-        committersRequired: 1, // if this is 0 or undefined, it'll just be one
-        coolDownMS: 0,
-    
+    requirements: undefined,
+    committersRequired: 1, // if this is 0 or undefined, it'll just be one
+    coolDownMS: 0,
   },
 ];
 //
@@ -84,9 +62,9 @@ class modularGenericWidget {
   // constructor into a large builder function
   // what I should do is pass the widget object to the builder
   constructor(index) {
-      this.index = index;
-      this.numCommitters = 0;
-      state = 0; // 0 is never been done, 1 is going, 2 is paused, 3 is complete
+    this.index = index;
+    this.numCommitters = 0;
+    state = 0; // 0 is never been done, 1 is going, 2 is paused, 3 is complete
   }
 }
 //
@@ -118,24 +96,25 @@ class playerDataClass {
     this.dateTimeStarted = dayjs();
     // player inventory
     this.inventory = [];
+
     for (let index = 0; index < array.length; index++) {
       this.inventory[index] = {};
       this.inventory[index].type = inventoryData[index].type;
       this.inventory[index].quantity = 0;
       this.inventory[index].quantityCumulative = 0;
     }
-    }
-    /**
-     * passed an array, it looks for the property "type", and tries to find
-     * the index of it, or returns null
-     * @param {array} is the passed array 
-     * @param {searchType} is the value in the "type":"value" pair
-     * @returns the index of the item in the array 
-     * ot null if none (rather than -1)
-     */
-    getIndexInArrayFromType(array, searchType) {
-let index = array.findIndex(obj=>obj.type===searchType)
-        index = index == -1 ? null : index;
+  }
+  /**
+   * passed an array, it looks for the property "type", and tries to find
+   * the index of it, or returns null
+   * @param {array} is the passed array
+   * @param {searchType} is the value in the "type":"value" pair
+   * @returns the index of the item in the array
+   * ot null if none (rather than -1)
+   */
+  getIndexInArrayFromType(array, searchType) {
+    let index = array.findIndex((obj) => obj.type === searchType);
+    index = index == -1 ? null : index;
   }
   addInventory(type, quantity) {}
 }
